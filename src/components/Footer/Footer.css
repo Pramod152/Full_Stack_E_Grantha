@@ -1,0 +1,63 @@
+/* Footer container */
+footer {
+    background-color: white;
+    padding: 20px;
+    font-size: 1.7rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid container */
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+/* About section */
+.container h3:first-child {
+    margin-top: 0;
+}
+
+/* List items */
+.container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.container ul li {
+    margin-bottom: 5px;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background-color: #ccc;
+    margin: 20px 0;
+}
+
+.copyright_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* Copyright and social icons */
+.copyright_container p {
+    margin: 0;
+    
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+}
+
+.social-icons a {
+    margin-right: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.social-icons i {
+    font-size: 18px;
+}

@@ -1,0 +1,70 @@
+
+.card {
+    overflow: hidden;
+    max-width: 370px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.video-thumbnail {
+    position: relative;
+}
+
+.video-thumbnail:hover img {
+    filter: blur(4px);
+    opacity: 0.8;
+}
+
+.video-thumbnail:hover .watch-button {
+    display: block;
+}
+
+.rating-stars {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    color: yellow;
+    z-index: 100;
+}
+
+.heading,
+.description {
+    color: #333;
+}
+
+.description::after {
+    content: "See More";
+    color: blue;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    flex-direction: row;
+}
+
+.user-info svg,
+.duration-info svg {
+    margin-right: 5px;
+}
+
+.view-details-link {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.buy-now-button {
+    float: right;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .card {
+        margin: 10px;
+    }
+}
