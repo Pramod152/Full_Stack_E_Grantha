@@ -1,4 +1,4 @@
-import NavBar from '../../components/NavBar/NavBar_Welcome/NavBar';
+import NavBar from '../../../components/NavBar/NavBar_Welcome/NavBar';
 import React from 'react';
 import './About.css';
 

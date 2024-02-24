@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import "./U_Dashboard.css";
-import Navbar_udashboard from "../../components/NavBar/NavBar_User_Dashboard/Navbar_udashboard";
+import Navbar_udashboard from "../../../components/NavBar/NavBar_User_Dashboard/Navbar_udashboard";
 
 const U_Dashboard = () => {
     const [activeTab, setActiveTab] = useState("firstlist");
