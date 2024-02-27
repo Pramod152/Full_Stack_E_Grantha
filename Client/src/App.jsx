@@ -72,6 +72,8 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AllUsers from "./pages/AdminPage/AllUsers/AllUsers";
+import AdminDashboard from "./pages/AdminPage/AdminDashboard/AdminDashboard";
+import Allcourses from "./pages/AdminPage/AllCourses/Allcourses";
 
 function App() {
   return (
@@ -79,6 +81,15 @@ function App() {
       <Routes>
         {/* Other routes */}
         <Route path="/E-Grantha/admin/allUser" element={<AllUsers />} />
+        <Route path="/E-Grantha/dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/E-Grantha/dashboard/Allcourses"
+          element={<Allcourses />}
+        />
+        <Route
+          path="/E-Grantha/dashboard/Allcourses"
+          element={<AdminDashboard />}
+        />
       </Routes>
     </Router>
   );

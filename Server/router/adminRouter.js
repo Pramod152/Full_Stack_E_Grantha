@@ -5,7 +5,7 @@ const multer = require("multer");
 const uploadCourse = multer();
 // const auth = require("../auth/userAuth");
 
-// adminRouter.route("/").get(adminController.dashboard);
+adminRouter.route("/").get(adminController.dashboard);
 adminRouter.route("/allUser").get(adminController.allUser);
 adminRouter.route("/course").get(adminController.courses);
 

@@ -21,10 +21,10 @@ const videoSchema = new mongoose.Schema({
     type: String, // Store the Google Drive file ID here
     required: true,
   },
-  // driveWebViewLink: {
-  //   type: String, // Store the Google Drive web view link here
-  //   required: true,
-  // },
+  driveWebViewLink: {
+    type: String, // Store the Google Drive web view link here
+    required: true,
+  },
 });
 
 const Video = mongoose.model("Video", videoSchema);

@@ -105,6 +105,7 @@ exports.uploadCourse = async (req, res) => {
 
     // Extract the driveFileId from the response
     const driveFileId = driveResponse.data.id;
+    const driveWebViewLink = driveResponse.data.webViewLink;
 
     console.log("Video uploaded to Google Drive:", driveResponse.data);
 
@@ -115,6 +116,7 @@ exports.uploadCourse = async (req, res) => {
       description: description,
       fileData: fileData.buffer, // Assuming fileData is a Buffer containing the file content
       driveFileId: driveFileId, // Use the obtained driveFileId
+      driveWebViewLink: driveWebViewLink, // Use the obtained driveWebViewLink
     });
 
     // Save the video document to the database
@@ -135,6 +137,70 @@ exports.uploadCourse = async (req, res) => {
   }
 };
 
+// ---------------------------------------------------------------//
+// ---------------------------------------------------------------//
+////------------------------ upload video to google drive ------------------------////
+exports.uploadCourse = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const fileData = req.file;
+
+    // Upload file to Google Drive
+    const driveResponse = await drive.files.create({
+      requestBody: {
+        name: title, // Use the title as the file name
+        mimeType: "video/mp4", // Use the provided file type
+        parents: ["1vR7FUcu_0rSnuCjv8EKZZU6iYqpUKMXo"], // Use the appropriate folder ID
+      },
+      media: {
+        mimeType: "video/mp4",
+        body: Readable.from(fileData.buffer),
+      },
+    });
+
+    // Extract the driveFileId from the response
+    const driveFileId = driveResponse.data.id;
+
+    // Get the file metadata, which includes the web view link
+    const file = await drive.files.get({
+      fileId: driveFileId,
+      fields: "webViewLink",
+    });
+
+    const driveWebViewLink = file.data.webViewLink;
+
+    console.log("Video uploaded to Google Drive:", driveResponse.data);
+
+    // Create a new Video document with the obtained driveFileId
+    const newVideo = new Video({
+      fileType: "video/mp4", // Adjust as needed
+      title: title,
+      description: description,
+      fileData: fileData.buffer, // Assuming fileData is a Buffer containing the file content
+      driveFileId: driveFileId, // Use the obtained driveFileId
+      driveWebViewLink: driveWebViewLink, // Use the obtained driveWebViewLink
+    });
+
+    // Save the video document to the database
+    await newVideo.save();
+
+    res.status(200).json({
+      status: "ok",
+      message: "Video uploaded successfully",
+      data: newVideo,
+    });
+  } catch (error) {
+    console.error("Error uploading video:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to upload video",
+      error: error.message,
+    });
+  }
+};
+// ---------------------------------------------------------------//
+// ---------------------------------------------------------------//
+
 ////------------------------ get all courses courses------------------------////
 exports.courses = async (req, res) => {
   const courses = await Video.find();
@@ -143,6 +209,43 @@ exports.courses = async (req, res) => {
       status: "ok",
       message: courses,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.courses = async (req, res) => {
+  try {
+    const videos = await Video.find();
+    const videoData = [];
+
+    for (const video of videos) {
+      const driveResponse = await drive.files.get(
+        {
+          fileId: video.driveFileId,
+          alt: "media",
+        },
+        { responseType: "stream" }
+      );
+
+      const videoDetails = {
+        title: video.title,
+        description: video.description,
+        // Add other video details as needed
+      };
+      // Set appropriate headers for the response
+      // res.set("Content-Type", video.fileType);
+      // res.set("Content-Disposition", `inline; filename="${video.title}"`);
+      // Pipe the file content directly to the response
+      // driveResponse.data.pipe(res);
+
+      videoData.push({
+        videoDetails,
+        videoContent: driveResponse.data,
+      });
+    }
+
+    res.status(200).json({ status: "ok", data: videoData });
   } catch (err) {
     console.log(err);
   }
