@@ -2,35 +2,54 @@ import React, { useEffect } from 'react';
 import './Login_SignUp.css';
 
 const login = () => {
-  useEffect(() => {
-    const loginScript = () => {
-      const loginText = document.querySelector(".title-text .login");
-      const loginForm = document.querySelector("form.login");
-      const loginBtn = document.querySelector("label.login");
-      const signupBtn = document.querySelector("label.signup");
-      const signupLink = document.querySelector("form .signup-link a");
 
-      signupBtn.addEventListener("click", () => {
-        loginForm.style.marginLeft = "-50%";
-        loginText.style.marginLeft = "-50%";
-        signupBtn.click(); // Manually trigger the click event
+  const loginData = fetch('http://localhost:3000/E-Grantha/admin/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: 'pramod@gmail.com',
+      password: 'pramod@123'
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+    
+  // useEffect(() => {
+    // const loginScript = () => {
+    //   const loginText = document.querySelector(".title-text .login");
+    //   const loginForm = document.querySelector("form.login");
+    //   const loginBtn = document.querySelector("label.login");
+    //   const signupBtn = document.querySelector("label.signup");
+    //   const signupLink = document.querySelector("form .signup-link a");
+
+    //   signupBtn.addEventListener("click", () => {
+    //     loginForm.style.marginLeft = "-50%";
+    //     loginText.style.marginLeft = "-50%";
+    //     signupBtn.click(); // Manually trigger the click event
         
-      });
+    //   });
 
-      loginBtn.addEventListener("click", () => {
-        loginForm.style.marginLeft = "0%";
-        loginText.style.marginLeft = "0%";
-      });
+    //   loginBtn.addEventListener("click", () => {
+    //     loginForm.style.marginLeft = "0%";
+    //     loginText.style.marginLeft = "0%";
+    //   });
 
-      signupLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        signupBtn.click();
-        return false;
-      });
-    };
+    //   signupLink.addEventListener("click", (e) => {
+    //     e.preventDefault();
+    //     signupBtn.click();
+    //     return false;
+    //   });
+    // };
 
-    loginScript();
-  }, []);
+    // loginScript();
+  // }, []);
 
   return (
     <>

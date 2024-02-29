@@ -2,121 +2,44 @@ const express = require("express");
 const adminController = express();
 const User = require("../model/user");
 const cookieParser = require("cookie-parser");
-const { google } = require("googleapis");
+const cloudflare = require("cloudflare");
 const Video = require("../model/video");
 const { Readable } = require("stream");
 
-// const path = require("path");
-// const fs = require("fs");
-// const fs = require("fs");
-// const { drive } = require("googleapis");
 adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
 
-////------------------------get dashboard------------------------////
-exports.dashboard = async (req, res) => {
-  try {
-    res.status(200).json({
-      status: "ok",
-      message: "dashboard",
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-///////-----------------drive information to upload file-----------------/////
-
-const CLIENT_ID =
-  "607703662588-0vc7r41ofmpebbkr3ubhimpmos6fkffm.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-
-const REFRESH_TOKEN =
-  "1//044CdfKXs5T6rCgYIARAAGAQSNwF-L9IrpJCbH7cUDU5rLApF3oTebfG5Khf9_kqx9P5K2MZAGXui8mZ41JdiYrGdLsGeSLAhDLY";
-
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-
-oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-const drive = google.drive({
-  version: "v3",
-  auth: oauth2Client,
+// Initialize Cloudflare
+const cf = cloudflare({
+  token: "pkSKCId5YCoRg7w8sKO_CSJCt8nqVBZYVDWcuuwG", // Your Cloudflare API token
 });
 
-//////////////////////////////////////////////////////////////////////////////////////
-// --------------------crud operation for videos in admin panel-----------------------
-//////////////////////////////////////////////////////////////////////////////////////
+// CRUD operations for videos in the admin panel
 
-///////-----------------!!!!!!!!!!!!!!!-----------------/////
-////------------------------ delete user ------------------------////
-exports.deleteUser = async (req, res) => {
-  try {
-    const data = await User.findByIdAndDelete(req.params.userId);
-    res.status(200).json({
-      status: "ok",
-      data: data,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-////------------------------ get all user ------------------------////
-exports.allUser = async (req, res) => {
-  try {
-    const data = await User.find();
-    res.status(200).json({
-      status: "ok",
-      data: data,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-//////////////////////////////////////////////////////////////////////////////////////
-// --------------------crud operation for videos in admin panel-----------------------
-//////////////////////////////////////////////////////////////////////////////////////
-
-////------------------------ upload video to google drive ------------------------////
+// Upload video to Cloudflare Stream
 exports.uploadCourse = async (req, res) => {
   try {
     const { title, description } = req.body;
     const fileData = req.file;
 
-    // Upload file to Google Drive
-    const driveResponse = await drive.files.create({
-      requestBody: {
-        name: title, // Use the title as the file name
-        mimeType: "video/mp4", // Use the provided file type
-        parents: ["1vR7FUcu_0rSnuCjv8EKZZU6iYqpUKMXo"], // Use the appropriate folder ID
-      },
-      media: {
-        mimeType: "video/mp4",
-        body: Readable.from(fileData.buffer),
-      },
+    // Upload file to Cloudflare Stream
+    const streamResponse = await cf.stream.upload({
+      title: title,
+      description: description,
+      file: fileData.buffer, // Assuming fileData is a Buffer containing the file content
+      type: "video/mp4", // Adjust as needed
     });
 
-    // Extract the driveFileId from the response
-    const driveFileId = driveResponse.data.id;
-    const driveWebViewLink = driveResponse.data.webViewLink;
+    console.log("Video uploaded to Cloudflare Stream:", streamResponse);
 
-    console.log("Video uploaded to Google Drive:", driveResponse.data);
-
-    // Create a new Video document with the obtained driveFileId
+    // Create a new Video document
     const newVideo = new Video({
       fileType: "video/mp4", // Adjust as needed
       title: title,
       description: description,
-      fileData: fileData.buffer, // Assuming fileData is a Buffer containing the file content
-      driveFileId: driveFileId, // Use the obtained driveFileId
-      driveWebViewLink: driveWebViewLink, // Use the obtained driveWebViewLink
+      driveFileId: streamResponse.result.uid, // Use the obtained UID
+      // Optionally, you can store other information like web view link, etc.
     });
 
     // Save the video document to the database
@@ -137,156 +60,63 @@ exports.uploadCourse = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------//
-// ---------------------------------------------------------------//
-////------------------------ upload video to google drive ------------------------////
-exports.uploadCourse = async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const fileData = req.file;
-
-    // Upload file to Google Drive
-    const driveResponse = await drive.files.create({
-      requestBody: {
-        name: title, // Use the title as the file name
-        mimeType: "video/mp4", // Use the provided file type
-        parents: ["1vR7FUcu_0rSnuCjv8EKZZU6iYqpUKMXo"], // Use the appropriate folder ID
-      },
-      media: {
-        mimeType: "video/mp4",
-        body: Readable.from(fileData.buffer),
-      },
-    });
-
-    // Extract the driveFileId from the response
-    const driveFileId = driveResponse.data.id;
-
-    // Get the file metadata, which includes the web view link
-    const file = await drive.files.get({
-      fileId: driveFileId,
-      fields: "webViewLink",
-    });
-
-    const driveWebViewLink = file.data.webViewLink;
-
-    console.log("Video uploaded to Google Drive:", driveResponse.data);
-
-    // Create a new Video document with the obtained driveFileId
-    const newVideo = new Video({
-      fileType: "video/mp4", // Adjust as needed
-      title: title,
-      description: description,
-      fileData: fileData.buffer, // Assuming fileData is a Buffer containing the file content
-      driveFileId: driveFileId, // Use the obtained driveFileId
-      driveWebViewLink: driveWebViewLink, // Use the obtained driveWebViewLink
-    });
-
-    // Save the video document to the database
-    await newVideo.save();
-
-    res.status(200).json({
-      status: "ok",
-      message: "Video uploaded successfully",
-      data: newVideo,
-    });
-  } catch (error) {
-    console.error("Error uploading video:", error);
-    res.status(500).json({
-      status: "error",
-      message: "Failed to upload video",
-      error: error.message,
-    });
-  }
-};
-// ---------------------------------------------------------------//
-// ---------------------------------------------------------------//
-
-////------------------------ get all courses courses------------------------////
-exports.courses = async (req, res) => {
-  const courses = await Video.find();
-  try {
-    res.status(200).json({
-      status: "ok",
-      message: courses,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
+// Get all courses
 exports.courses = async (req, res) => {
   try {
     const videos = await Video.find();
-    const videoData = [];
 
+    // Prepare response data
+    const responseData = [];
+
+    // Retrieve videos from Cloudflare Stream
     for (const video of videos) {
-      const driveResponse = await drive.files.get(
-        {
-          fileId: video.driveFileId,
-          alt: "media",
-        },
-        { responseType: "stream" }
-      );
-
-      const videoDetails = {
-        title: video.title,
-        description: video.description,
-        // Add other video details as needed
-      };
-      // Set appropriate headers for the response
-      // res.set("Content-Type", video.fileType);
-      // res.set("Content-Disposition", `inline; filename="${video.title}"`);
-      // Pipe the file content directly to the response
-      // driveResponse.data.pipe(res);
-
-      videoData.push({
-        videoDetails,
-        videoContent: driveResponse.data,
-      });
+      const streamResponse = await cf.stream.get(video.driveFileId);
+      responseData.push(streamResponse);
     }
 
-    res.status(200).json({ status: "ok", data: videoData });
-  } catch (err) {
-    console.log(err);
+    // Send response
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
-// ////------------------------ edit video content------------------------////
+// Edit video content
 exports.updateCourse = async (req, res) => {
   const videoId = req.params.videoId;
   const { title, description } = req.body;
   try {
     console.log(videoId);
-    const document = await Video.findOneAndUpdate(
-      { driveFileId: videoId },
-      { title: title, description: description },
-      { new: true }
-    );
-    // console.log(document);
-    // console.log(title, description);
+    // Update video metadata in Cloudflare Stream
+    const streamResponse = await cf.stream.update(videoId, {
+      title: title,
+      description: description,
+    });
+    console.log("Stream updated:", streamResponse);
+
     res.status(200).json({ message: "Course updated successfully" });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error("Error updating video:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
 
-// ////------------------------ delete video ------------------------////
+// Delete video
 exports.deleteCourse = async (req, res) => {
   try {
     const videoId = req.params.videoId;
     console.log(videoId);
-    // delete video from database
-    await Video.deleteOne({ driveFileId: videoId });
-    // delete video from google drive
-    const response = await drive.files.delete({
-      fileId: videoId,
-    });
+    // Delete video from Cloudflare Stream
+    const streamResponse = await cf.stream.delete(videoId);
+    console.log("Stream deleted:", streamResponse);
 
-    console.log(response.data, response.status);
+    // Delete video from the database
+    await Video.deleteOne({ driveFileId: videoId });
+
     res.status(200).json({ message: "Course deleted successfully" });
   } catch (error) {
-    console.log(error);
+    console.error("Error deleting video:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

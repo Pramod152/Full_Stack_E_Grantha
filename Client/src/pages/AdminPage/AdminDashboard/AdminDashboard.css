@@ -1,0 +1,144 @@
+.admin-page {
+    background-color: #611818;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+.admin-page .overlap {
+    background-color: #d7d7d7;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 396px;
+}
+
+.admin-page .overlap_group {
+    display: flex;
+    background-color: #c70f0f;
+    padding: 46px 25px 38px 54px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-page .group {
+    height: 48px;
+    left: 317px;
+    position: absolute;
+    top: 42px;
+    width: 27px;
+}
+
+.admin-page .nav-items {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 62px;
+    height: 308px;
+    justify-content: center;
+    left: 43px;
+    position: absolute;
+    top: 187px;
+}
+
+.admin-page .div-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 27px;
+    position: relative;
+}
+
+.admin-page .img {
+    height: 55px;
+    margin-bottom: -0.5px;
+    margin-left: -2.5px;
+    margin-top: -2.5px;
+    position: relative;
+    width: 55px;
+}
+
+.admin-page .text-wrapper {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 43px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+}
+
+.admin-page .content-wrapper {
+    background-color: #b5b5b5;
+    height: auto;
+    left: 396px;
+    position: absolute;
+    top: 133px;
+    width: 1524px;
+}
+
+.admin-page .dashboard-text-wrapper {
+    background-color: #524fe9;
+    height: 133px;
+    left: 396px;
+    position: absolute;
+    top: 0;
+    width: 1524px;
+}
+
+.admin-page .dashboard-text {
+    color: #dedede;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 43px;
+    font-weight: 400;
+    left: 40px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 39px;
+}
+
+.admin-page .section1 {
+    /* Styles for section 1 */
+    height: 20%;
+}
+
+.admin-page .section2 {
+    /* Styles for section 2 */
+    height: 30%;
+}
+
+.admin-page .section3 {
+    /* Styles for section 3 */
+    height: 25%;
+}
+
+.admin-page .section4 {
+    /* Styles for section 4 */
+    height: 25%;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+    .admin-page {
+        flex-direction: column;
+    }
+
+    .admin-page .overlap {
+        width: 100%;
+    }
+
+    .admin-page .content-wrapper {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-page .dashboard-text-wrapper {
+        left: 0;
+        width: 100%;
+    }
+}

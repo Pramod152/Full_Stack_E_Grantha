@@ -74,22 +74,36 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AllUsers from "./pages/AdminPage/AllUsers/AllUsers";
 import AdminDashboard from "./pages/AdminPage/AdminDashboard/AdminDashboard";
 import Allcourses from "./pages/AdminPage/AllCourses/Allcourses";
+import AccountProfileDetails from './pages/AdminPage/AdminDashboard/Account';
+import CustomersTable from "./pages/AdminPage/AdminDashboard/Customer_Table";
+import AdminPanel from "./pages/Admin/AdminPanel";
 
 function App() {
   return (
+    // <Router>
+    //   <Routes>
+    //     {/* Other routes */}
+    //     {/* <Route path="/E-Grantha/admin/allUser" element={<AllUsers />} />
+    //     <Route path="/dashboard" element={<AdminDashboard />} />
+    //     <Route
+    //       path="/E-Grantha/dashboard/Allcourses"
+    //       element={<Allcourses />}
+    //     /> */}
+    //     {/* <Route
+    //       path="/E-Grantha/dashboard/Allcourses"
+    //       element={<AdminDashboard />}
+    //     /> */}
+    //     <Route
+    //       path="/E-Grantha/admin"
+    //       element={<AccountProfileDetails />}>
+    //       </Route>
+    //       <Route path="/E-Grantha/customer" element={<CustomersTable />} > </Route>
+    //   </Routes>
+    // </Router>
+     
     <Router>
       <Routes>
-        {/* Other routes */}
-        <Route path="/E-Grantha/admin/allUser" element={<AllUsers />} />
-        <Route path="/E-Grantha/dashboard" element={<AdminDashboard />} />
-        <Route
-          path="/E-Grantha/dashboard/Allcourses"
-          element={<Allcourses />}
-        />
-        <Route
-          path="/E-Grantha/dashboard/Allcourses"
-          element={<AdminDashboard />}
-        />
+        <Route path="/admin" element={<AdminPanel />}></Route>
       </Routes>
     </Router>
   );
