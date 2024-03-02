@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Allcourses = () => {
-  return (
-    <>
-      
-    </>
-  );
-}
+  return <>All courses</>;
+};
 
 export default Allcourses;

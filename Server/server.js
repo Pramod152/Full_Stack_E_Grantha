@@ -13,9 +13,3 @@ mongoose.connect("mongodb://127.0.0.1:27017/E-Grantha").then(() => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-
-// const driveUpload = require("./driveUpload");
-
-// driveUpload.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
