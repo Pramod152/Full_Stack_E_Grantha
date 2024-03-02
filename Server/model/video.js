@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 
 const videoSchema = new mongoose.Schema({
   fileType: {
-    type: String, // Assuming Video is a string representing the file type
+    type: String,
     required: true,
+    default: "video",
   },
   title: {
     type: String,
@@ -17,13 +18,18 @@ const videoSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  driveFileId: {
-    type: String, // Store the Google Drive file ID here
+  videoId: {
+    type: String,
     required: true,
   },
-  driveWebViewLink: {
-    type: String, // Store the Google Drive web view link here
+  videoLink: {
+    type: String,
     required: true,
+  },
+  categoryId: {
+    type: String,
+    required: true,
+    default: "Education",
   },
 });
 
