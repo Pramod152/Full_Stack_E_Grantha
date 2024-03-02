@@ -32,7 +32,6 @@ const DashboardLayout = () => {
           <MenuItem src="https://cdn.builder.io/api/v1/image/assets/TEMP/a9e8489f9653029cbfdf175ea0089d57d43f0685d62d58eee10fb58a1d23ce08?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" text="Register" />
           <MenuItem src="https://cdn.builder.io/api/v1/image/assets/TEMP/2ef80d62a55fe827c468a59cae2293c52e0128a6b82830cfeef84bffebaf31f0?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" text="Error" />
         </Navigation>
-        
       </Sidebar>
     </MainContainer>
   );

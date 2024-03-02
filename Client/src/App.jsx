@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/UserPage/HomePage/HomePage";
 import AboutPage from "./pages/UserPage/AboutPage/About";
@@ -6,111 +6,93 @@ import CoursesPage from "./pages/UserPage/CoursePage/Course";
 import ContactPage from "./pages//UserPage/ContactPage/Contact";
 import U_Dashboard from "./pages/UserPage/UserDashboardPage/U_Dashboard";
 import Registration from "./pages//UserPage/RegistrationPage/Registration";
-
+import DashboardLayout from "./AdminPanel/DashboardLayout";
+import AllCourses from "./pages/AdminPage/AllCourses/Allcourses";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/course" element={<CoursesPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/login" element={<Registration />} />
-        <Route path="/udashboard" element={<U_Dashboard />} />
+      // Routes for User
+        <Route path="/E-Grantha/" element={<HomePage />} />
+        <Route path="/E-Grantha/about" element={<AboutPage />} />
+        <Route path="/E-Grantha/course" element={<CoursesPage />} />
+        <Route path="/E-Grantha/contact" element={<ContactPage />} />
+        <Route path="/E-Grantha/login" element={<Registration />} />
+        // Routes for User Dashboard
+        <Route path="/E-Grantha/udashboard" element={<U_Dashboard />} />
+        // Routes for Admin
+        <Route path="/E-Grantha/admin" element={<DashboardLayout />} />
+        <Route path="/E-Grantha/allcourses" element={<AllCourses />} />
       </Routes>
     </Router>
   );
 };
 
-// export default App;
-
-//////////////////////////////--------------------/////////////////////////////
-// import React from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import AdminDashboard from "./pages/AdminPage/AdminDashboard";
-// import AllUsers from "./pages/AdminPage/AllUsers";
-// import CourseManagement from "./pages/AdminPage/CourseManagement";
-// import UploadCourse from "./pages/AdminPage/UploadCourse";
-// import DeleteCourse from "./pages/AdminPage/DeleteCourse";
-// import UpdateCourse from "./pages/AdminPage/UpdateCourse";
-// import DeleteUser from "./pages/AdminPage/DeleteUser";
-// import AllUsers from "./pages/AdminPage/AllUsers/AllUsers";
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-// {
-  /* <Route exact path="/E-Grantha/admin" component={AdminDashboard} /> */
-// }
-// {
-  /* <Route path="/E-Grantha/admin/allUser/" component={AllUsers} /> */
-// }
-// {
-  /* <Route path="/E-Grantha/admin/course" component={CourseManagement} />
-        <Route path="/E-Grantha/admin/uploadCourse" component={UploadCourse} />
-        <Route
-          path="/E-Grantha/admin/deleteCourse/:courseId"
-          component={DeleteCourse}
-        />
-        <Route
-          path="/E-Grantha/admin/updateCourse/:courseId"
-          component={UpdateCourse}
-        />
-        <Route
-          path="/E-Grantha/admin/deleteUser/:userId"
-          component={DeleteUser}
-        /> */
-// }
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
-
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// // import AllUsers from "./pages/AdminPage/AllUsers/AllUsers";
-// // import AdminDashboard from "./pages/AdminPage/AdminDashboard/AdminDashboard";
-// // import Allcourses from "./pages/AdminPage/AllCourses/Allcourses";
-// // import AccountProfileDetails from './pages/AdminPage/AdminDashboard/Account';
-// // import CustomersTable from "./pages/AdminPage/AdminDashboard/Customer_Table";
-// // import AdminPanel from "./pages/Admin/AdminPanel";
-// import NavigationBar from "./AdminPanel/NavigationBar";
-// import Dashboard from "./AdminPanel/Side_Nav";
-// import DashboardLayout from "./AdminPanel/DashboardLayout";
-
-// function App() {
-//   return (
-//     // <Router>
-//     //   <Routes>
-//     //     {/* Other routes */}
-//     //     {/* <Route path="/E-Grantha/admin/allUser" element={<AllUsers />} />
-//     //     <Route path="/dashboard" element={<AdminDashboard />} />
-//     //     <Route
-//     //       path="/E-Grantha/dashboard/Allcourses"
-//     //       element={<Allcourses />}
-//     //     /> */}
-//     //     {/* <Route
-//     //       path="/E-Grantha/dashboard/Allcourses"
-//     //       element={<AdminDashboard />}
-//     //     /> */}
-//     //     <Route
-//     //       path="/E-Grantha/admin"
-//     //       element={<AccountProfileDetails />}>
-//     //       </Route>
-//     //       <Route path="/E-Grantha/customer" element={<CustomersTable />} > </Route>
-//     //   </Routes>
-//     // </Router>
-     
-//     <Router>
-//       <Routes>
-//         {/* <Route path="/admin" element={<AdminPanel />}></Route> */}
-//         {/* <Route path="/admin" element={<NavigationBar />}></Route> */}
-//         <Route path="/admin" element={<DashboardLayout />}></Route>
-//       </Routes>
-//     </Router>
-//   );
-// }
-
 export default App;
+
+//Admin Panel Features
+//There should be one main Page (Main Dashboard) 
+// First -> TopBar left most side ma logo and right most side ma user profile
+// Second -> SideBar ma menu items (Dashboard, Users, Courses, LogOut)
+// Third -> Main Content ma Dashboard, Users, Courses, LogOut pages chai dynamically view huna paryo
+// Fourth -> Footer ma company name and copy right year
+{/* <div className="adminpanel">
+  <div className="sidenav">
+    <ul>
+      <li>Account</li>
+      <li>Customer</li>
+      <li>Conatct</li>
+    </ul>
+  </div>
+  <div className="main">
+    <div className="topbar"></div>
+    {<div className="custoemmr"></div>}
+  </div>
+</div> */}
+
+//AdminPage
+// -> Component
+// ----> SideNav
+// ----> TopBar
+// ----> Profile Content
+// ----> Users Content
+// ----> Courses Content
+// ----> Dashboard Content
+// ----> Footer
+// -> Pages
+// ----> MainDashboard
+// ----> Login
+
+//If Logged Out show Login Page
+
+//UserPage
+// -> Component
+// ---> NavBar
+// ---> LoginForm
+// ---> RegistrationForm
+// ---> CourseCard
+// ---> CourseDetail
+// ---> Footer
+// ---> Dynamic Button
+// ---> Avatar
+// ---> CourseRenderingContainer
+// ---> CourseDetailComponent
+// ---> DispalyRecommendedCourses (Course Card kai thau ma Recommened Course Display Garauney only top 4 Courses)
+// 
+// -> Pages
+//Without Registering user can view only HomePage, AboutPage, CoursePage, ContactPage
+// ----> HomePage
+// ----> AboutPage
+// ----> CoursePage
+// -------> View Detail of video ma thichyo vaney tyo course ko detail page jana paryo
+// ----> CourseDetailPage
+// ----> ContactPage
+// ----> LoginPage/RegisterPage
+// After Registering user can view UserDashboardPage
+// -------> UserDashboardPage
+// -------> View ProfilePage
+// -------> View CoursesPage
+// -------> View SubscribedCoursesPage
+// -------> CourseDetailPage (Add subscribe garney button to subscribe that aprticular course)
+
+

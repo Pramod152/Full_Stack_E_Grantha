@@ -8,16 +8,7 @@ const Dashboard = () => {
         <Logo src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d4bd99f1d7245ff8c7e2426a0aceac4e3f9a9651b12275b018016e8c02d52ec?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" alt="Company logo" />
         <PlanBadge>Free</PlanBadge>
       </Header>
-      <UserInfoSection>
-        <UserInfo>
-          <CompanyName>Acme Inc</CompanyName>
-          <UserTier>
-            <span>Your tier:</span> Premium
-          </UserTier>
-        </UserInfo>
-        <UserAvatar src="https://cdn.builder.io/api/v1/image/assets/TEMP/d36bbc7501504c9dfede3c194c0bbb8e4b11203094da5493a32cac2cf09e5ada?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" alt="User avatar" />
-      </UserInfoSection>
-      <Separator />
+      
       
       <Nav>
         <MenuItem icon="https://cdn.builder.io/api/v1/image/assets%2FTEMP%2F427cd8eeaf494cde7505077f78d47010" title="Dashboard" />
@@ -30,16 +21,7 @@ const Dashboard = () => {
         <MenuItem icon="https://cdn.builder.io/api/v1/image/assets%2FTEMP%2F9b00efd96d60930bb9bec844be27ce32" title="Error" />
       </Nav>
       
-      <Separator />
-      <PromotionSection>
-        <PromotionTitle>Need more features?</PromotionTitle>
-        <PromotionSubTitle>Check out our Pro solution template.</PromotionSubTitle>
-        <ProPreviewImg src="https://cdn.builder.io/api/v1/image/assets/TEMP/427cd8eeaf494cde7505077f78d47010ba94b3f68de8920b022576bd7b395159?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" alt="Pro solution preview" />
-        <PreviewButton>
-          Pro Live Preview
-          <ButtonIcon src="https://cdn.builder.io/api/v1/image/assets/TEMP/df930564148632234419016a7cd773cb2eeae2426ebc6627583b9be320b10218?apiKey=3c83b42fd7b3487a8f5a88c785600e26&" alt="" />
-        </PreviewButton>
-      </PromotionSection>
+      
     </DashboardWrapper>
   );
 };
