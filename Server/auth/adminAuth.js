@@ -1,13 +1,44 @@
-// Middleware function to authenticate admin
-const adminAuthMiddleware = (req, res, next) => {
-  // Check if user is authenticated and is an admin
-  if (req.user.isAdmin === true) {
-    // User is authenticated and is an admin, proceed to the next middleware or route handler
+const jwt = require("jsonwebtoken");
+const User = require("../model/user");
+
+const adminAuth = async (req, res, next) => {
+  try {
+    // Ensure that req.cookies is defined before accessing req.cookies.jwt
+    const token = req.cookies && req.cookies.jwt;
+
+    if (!token) {
+      throw new Error("No JWT cookie found");
+      cd;
+    }
+
+    const verifyUser = jwt.verify(token, "mynameisrajeshrajpandey");
+
+    if (!verifyUser) {
+      throw new Error("Token verification failed");
+    }
+
+    const user = await User.findOne({ _id: verifyUser._id });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    req.token = token;
+    req.user = user;
+
+    if (!user.isAdmin) {
+      throw new Error("User is not authorized as admin");
+    }
+
     next();
-  } else {
-    // User is not authenticated or is not an admin, send an error response
-    res.status(401).json({ error: "Unauthorized" });
+  } catch (err) {
+    console.error("Authentication Error:", err);
+    res.status(401).json({
+      status: "fail",
+      message: "Unauthorized",
+      error: err.message, // Include the error message for debugging
+    });
   }
 };
 
-module.exports = adminAuthMiddleware;
+module.exports = adminAuth;
