@@ -8,6 +8,7 @@ import U_Dashboard from "./pages/UserPage/UserDashboardPage/U_Dashboard";
 import Registration from "./pages//UserPage/RegistrationPage/Registration";
 import DashboardLayout from "./AdminPanel/DashboardLayout";
 import AllCourses from "./pages/AdminPage/AllCourses/Allcourses";
+import AddCourses from "./pages/AdminPage/AllCourses/AddCourses"
 const App = () => {
   return (
     <Router>
@@ -23,6 +24,7 @@ const App = () => {
         // Routes for Admin
         <Route path="/E-Grantha/admin" element={<DashboardLayout />} />
         <Route path="/E-Grantha/allcourses" element={<AllCourses />} />
+        <Route path="/E-Grantha/addcourses" element={<AddCourses />} />
       </Routes>
     </Router>
   );
