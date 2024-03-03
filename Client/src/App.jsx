@@ -32,10 +32,7 @@ const App = () => {
         <Route path="/E-Grantha/sidenav" element={<SideNav />} />
         <Route path="/E-Grantha/topbar" element={<TopBar />} />
         <Route path="/E-Grantha/addcourses" element={<AddCourses />} />
-        <Route
-          path="/E-Grantha/maindashboard"
-          element={<MainDashboard />}
-        />{" "}
+        <Route path="/E-Grantha/maindashboard" element={<MainDashboard />} />
         //new main dashboard //new main dashboard
       </Routes>
     </Router>
