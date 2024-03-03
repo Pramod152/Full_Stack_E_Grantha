@@ -6,6 +6,8 @@ import CoursesPage from "./pages/UserPage/CoursePage/Course";
 import ContactPage from "./pages//UserPage/ContactPage/Contact";
 import U_Dashboard from "./pages/UserPage/UserDashboardPage/U_Dashboard";
 import Registration from "./pages//UserPage/RegistrationPage/Registration";
+import SideNav from "./NewDesign/AdminPage/Component/SideNav";
+import TopBar from "./NewDesign/AdminPage/Component/TopBar";
 import DashboardLayout from "./AdminPanel/DashboardLayout";
 import AllCourses from "./pages/AdminPage/AllCourses/Allcourses";
 import AddCourses from "./pages/AdminPage/AllCourses/AddCourses";
@@ -20,11 +22,15 @@ const App = () => {
         <Route path="/E-Grantha/course" element={<CoursesPage />} />
         <Route path="/E-Grantha/contact" element={<ContactPage />} />
         <Route path="/E-Grantha/login" element={<Registration />} />
+        {/* <Route path="/E-Grantha/coursedetail" element={<CourseDetail />} /> //Still Not Implemented */}
         // Routes for User Dashboard
         <Route path="/E-Grantha/udashboard" element={<U_Dashboard />} />
         // Routes for Admin
-        <Route path="/E-Grantha/admin" element={<DashboardLayout />} />
+        {/* <Route path="/E-Grantha/admin" element={<DashboardLayout />} />
         <Route path="/E-Grantha/allcourses" element={<AllCourses />} />
+        <Route path="/E-Grantha/addcourses" element={<AddCourses />} /> */}
+        <Route path="/E-Grantha/sidenav" element={<SideNav />} />
+        <Route path="/E-Grantha/topbar" element={<TopBar />} />
         <Route path="/E-Grantha/addcourses" element={<AddCourses />} />
         <Route
           path="/E-Grantha/maindashboard"
