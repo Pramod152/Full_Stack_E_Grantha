@@ -8,12 +8,13 @@ import U_Dashboard from "./pages/UserPage/UserDashboardPage/U_Dashboard";
 import Registration from "./pages//UserPage/RegistrationPage/Registration";
 import DashboardLayout from "./AdminPanel/DashboardLayout";
 import AllCourses from "./pages/AdminPage/AllCourses/Allcourses";
-import AddCourses from "./pages/AdminPage/AllCourses/AddCourses"
+import AddCourses from "./pages/AdminPage/AllCourses/AddCourses";
+import MainDashboard from "./NewDesign/AdminPage/Pages/MainDashboard"; //new main dashboard
 const App = () => {
   return (
     <Router>
       <Routes>
-      // Routes for User
+        // Routes for User
         <Route path="/E-Grantha/" element={<HomePage />} />
         <Route path="/E-Grantha/about" element={<AboutPage />} />
         <Route path="/E-Grantha/course" element={<CoursesPage />} />
@@ -25,6 +26,11 @@ const App = () => {
         <Route path="/E-Grantha/admin" element={<DashboardLayout />} />
         <Route path="/E-Grantha/allcourses" element={<AllCourses />} />
         <Route path="/E-Grantha/addcourses" element={<AddCourses />} />
+        <Route
+          path="/E-Grantha/maindashboard"
+          element={<MainDashboard />}
+        />{" "}
+        //new main dashboard //new main dashboard
       </Routes>
     </Router>
   );
@@ -33,12 +39,13 @@ const App = () => {
 export default App;
 
 //Admin Panel Features
-//There should be one main Page (Main Dashboard) 
+//There should be one main Page (Main Dashboard)
 // First -> TopBar left most side ma logo and right most side ma user profile
 // Second -> SideBar ma menu items (Dashboard, Users, Courses, LogOut)
 // Third -> Main Content ma Dashboard, Users, Courses, LogOut pages chai dynamically view huna paryo
 // Fourth -> Footer ma company name and copy right year
-{/* <div className="adminpanel">
+{
+  /* <div className="adminpanel">
   <div className="sidenav">
     <ul>
       <li>Account</li>
@@ -50,7 +57,8 @@ export default App;
     <div className="topbar"></div>
     {<div className="custoemmr"></div>}
   </div>
-</div> */}
+</div> */
+}
 
 //AdminPage
 // -> Component
@@ -80,7 +88,7 @@ export default App;
 // ---> CourseRenderingContainer
 // ---> CourseDetailComponent
 // ---> DispalyRecommendedCourses (Course Card kai thau ma Recommened Course Display Garauney only top 4 Courses)
-// 
+//
 // -> Pages
 //Without Registering user can view only HomePage, AboutPage, CoursePage, ContactPage
 // ----> HomePage
@@ -96,5 +104,3 @@ export default App;
 // -------> View CoursesPage
 // -------> View SubscribedCoursesPage
 // -------> CourseDetailPage (Add subscribe garney button to subscribe that aprticular course)
-
-
