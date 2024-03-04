@@ -1,0 +1,30 @@
+/* UsersTable.css */
+
+.users_table_container {
+    overflow-x: auto; /* Enable horizontal scrolling for the table */
+  }
+  
+  .users_table {
+    width: 100%; /* Table takes up full width of its container */
+    border-collapse: collapse; /* Remove default spacing between table cells */
+  }
+  
+  .users_table th,
+  .users_table td {
+    padding: 8px 12px; /* Add padding to table cells */
+    border: 1px solid #ddd; /* Add border to table cells */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .users_table th {
+    background-color: #f2f2f2; /* Background color for table header */
+  }
+  
+  .users_table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternate row background color */
+  }
+  
+  .users_table tbody tr:hover {
+    background-color: #ddd; /* Hover effect for table rows */
+  }
+  

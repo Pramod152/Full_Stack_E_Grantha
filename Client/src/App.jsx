@@ -11,6 +11,8 @@ import TopBar from './NewDesign/AdminPage/Component/TopBar'
 import DashboardLayout from "./AdminPanel/DashboardLayout";
 import AllCourses from "./pages/AdminPage/AllCourses/Allcourses";
 import AddCourses from "./pages/AdminPage/AllCourses/AddCourses"
+import SearchFilter from "./NewDesign/UserPage/Component/SearchFilter";
+import MainDashboard from './NewDesign/AdminPage/Pages/MainDashboard'
 const App = () => {
   return (
     <Router>
@@ -31,6 +33,10 @@ const App = () => {
         <Route path="/E-Grantha/addcourses" element={<AddCourses />} /> */}
         <Route path="/E-Grantha/sidenav" element={<SideNav />} />
         <Route path="/E-Grantha/topbar" element={<TopBar />} />
+        <Route path="/E-Grantha/search" element={<SearchFilter />} />
+        <Route path="/E-Grantha/dashboard" element={<MainDashboard />} />
+
+        
 
       </Routes>
     </Router>
