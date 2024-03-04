@@ -17,14 +17,13 @@ const App = () => {
   return (
     <Router>
       <Routes>
-      // Routes for User
+        // Routes for User
         <Route path="/E-Grantha/" element={<HomePage />} />
         <Route path="/E-Grantha/about" element={<AboutPage />} />
         <Route path="/E-Grantha/course" element={<CoursesPage />} />
         <Route path="/E-Grantha/contact" element={<ContactPage />} />
         <Route path="/E-Grantha/login" element={<Registration />} />
         {/* <Route path="/E-Grantha/coursedetail" element={<CourseDetail />} /> //Still Not Implemented */}
-
         // Routes for User Dashboard
         <Route path="/E-Grantha/udashboard" element={<U_Dashboard />} />
         // Routes for Admin
@@ -46,12 +45,13 @@ const App = () => {
 export default App;
 
 //Admin Panel Features
-//There should be one main Page (Main Dashboard) 
+//There should be one main Page (Main Dashboard)
 // First -> TopBar left most side ma logo and right most side ma user profile
 // Second -> SideBar ma menu items (Dashboard, Users, Courses, LogOut)
 // Third -> Main Content ma Dashboard, Users, Courses, LogOut pages chai dynamically view huna paryo
 // Fourth -> Footer ma company name and copy right year
-{/* <div className="adminpanel">
+{
+  /* <div className="adminpanel">
   <div className="sidenav">
     <ul>
       <li>Account</li>
@@ -63,7 +63,8 @@ export default App;
     <div className="topbar"></div>
     {<div className="custoemmr"></div>}
   </div>
-</div> */}
+</div> */
+}
 
 //AdminPage
 // -> Component
@@ -93,7 +94,7 @@ export default App;
 // ---> CourseRenderingContainer
 // ---> CourseDetailComponent
 // ---> DispalyRecommendedCourses (Course Card kai thau ma Recommened Course Display Garauney only top 4 Courses)
-// 
+//
 // -> Pages
 //Without Registering user can view only HomePage, AboutPage, CoursePage, ContactPage
 // ----> HomePage
@@ -109,5 +110,3 @@ export default App;
 // -------> View CoursesPage
 // -------> View SubscribedCoursesPage
 // -------> CourseDetailPage (Add subscribe garney button to subscribe that aprticular course)
-
-
