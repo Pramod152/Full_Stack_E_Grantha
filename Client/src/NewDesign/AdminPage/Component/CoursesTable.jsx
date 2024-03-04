@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ComponentCSS/CoursesTable.css'; // Import CSS file for styling
 import EditCourseModal from './EditCourses'; // Import the EditCourseModal component
+import axios from 'axios'; // Import axios for making HTTP requests
 
 const CoursesTable = () => {
     const [selectAll, setSelectAll] = useState(false);
@@ -38,7 +39,7 @@ const CoursesTable = () => {
     }
   };
 
-  //Update the Course Title and Description
+  //Update
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
 
@@ -55,14 +56,13 @@ const CoursesTable = () => {
     // Implement logic to update the course data
     console.log('Updated course:', updatedCourse);
   };
+
+
   // Function to handle deleting a course
-  const handleDeleteCourse = async (videoId) => {
+  const handleDeleteCourse = async (id) => {
     try {
-      
-      const response = fetch(`http://localhost:3000/E-Grantha/admin/deleteCourse/${course.videoId}`, {
-        method: 'DELETE',
-      });
-      if (response.data.success) {
+      const response = await axios.delete(`http://localhost:3000/E-Grantha/admin/deleteCourse/${id}`);
+      if (response && response.data && response.data.success) {
         // Assuming the deletion was successful, you may want to update your local state or fetch courses again from backend
         console.log('Course deleted successfully');
         // Fetch courses data from the backend

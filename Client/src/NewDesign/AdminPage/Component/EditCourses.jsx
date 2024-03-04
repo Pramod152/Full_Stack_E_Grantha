@@ -61,4 +61,4 @@ const EditCourseModal = ({ course, onClose, onUpdate }) => {
   );
 }
 
-export default EditCourseModal; 
+export default EditCourseModal;
