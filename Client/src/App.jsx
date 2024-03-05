@@ -7,6 +7,7 @@ import ContactPage from "./NewDesign/UserPage/Pages/WelcomeUser/Contact";
 import SearchFilter from "./NewDesign/UserPage/Component/SearchFilter";
 import MainDashboard from './NewDesign/AdminPage/Pages/MainDashboard'
 import UserDashboardPage from './NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage'
+import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserRegistrationPage";
 const App = () => {
   return (
     <Router>
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/E-Grantha/about" element={<AboutPage />} />
         <Route path="/E-Grantha/course" element={<CoursesPage />} />
         <Route path="/E-Grantha/contact" element={<ContactPage />} />
-        <Route path="/E-Grantha/register" element={<Registration />} />
+        <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
         {/* <Route path="/E-Grantha/coursedetail" element={<CourseDetail />} /> //Still Not Implemented */}
         // Routes for User Dashboard
         {/* <Route path="/E-Grantha/udashboard" element={<U_Dashboard />} /> */}
