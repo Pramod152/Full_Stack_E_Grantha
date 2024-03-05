@@ -259,3 +259,4 @@ exports.deleteCourse = async (req, res) => {
     res.status(500).send("Error deleting video");
   }
 };
+// // ////------------------------ fuzzy search algorithm ------------------------////
