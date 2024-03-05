@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+// LoginForm.jsx
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../Auth/AuthContext';
 import './ComponentCSS/LoginForm.css';
 
 const LoginForm = ({ onSignUpClick }) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const handleSignUp = (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -29,6 +32,7 @@ const LoginForm = ({ onSignUpClick }) => {
 
       if (response.ok) {
         // If authentication is successful, redirect to main page
+        setIsAuthenticated(true);
         navigate('/E-Grantha'); // Adjust the route according to your setup
       } else {
         // Handle authentication failure

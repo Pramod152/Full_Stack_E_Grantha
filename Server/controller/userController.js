@@ -167,6 +167,7 @@ exports.unsubscribe = async (req, res) => {
   }
 };
 
+ //                     Get Subscribed Videos
 // =============//////////////////===============
 exports.getUserSubscriptions = async (req, res) => {
   try {
@@ -231,3 +232,17 @@ exports.allVideos = async (req, res) => {
     console.log(err);
   }
 };
+
+
+//                 User Contact Form Handler
+// =============//////////////////===============
+exports.contact = async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    console.log(name, email, message);
+    res.status(200).json({ status: "ok", message: "contact" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
