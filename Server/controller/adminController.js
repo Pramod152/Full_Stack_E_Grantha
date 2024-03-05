@@ -20,14 +20,6 @@ const REFRESH_TOKEN =
   "1//04uGsh1gVb8jACgYIARAAGAQSNwF-L9IruoYtSbtZM3htUMrvRBJlJTN4x3K_Cv7QIiznMxE7Iwpm37A5S7Go7841eyDx7cii1Uk";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
-// const CLIENT_ID =
-//   "1022129594616-idgg5q0mi59anklne5tvfjfp49rfe6cm.apps.googleusercontent.com";
-// const CLIENT_SECRET = "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";
-// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-// const REFRESH_TOKEN =
-//   "1//04uGsh1gVb8jACgYIARAAGAQSNwF-L9IruoYtSbtZM3htUMrvRBJlJTN4x3K_Cv7QIiznMxE7Iwpm37A5S7Go7841eyDx7cii1Uk";
-// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
-
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
