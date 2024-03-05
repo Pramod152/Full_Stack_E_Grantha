@@ -3,6 +3,7 @@ const userController = express();
 const User = require("../model/user");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const Video = require("../model/video");
 userController.use(express.json());
 userController.use(express.urlencoded({ extended: false }));
 userController.use(cookieParser());
@@ -166,74 +167,29 @@ exports.unsubscribe = async (req, res) => {
   }
 };
 
-// // Client dashboard home
-// app.get("/dashboard", auth, (req, res) => {
-//   // Render client dashboard home, fetch and display subscribed videos
-//   videoId: mongoose.Types.ObjectId("your_video_id_here"), ///fill this to link with video id to add subscription video to the user dashboard
-//     res.render("dashboard/home", { user: req.user });
-// });
-
-// // Video details page
-// app.get("/video/:videoId", auth, (req, res) => {
-//   // Render video details page based on videoId
-//   // You can fetch video details from the database
-//   res.render("dashboard/video", { videoId: req.params.videoId });
-// });
-
 // =============//////////////////===============
-const { google } = require("googleapis");
-const Video = require("../model/video");
-
-// Create a Google Drive client
-
-const CLIENT_ID =
-  "607703662588-0vc7r41ofmpebbkr3ubhimpmos6fkffm.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-
-const REFRESH_TOKEN =
-  "1//044CdfKXs5T6rCgYIARAAGAQSNwF-L9IrpJCbH7cUDU5rLApF3oTebfG5Khf9_kqx9P5K2MZAGXui8mZ41JdiYrGdLsGeSLAhDLY";
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-
-oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-const drive = google.drive({
-  version: "v3",
-  auth: oauth2Client,
-});
-
-exports.getVideo = async (req, res) => {
+exports.getUserSubscriptions = async (req, res) => {
   try {
-    const videoId = req.params.videoId;
+    const userId = req.user._id;
+    const user = await User.findById(userId);
 
-    // Find the video document in your database using the provided videoId
-    const video = await Video.findOne({ driveFileId: videoId });
-
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Retrieve the file content from Google Drive using its ID
-    const driveResponse = await drive.files.get(
-      {
-        fileId: videoId,
-        alt: "media",
-      },
-      { responseType: "stream" }
-    );
+    const subscribedVideos = user.subscribedVideos;
+    console.log(subscribedVideos);
 
-    // Set appropriate headers for the response
-    res.set("Content-Type", video.fileType);
-    res.set("Content-Disposition", `inline; filename="${video.title}"`);
+    // Use Video.find() with $in to find videos by their IDs
+    const subscribedVideosData = await Video.find({
+      _id: { $in: subscribedVideos },
+    });
 
-    // Pipe the file content directly to the response
-    driveResponse.data.pipe(res);
+    console.log(subscribedVideosData);
+
+    res.status(200).json({ subscribedVideosData });
   } catch (error) {
-    console.error("Error retrieving video:", error);
+    console.error("Error retrieving subscriptions:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -275,20 +231,3 @@ exports.allVideos = async (req, res) => {
     console.log(err);
   }
 };
-
-/////////
-// exports.allVideos = async (req, res) => {
-//   try {
-//     const videos = await Video.find();
-//     const videoData = videos.map((video) => ({
-//       title: video.title,
-//       description: video.description,
-//       videoUrl: `https://drive.google.com/file/d/${video.driveFileId}/preview`, // URL for viewing the video
-//     }));
-
-//     res.status(200).json({ status: "ok", data: videoData });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ status: "error", message: "Internal server error" });
-//   }
-// };
