@@ -7,7 +7,7 @@ userController.use(express.json());
 userController.use(express.urlencoded({ extended: false }));
 userController.use(cookieParser());
 
-////------------------------sinUp------------------------////
+////------------------------signUp------------------------////
 
 exports.sinup = async (req, res) => {
   try {
@@ -206,34 +206,28 @@ const drive = google.drive({
   auth: oauth2Client,
 });
 
-exports.getVideo = async (req, res) => {
+exports.getUserSubscriptions = async (req, res) => {
   try {
-    const videoId = req.params.videoId;
+    const userId = req.user._id;
+    const user = await User.findById(userId);
 
-    // Find the video document in your database using the provided videoId
-    const video = await Video.findOne({ driveFileId: videoId });
-
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Retrieve the file content from Google Drive using its ID
-    const driveResponse = await drive.files.get(
-      {
-        fileId: videoId,
-        alt: "media",
-      },
-      { responseType: "stream" }
-    );
+    const subscribedVideos = user.subscribedVideos;
+    console.log(subscribedVideos);
 
-    // Set appropriate headers for the response
-    res.set("Content-Type", video.fileType);
-    res.set("Content-Disposition", `inline; filename="${video.title}"`);
+    // Use Video.find() with $in to find videos by their IDs
+    const subscribedVideosData = await Video.find({
+      _id: { $in: subscribedVideos },
+    });
 
-    // Pipe the file content directly to the response
-    driveResponse.data.pipe(res);
+    console.log(subscribedVideosData);
+
+    res.status(200).json({ subscribedVideosData });
   } catch (error) {
-    console.error("Error retrieving video:", error);
+    console.error("Error retrieving subscriptions:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

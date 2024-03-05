@@ -1,6 +1,6 @@
-import NavBar from '../../../components/NavBar/NavBar_Welcome/NavBar';
+import NavBar from '../../../../components/NavBar/NavBar_Welcome/NavBar';
 import React from 'react';
-import './About.css';
+import './WelcomeUserCSS/About.css';
 
 const AboutPage = () => {
     return (

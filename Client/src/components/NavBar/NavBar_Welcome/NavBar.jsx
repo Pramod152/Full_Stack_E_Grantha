@@ -9,12 +9,12 @@ const NavBar = () => {
             <nav>
                 <img src="/Logo_.png" alt="Logo" />
                 <ul>
-                    <li><Link to ="/">Home</Link></li>
-                    <li><Link to ="/about">About</Link></li>
-                    <li><Link to ="/course">Courses</Link></li>
-                    <li><Link to ="/contact">Contact</Link></li>
+                    <li><Link to ="/E-Grantha">Home</Link></li>
+                    <li><Link to ="/E-Grantha/about">About</Link></li>
+                    <li><Link to ="/E-Grantha/course">Courses</Link></li>
+                    <li><Link to ="/E-Grantha/contact">Contact</Link></li>
                 </ul>
-                <Link to='/login'> <Button BtnName="Get Started" /> </Link>
+                <Link to='/E-Grantha/register'> <Button BtnName="Get Started" /> </Link>
             </nav>
         </>
     )
