@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import './UsedDashboardCSS/UserDashboardPage.css';
-// import DashBoardContent from '../Component/DashBoardContent';
+import ProfilePage from './Component/ProfilePage'
+import SubscribedCourses from './Component/SubscribedCourses'
+import DashboardContent from './Component/DashboardContent'
 
 
 const MainDashboard = () => {
@@ -18,11 +20,11 @@ const MainDashboard = () => {
   const renderComponent = () => {
     switch (selectedComponent) {
       case 'Dashboard':
-        return <h1>Hello, User</h1>;
-      case 'Users':
-        return <h1>hello users</h1>; // Replace with your Users component
-      case 'Courses':
-        return <h1>hello courses</h1>; // Replace with your Courses component
+        return <DashboardContent />; 
+      case 'Profile':
+        return <ProfilePage />; 
+      case 'Subscribed':
+        return <SubscribedCourses />; 
       default:
         return null;
     }
@@ -36,8 +38,8 @@ const MainDashboard = () => {
                 <hr />
                 <ul>
                     <li onClick={() => handleNavClick('Dashboard')}>Dashboard</li>
-                    <li onClick={() => handleNavClick('Users')}>Profile</li>
-                    <li onClick={() => handleNavClick('Courses')}>Subscribed Courses</li>
+                    <li onClick={() => handleNavClick('Profile')}>Profile</li>
+                    <li onClick={() => handleNavClick('Subscribed')}>Subscribed Courses</li>
                     <li onClick={() => handleNavClick('LogOut')}>LogOut</li>
                 </ul>
             </div>

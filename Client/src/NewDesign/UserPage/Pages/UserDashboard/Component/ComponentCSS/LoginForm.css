@@ -1,0 +1,50 @@
+.login-card {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+  }
+
+  .login-card h1 {
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  .login-card a {
+    color: blue;
+    text-decoration: none;
+  }
+
+  .login-card a:hover {
+    text-decoration: underline;
+  }
+
+  .login-card label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .login-card input[type="email"],
+  .login-card input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-card button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-card button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
