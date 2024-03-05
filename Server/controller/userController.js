@@ -10,7 +10,7 @@ userController.use(cookieParser());
 
 ////------------------------signUp------------------------////
 
-exports.sinup = async (req, res) => {
+exports.signup = async (req, res) => {
   try {
     const data = await new User(req.body);
     const existingUser = await User.findOne({ email: req.body.email });
