@@ -27,4 +27,9 @@ adminRouter
   .route("/deleteCourse/:videoId")
   .delete(adminController.deleteCourse);
 
+////------------------------get operations for contact------------------------////
+adminRouter.route("/contact").get(adminController.contact);
+////------------------------get operations for Fuzzy------------------------////
+adminRouter.route("/search").get(adminController.fuzzySearch);
+
 module.exports = adminRouter;

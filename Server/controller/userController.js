@@ -3,6 +3,7 @@ const userController = express();
 const User = require("../model/user");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
+const Contact = require("../model/contact");
 const Video = require("../model/video");
 userController.use(express.json());
 userController.use(express.urlencoded({ extended: false }));
@@ -167,7 +168,7 @@ exports.unsubscribe = async (req, res) => {
   }
 };
 
- //                     Get Subscribed Videos
+//                     Get Subscribed Videos
 // =============//////////////////===============
 exports.getUserSubscriptions = async (req, res) => {
   try {
@@ -195,54 +196,54 @@ exports.getUserSubscriptions = async (req, res) => {
   }
 };
 
-//get all the data from the database related to video to render on the client side and display the video that is present in drive .the video should be presented in such a way that the driveFieldId presend in video document should be used to fetch the video from the drive and display it on the client side along with the video details like title,description,etc.
-exports.allVideos = async (req, res) => {
+////------------------------get Perticular Course by Id------------------------////
+
+exports.getVideo = async (req, res) => {
   try {
-    const videos = await Video.find();
-    const videoData = [];
+    // Extract the videoId from the request parameters
+    const videoId = req.params.videoId;
 
-    for (const video of videos) {
-      const driveResponse = await drive.files.get(
-        {
-          fileId: video.driveFileId,
-          alt: "media",
-        },
-        { responseType: "stream" }
-      );
+    // Use the Video model to find the video by its ID
+    const video = await Video.findById(videoId);
 
-      const videoDetails = {
-        title: video.title,
-        description: video.description,
-        // Add other video details as needed
-      };
-      // Set appropriate headers for the response
-      // res.set("Content-Type", video.fileType);
-      // res.set("Content-Disposition", `inline; filename="${video.title}"`);
-      // Pipe the file content directly to the response
-      // driveResponse.data.pipe(res);
-
-      videoData.push({
-        videoDetails,
-        videoContent: driveResponse.data,
-      });
+    // Check if the video exists
+    if (!video) {
+      // If the video is not found, send a 404 Not Found response
+      return res.status(404).json({ error: "Video not found" });
     }
 
-    res.status(200).json({ status: "ok", data: videoData });
+    // If the video is found, send a JSON response with the video data
+    res.status(200).json({ status: "success", video });
+  } catch (error) {
+    // If any error occurs, send a 500 Internal Server Error response
+    console.error("Error fetching video:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+////------------------------get all courses ------------------------////
+
+exports.allVideos = async (req, res) => {
+  const courses = await Video.find();
+  try {
+    res.status(200).json({
+      status: "ok",
+      message: courses,
+    });
   } catch (err) {
     console.log(err);
   }
 };
-
 
 //                 User Contact Form Handler
 // =============//////////////////===============
 exports.contact = async (req, res) => {
   try {
-    const { name, email, message } = req.body;
-    console.log(name, email, message);
-    res.status(200).json({ status: "ok", message: "contact" });
+    const contact = await new Contact(req.body);
+    await contact.save();
+
+    res.status(200).json({ status: "ok", message: contact });
   } catch (err) {
     console.log(err);
   }
 };
-
