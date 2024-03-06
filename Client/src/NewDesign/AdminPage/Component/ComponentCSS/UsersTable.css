@@ -9,20 +9,28 @@
     border-collapse: collapse; /* Remove default spacing between table cells */
   }
   
-  .users_table th,
-  .users_table td {
-    padding: 8px 12px; /* Add padding to table cells */
-    border: 1px solid #ddd; /* Add border to table cells */
-    text-align: left; /* Align text to the left */
-  }
   
+  .users_table th {
+    background-color: #f3f3f3;
+    height: 37px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.users_table th, .users_table td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+    list-style-type: none;
+}
+.users_table td ul li{
+    list-style-type: none;
+}
   .users_table th {
     background-color: #f2f2f2; /* Background color for table header */
   }
-  
-  .users_table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alternate row background color */
-  }
+
   
   .users_table tbody tr:hover {
     background-color: #ddd; /* Hover effect for table rows */

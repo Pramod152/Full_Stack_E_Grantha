@@ -29,31 +29,12 @@ nav ul {
 nav ul li {
     margin-left: var(--nav-margin-left);
 }
-nav ul li::after{
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 4px;
-    background-color: #25645d;
-    transition: all 0.3s linear;
-
-    
-}
-
-nav ul li:hover::after{
-    width: 100%;
-   
-}
 
 nav ul li a {
     text-decoration: none;
     color: #343232;
     font-size: var(--nav-font-size);
 }
-
-
 
 @media (max-width: 1200px) {
     nav {
@@ -122,4 +103,20 @@ nav ul li a {
         padding: 6px 12px;
         font-size: 14px;
     }
+}
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #656565;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+    text-align: center;
+    font-size: 21px;
+    font-weight: 600;
+    color: #ededed;
+    border: 1px solid #555454;
+
 }

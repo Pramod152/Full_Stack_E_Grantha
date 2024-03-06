@@ -4,9 +4,10 @@ import './MainDashboard.css';
 import UsersTable from '../Component/UsersTable'; // Import the UsersTable component
 import CoursesTable from '../Component/CoursesTable';
 import DashBoardContent from '../Component/DashBoardContent';
+import Messages from '../Component/Messages';
 
 
-const MainDashboard = () => {
+const AdminPanel = () => {
   const [selectedComponent, setSelectedComponent] = useState('Dashboard');
   const navigate = useNavigate(); // Initialize navigate
 
@@ -25,6 +26,8 @@ const MainDashboard = () => {
         return <UsersTable />; // Replace with your Users component
       case 'Courses':
         return <CoursesTable />; // Replace with your Courses component
+      case 'Messages':
+        return <Messages />; // Replace with your Courses component
       default:
         return null;
     }
@@ -40,6 +43,7 @@ const MainDashboard = () => {
                     <li onClick={() => handleNavClick('Dashboard')}>Dashboard</li>
                     <li onClick={() => handleNavClick('Users')}>Users</li>
                     <li onClick={() => handleNavClick('Courses')}>Courses</li>
+                    <li onClick={() => handleNavClick('Messages')}>Messages</li>
                     <li onClick={() => handleNavClick('LogOut')}>LogOut</li>
                 </ul>
             </div>
@@ -51,4 +55,4 @@ const MainDashboard = () => {
   );
 }
 
-export default MainDashboard;
+export default AdminPanel;

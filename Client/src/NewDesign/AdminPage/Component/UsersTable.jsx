@@ -38,7 +38,7 @@ const UsersTable = () => {
         <tbody>
           {users.map(user => (
             <tr key={user._id}>
-              <td>{user.name}</td>
+            <td>{typeof user.name === 'string' ? user.firstName.charAt(0).toUpperCase() + user.name.slice(1) : user.firstName}</td>
               <td>{user.email}</td>
               <td>{user.password}</td>
               <td>

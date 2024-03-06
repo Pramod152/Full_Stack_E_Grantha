@@ -20,16 +20,24 @@ const SubscribedCourses = () => {
 
   return (
     <div className="subscribed-courses-container">
-      {courses.map(course => (
-        <div key={course._id} className="course-card">
-          <img src={course.thumbnail} alt={course.title} className="course-thumbnail" />
-          <div className="course-info">
-            <h3 className="course-title">{course.title}</h3>
-            <p className="course-description">{course.description}</p>
-            <p className="course-rating">Rating: {course.rating}</p>
-          </div>
-        </div>
-      ))}
+      <table className="subscribed-courses-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Subscribed Course Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courses.map(course => (
+            <tr key={course._id}>
+              <td>{course.title}</td>
+              <td>{course.description}</td>
+              <td><a href={course.videoLink} target="_blank" rel="noopener noreferrer">Watch</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

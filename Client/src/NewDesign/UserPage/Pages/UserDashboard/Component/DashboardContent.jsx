@@ -1,11 +1,20 @@
 import React from 'react';
+import { getUserData } from '../../../Auth/UserDataManager'; // Import the utility functions
 
-const DashboardContent = () => {
-  return (
-    <>
-     <h1>Hello, User</h1> 
-    </>
-  );
+const UserDashboard = () => {
+    // Retrieve user's data from localStorage
+    const userData = getUserData();
+    // console.log(userData.firstName);
+
+    // Extract user's name
+    const userName = userData ? userData.firstName : '';
+
+    return (
+        <div>
+            <h1>Welcome, {userName}</h1>
+            {/* Other content of UserDashboard */}
+        </div>
+    );
 }
 
-export default DashboardContent;
+export default UserDashboard;

@@ -1,12 +1,12 @@
-// LoginForm.js
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../Auth/AuthContext";
+import { saveUserData } from '../../../Auth/UserDataManager'; // Import the saveUserData function
 import "./ComponentCSS/LoginForm.css";
-import  {saveUserData}  from '../../../Auth/UserDataManager'
 
 const LoginForm = ({ onSignUpClick }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState("");
   const { setIsAuthenticated } = useContext(AuthContext);
 
@@ -19,46 +19,32 @@ const LoginForm = ({ onSignUpClick }) => {
     e.preventDefault(); // Prevent default form submission
 
     try {
+      // Clear localStorage for a fresh start
+      localStorage.clear();
+
       // Here you should make the authentication request to your backend
-      const response = await fetch(
-        "http://localhost:3000/E-Grantha/user/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: e.target.email.value,
-            password: e.target.password.value,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/E-Grantha/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: e.target.email.value,
+          password: e.target.password.value,
+        }),
+      });
 
       if (response.ok) {
-        // If authentication is successful, redirect to main page
-        const data = await response.json();
-        
+        // If authentication is successful, redirect to the previous page or main page
+        const { token, user } = await response.json();
         setIsAuthenticated(true); // Update the state of the context
 
-        // Fetch the user data
-        const userResponse = await fetch(
-          `http://localhost:3000/E-Grantha/admin/user/${data.user._id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const userData = await userResponse.json();
+        // Save user data and token in local storage
+        saveUserData({ token, ...user });
 
-        // Save user data in local storage
-        console.log("User data:", userData); // Debug statement
-        saveUserData(userData);
-
-        console.log("Login successful"); // Debug statement
-
-        navigate("/E-Grantha"); // Adjust the route according to your setup
+        // Redirect to the previous page or main page
+        const { from } = location.state || { from: { pathname: "/E-Grantha" } };
+        navigate(from);
       } else {
         // Handle authentication failure
         setErrorMessage("Invalid Email or Password");

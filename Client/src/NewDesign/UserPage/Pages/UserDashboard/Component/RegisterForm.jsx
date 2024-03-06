@@ -1,12 +1,11 @@
-// RegisterForm.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'react-auth-kit'
+import { saveUserData } from '../../../Auth/UserDataManager'; // Import the saveUserData function
 import './ComponentCSS/RegisterForm.css';
 
 const RegisterForm = ({ onSignInClick }) => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignIn = (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -23,7 +22,8 @@ const RegisterForm = ({ onSignInClick }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: e.target.username.value,
+          firstName: e.target.firstName.value,
+          lastName: e.target.lastName.value,
           email: e.target.email.value,
           password: e.target.password.value,
           confirmPassword: e.target['confirm-password'].value,
@@ -44,15 +44,10 @@ const RegisterForm = ({ onSignInClick }) => {
         });
 
         if (loginResponse.ok) {
-          const data = await loginResponse.json();
+          const { token, user } = await loginResponse.json();
           // If login is successful, save the token and navigate to the main page
-          login({
-            token: data.token,
-            expiresIn: 60, // Adjust this value according to your setup
-            tokenType: 'Bearer',
-            authState: data.user, // Adjust this value according to your setup
-          });
-          navigate('/E-Grantha');
+          saveUserData({ token, ...user });
+          navigate('/E-Grantha/register');
         } else {
           console.error('Login failed after registration');
         }
@@ -61,17 +56,23 @@ const RegisterForm = ({ onSignInClick }) => {
       }
     } catch (error) {
       console.error('Error during registration:', error);
+      setErrorMessage("Error during registration");
     }
   };
 
   return (
     <div className="registration-card">
       <h1>Register</h1>
+      {errorMessage && <p>{errorMessage}</p>}
       <div>
         <form onSubmit={handleRegister}>
           <div>
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" required />
+            <label htmlFor="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required />
           </div>
           <div>
             <label htmlFor="email">Email</label>

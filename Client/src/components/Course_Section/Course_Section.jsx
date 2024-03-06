@@ -1,27 +1,54 @@
-
-import Video_Card from '../Card_Video/Video_Card/Video_Card'
-import './Course_Section.css'
+import React, { useState, useEffect } from 'react';
+import Video_Card from '../Card_Video/Video_Card/Video_Card';
+import './Course_Section.css';
 import { Link } from 'react-router-dom';
 
-const Course_Section = () => {
-    const description = " elit. Quisquam, voluptatum."
+const Course_Section = ({ showSeeAll }) => {
+    const [videos, setVideos] = useState([]);
+
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/E-Grantha/user/allVideos");
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.status === "ok") {
+                        setVideos(data.message); // Set fetched videos data to state
+                    } else {
+                        console.error("API returned error status:", data.status);
+                    }
+                } else {
+                    console.error("Failed to fetch videos");
+                }
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+            }
+        };
+
+        fetchVideos();
+    }, []); // Fetch videos data only once on component mount
 
     return (
-        <>
         <div className="courses">
-        <div className="course_header">
-        <h1>Courses</h1>
-        <Link to="#">See All</Link>
-        </div>
+            <div className="course_header">
+                <h1>Courses</h1>
+                {showSeeAll && <Link to="/E-Grantha/course">See All</Link>}
+            </div>
             <div className="card-wrapper">
-                <Video_Card description={description}/>
-                <Video_Card description={description}/>
-                <Video_Card description={description}/>
-                <Video_Card description={description}/>
+                {/* Map through the videos array and render Video_Card for each video */}
+                {videos.map(video => (
+                    <Video_Card 
+                        key={video._id} // Assuming each video has a unique id
+                        title={video.title} 
+                        description={video.description} 
+                        videoLink={video.videoLink} 
+                        videoId={video.videoId}
+                        video_id={video._id}
+                    />
+                ))}
+            </div>
         </div>
-        </div>
-        </>
-    )
-}
+    );
+};
 
-export default Course_Section
+export default Course_Section;

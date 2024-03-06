@@ -22,21 +22,30 @@
   }
   
   .courses_table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; /* Table takes up full width of its container */
+    border-collapse: collapse; /* Remove default spacing between table cells */
   }
   
-  .courses_table th,
-  .courses_table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
   
   .courses_table th {
-    background-color: #f2f2f2;
+    background-color: #f3f3f3;
+    height: 37px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.courses_table th, .courses_table td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+    list-style-type: none;
+}
+
+  .courses_table th {
+    background-color: #f2f2f2; /* Background color for table header */
   }
-  
+
   
   .courses_table tbody tr:hover {
     background-color: #ddd;

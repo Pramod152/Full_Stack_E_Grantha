@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ComponentCSS/CoursesTable.css'; // Import CSS file for styling
 import EditCourseModal from './EditCourses'; // Import the EditCourseModal component
 import axios from 'axios'; // Import axios for making HTTP requests
+import { FiEdit2 } from 'react-icons/fi';
+import { AiFillDelete } from 'react-icons/ai';
 
 const CoursesTable = () => {
     const [selectAll, setSelectAll] = useState(false);
@@ -96,7 +98,6 @@ const CoursesTable = () => {
                 onChange={handleRowSelect}
               />
             </th>
-            <th>Id</th>
             <th>Title</th>
             <th>Description</th>
             <th>VideoId</th>
@@ -111,16 +112,15 @@ const CoursesTable = () => {
               <td>
                 <input type="checkbox" />
               </td>
-              <td>{course.id}</td>
               <td>{course.title}</td>
               <td>{course.description}</td>
               <td>{course.videoId}</td>
               <td>{course.videoLink}</td>
               <td>
-              <button onClick={() => openModal(course)}>Edit</button>
+              <FiEdit2 style={{ cursor: 'pointer', color: 'blue' }} onClick={() => openModal(course)} /> 
               </td>
               <td>
-                <button onClick={() => handleDeleteCourse(course.videoId)}>Delete</button>
+                <AiFillDelete style={{ cursor: 'pointer', color: 'red' }} onClick={() => handleDeleteCourse(course.videoId)} /> 
               </td>
             </tr>
           ))}

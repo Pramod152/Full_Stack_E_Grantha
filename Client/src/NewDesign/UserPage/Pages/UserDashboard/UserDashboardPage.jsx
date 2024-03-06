@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { clearUserData } from '../../Auth/UserDataManager'; // Import clearUserData function
 import './UsedDashboardCSS/UserDashboardPage.css';
-import ProfilePage from './Component/ProfilePage'
-import SubscribedCourses from './Component/SubscribedCourses'
-import DashboardContent from './Component/DashboardContent'
+import ProfilePage from './Component/ProfilePage';
+import SubscribedCourses from './Component/SubscribedCourses';
+import DashboardContent from './Component/DashboardContent';
+import {AuthContext} from '../../Auth/AuthContext';
 
-
-const MainDashboard = () => {
+const UserDashboard = () => {
   const [selectedComponent, setSelectedComponent] = useState('Dashboard');
-  const navigate = useNavigate(); // Initialize navigate
+  const { setIsAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleNavClick = (componentName) => {
     setSelectedComponent(componentName);
     if (componentName === 'LogOut') {
-      navigate('/login'); // Redirect to '/login' when LogOut is clicked using navigate
+      clearUserData();
+      setIsAuthenticated(false);
+       // Clear user data from localStorage
+      navigate('/E-Grantha/register'); // Redirect to the registration page
     }
   };
 
   const renderComponent = () => {
     switch (selectedComponent) {
       case 'Dashboard':
-        return <DashboardContent />; 
+        return <DashboardContent />;
       case 'Profile':
-        return <ProfilePage />; 
+        return <ProfilePage />;
       case 'Subscribed':
-        return <SubscribedCourses />; 
+        return <SubscribedCourses />;
       default:
         return null;
     }
@@ -32,23 +37,23 @@ const MainDashboard = () => {
 
   return (
     <>
-        <div className="main_dashboard">
-            <div className="sidebar">
-                <img src="/Logo_.png" alt="Logo" />
-                <hr />
-                <ul>
-                    <li onClick={() => handleNavClick('Dashboard')}>Dashboard</li>
-                    <li onClick={() => handleNavClick('Profile')}>Profile</li>
-                    <li onClick={() => handleNavClick('Subscribed')}>Subscribed Courses</li>
-                    <li onClick={() => handleNavClick('LogOut')}>LogOut</li>
-                </ul>
-            </div>
-            <div className="mainContainer">
-                {renderComponent()}
-            </div>
+      <div className="main_dashboard">
+        <div className="sidebar">
+          <img src="/Logo_.png" alt="Logo" />
+          <hr />
+          <ul>
+            <li onClick={() => handleNavClick('Dashboard')}>Dashboard</li>
+            <li onClick={() => handleNavClick('Profile')}>Profile</li>
+            <li onClick={() => handleNavClick('Subscribed')}>Subscribed Courses</li>
+            <li onClick={() => handleNavClick('LogOut')}>LogOut</li>
+          </ul>
         </div>
+        <div className="mainContainer">
+          {renderComponent()}
+        </div>
+      </div>
     </>
   );
 }
 
-export default MainDashboard;
+export default UserDashboard;

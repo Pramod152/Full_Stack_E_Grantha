@@ -16,7 +16,7 @@ const HomePage = () => {
         <SearchBox size="large" iconName={faSearch} />
         <p className="hero-text">Learn Best Online Courses</p>
       </div>
-      {Course_Section()}
+      <Course_Section showSeeAll={true} />
       <Footer />
     </>
   );

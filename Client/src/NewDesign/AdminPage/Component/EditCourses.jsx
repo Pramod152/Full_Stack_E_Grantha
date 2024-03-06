@@ -45,11 +45,11 @@ const EditCourseModal = ({ course, onClose, onUpdate }) => {
         <form onSubmit={handleSubmit}>
           <div className="form_group">
             <label>Title:</label>
-            <input type="text" name="title" value={editedCourse.title} onChange={handleChange} />
+            <input type="text" name="title" value={editedCourse.title} className='text' onChange={handleChange} />
           </div>
           <div className="form_group">
             <label>Description:</label>
-            <textarea name="description" value={editedCourse.description} onChange={handleChange} />
+            <textarea name="description" className='description' value={editedCourse.description} onChange={handleChange} />
           </div>
           <div className="form_actions">
             <button type="submit">Update</button>

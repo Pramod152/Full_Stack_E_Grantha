@@ -8,7 +8,9 @@ import AboutPage from "./NewDesign/UserPage/Pages/WelcomeUser/About";
 import CoursesPage from "./NewDesign/UserPage/Pages/WelcomeUser/Course";
 import ContactPage from "./NewDesign/UserPage/Pages/WelcomeUser/Contact";
 import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserRegistrationPage";
-import MainDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
+import UserDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
+import AdminPanel from './NewDesign/AdminPage/Pages/AdminPanel'
+import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
 
 const App = () => {
   return (
@@ -21,8 +23,13 @@ const App = () => {
           <Route path="/E-Grantha/course" element={<CoursesPage />} />
           <Route path="/E-Grantha/contact" element={<ContactPage />} />
           <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
-          <Route path="/E-Grantha/userdashboard" element={<PrivateRoute/>} />
-          <Route path="/E-Grantha/dashboard" element={<MainDashboard />} />
+          <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
+    <UserDashboard />
+  </PrivateRoute>} />
+          {/* <Route path="/E-Grantha/dashboard" element={<UserDashboard />} /> */}
+          <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+
+          <Route path="/E-Grantha/admin" element={<AdminPanel />} />
         </Routes>
         </Fragment>
       </Router>
