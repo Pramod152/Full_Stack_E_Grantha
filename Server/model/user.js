@@ -9,6 +9,16 @@ const schema = new mongoose.Schema({
     reuired: [true, `name must be filled`],
     trim: true,
   },
+  firstName: {
+    type: String,
+    required: [true, `name must be filled`],
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: [true, `name must be filled`],
+    trim: true,
+  },
 
   email: {
     type: String,
