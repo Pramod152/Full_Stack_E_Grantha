@@ -70,6 +70,23 @@ exports.allUser = async (req, res) => {
   }
 };
 
+
+// Get a single user by ID
+exports.getUser = async (req, res) => {
+  try {
+    const data
+      = await User.findById(req.params.userId);
+    res.status(200).json({
+      status: "ok",
+      data: data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 // --------------------crud operation for videos in admin panel-----------------------
 //////////////////////////////////////////////////////////////////////////////////////

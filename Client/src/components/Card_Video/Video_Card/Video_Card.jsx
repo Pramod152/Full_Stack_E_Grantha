@@ -1,7 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faStar, faClock} from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of Navigate
+import React, { useContext } from 'react';
+import {getUserData} from '../../../NewDesign/UserPage/Auth/UserDataManager';
+import { AuthContext } from "../../../NewDesign/UserPage/Auth/AuthContext";
 
 const Video_Card = ({description}) => {
+  const { isAuthenticated } = useContext(AuthContext); // Make sure the variable name matches the one provided in the context
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleAuth = () => {
+    console.log(getUserData());
+    if (isAuthenticated) {
+      console.log('Subscribed Successfully');
+    } else {
+      navigate('/E-Grantha/register');
+    }
+  }
+
   return (
     <>
       <div className="card">
@@ -52,7 +68,7 @@ const Video_Card = ({description}) => {
             <span className="duration">2h 30m</span>
           </div>
         </div>
-        <button className="buy-now-button">Buy Now</button>
+        <button onClick={handleAuth} className="buy-now-button">Subscribe Now</button>
         <a href="#" className="view-details-link">
           View Details
         </a>

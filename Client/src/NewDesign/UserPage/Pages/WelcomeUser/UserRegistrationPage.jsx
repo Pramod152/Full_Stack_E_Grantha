@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import LoginForm from '../UserDashboard/Component/LoginForm';
-import RegisterForm from '../UserDashboard/Component/RegisterForm'; // Assuming you have a RegisterForm component
+import RegisterForm from '../UserDashboard/Component/RegisterForm';
 
 const UserRegistrationPage = () => {
-  const [isLogin, setIsLogin] = useState(true); // Initially, set to login
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleSignInClick = () => {
     setIsLogin(true);
@@ -13,15 +12,15 @@ const UserRegistrationPage = () => {
   const handleSignUpClick = () => {
     setIsLogin(false);
   };
-
+ 
   return (
-    <div>
+    <>
       {isLogin ? (
-        <LoginForm onSignUpClick={handleSignUpClick} />
+        <LoginForm onSignUpClick={handleSignUpClick}/>
       ) : (
-        <RegisterForm onSignInClick={handleSignInClick} />
+        <RegisterForm onSignInClick={handleSignInClick}  />
       )}
-    </div>
+    </>
   );
 };
 

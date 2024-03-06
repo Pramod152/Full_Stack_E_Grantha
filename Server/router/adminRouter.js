@@ -7,6 +7,7 @@ const uploadCourse = multer({ dest: "uploads/" });
 // ////------------------------get operations for user------------------------////
 adminRouter.route("/").get(adminController.dashboard);
 adminRouter.route("/allUser").get(adminController.allUser);
+adminRouter.route("/user/:userId").get(adminController.getUser);
 adminRouter.route("/course").get(adminController.courses);
 
 // ////------------------------Delete operations for user------------------------////

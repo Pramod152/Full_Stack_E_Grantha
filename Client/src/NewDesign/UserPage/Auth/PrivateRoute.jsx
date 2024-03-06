@@ -1,19 +1,13 @@
 // PrivateRoute.jsx
-import React, { useContext } from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const PrivateRoute = ({ element, ...rest }) => {
-  const { isAuthenticated } = useContext(AuthContext);
+const PrivateRoute = () => {
+    const auth = localStorage.getItem('authToken'); // Check if the user is authenticated
 
-  return (
-    <Route
-      {...rest}
-      element={
-        isAuthenticated ? element : <Navigate to="/E-Grantha/register" />
-      }
-    />
-  );
-};
+    // If authorized, return an outlet that will render child elements
+    // If not, return element that will navigate to login page
+    return auth ? <Outlet /> : <Navigate to="/E-Grantha/login" />;
+}
 
 export default PrivateRoute;
