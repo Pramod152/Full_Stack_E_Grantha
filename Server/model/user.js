@@ -4,11 +4,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const schema = new mongoose.Schema({
-  name: {
-    type: String,
-    reuired: [true, `name must be filled`],
-    trim: true,
-  },
   firstName: {
     type: String,
     required: [true, `name must be filled`],
