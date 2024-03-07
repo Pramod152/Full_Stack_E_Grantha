@@ -22,6 +22,8 @@ const UserDashboard = () => {
     }
   };
 
+  const handleClick =()=>{{navigate('/E-Grantha')}}
+
   const renderComponent = () => {
     switch (selectedComponent) {
       case 'Dashboard':
@@ -39,7 +41,7 @@ const UserDashboard = () => {
     <>
       <div className="main_dashboard">
         <div className="sidebar">
-          <img src="/Logo_.png" alt="Logo" />
+          <img src="/Logo_.png" alt="Logo" onClick={handleClick}/>
           <hr />
           <ul>
             <li onClick={() => handleNavClick('Dashboard')}>Dashboard</li>

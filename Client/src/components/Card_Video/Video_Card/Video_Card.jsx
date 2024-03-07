@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../../NewDesign/UserPage/Auth/AuthContext";
 import { getUserData } from '../../../NewDesign/UserPage/Auth/UserDataManager';
 import axios from 'axios'; // Import Axios for making HTTP requests
+import './Video_Card.css'
 
 const Video_Card = ({ title, description, videoLink,video_id }) => {
     const { isAuthenticated } = useContext(AuthContext);
@@ -64,33 +65,26 @@ const Video_Card = ({ title, description, videoLink,video_id }) => {
                     allowFullScreen
                 ></iframe>
                 <div className="rating-stars">
+                    {/* <span><FontAwesomeIcon icon={faStar} /></span>
                     <span><FontAwesomeIcon icon={faStar} /></span>
                     <span><FontAwesomeIcon icon={faStar} /></span>
                     <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span>
+                    <span><FontAwesomeIcon icon={faStar} /></span> */}
                 </div>
             </div>
             <h2 className="heading">{title}</h2>
-            <p className="description">
+            <p id="description">
                 {description.split(" ").slice(0, 10).join(" ")}
                 {description.split(" ").length > 10 ? (
                     <a href="#" style={{ color: "black", textDecoration: "none" }}>
-                        ...... See More{" "}
+                        ...{" "}
                     </a>
                 ) : (
                         ""
                     )}
             </p>
             <div className="stats">
-                <div className="user-info">
-                    <FontAwesomeIcon icon={faUser} />
-                    <span className="user-count">100</span>
-                </div>
-                <div className="duration-info">
-                    <FontAwesomeIcon icon={faClock} />
-                    <span className="duration">2h 30m</span>
-                </div>
+                
             </div>
             <button onClick={handleAuth} className="buy-now-button">Subscribe Now</button>
             <a onClick={handleViewDetail} className="view-details-link">View Details</a>

@@ -16,21 +16,20 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-      <Fragment>
-        <Routes>
-          <Route path="/E-Grantha" element={<HomePage />} />
-          <Route path="/E-Grantha/about" element={<AboutPage />} />
-          <Route path="/E-Grantha/course" element={<CoursesPage />} />
-          <Route path="/E-Grantha/contact" element={<ContactPage />} />
-          <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
-          <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
-    <UserDashboard />
-  </PrivateRoute>} />
-          {/* <Route path="/E-Grantha/dashboard" element={<UserDashboard />} /> */}
-          <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
-
-          <Route path="/E-Grantha/admin" element={<AdminPanel />} />
-        </Routes>
+        <Fragment>
+          <Routes>
+            <Route path="/E-Grantha" element={<HomePage />} />
+            <Route path="/E-Grantha/about" element={<AboutPage />} />
+            <Route path="/E-Grantha/course" element={<CoursesPage />} />
+            <Route path="/E-Grantha/contact" element={<ContactPage />} />
+            <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
+            <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
+              <UserDashboard />
+            </PrivateRoute>} />
+            <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+            <Route path="/E-Grantha/admin" element={<AdminPanel />} />
+            <Route path="/" element={<HomePage />} /> {/* Add this line */}
+          </Routes>
         </Fragment>
       </Router>
     </AuthProvider>

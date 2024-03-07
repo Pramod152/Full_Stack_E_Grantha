@@ -3,7 +3,7 @@ import Video_Card from '../Card_Video/Video_Card/Video_Card';
 import './Course_Section.css';
 import { Link } from 'react-router-dom';
 
-const Course_Section = ({ showSeeAll }) => {
+const Course_Section = ({ showSeeAll, renderCount }) => {
     const [videos, setVideos] = useState([]);
 
     useEffect(() => {
@@ -28,6 +28,11 @@ const Course_Section = ({ showSeeAll }) => {
         fetchVideos();
     }, []); // Fetch videos data only once on component mount
 
+    let renderedVideos = videos;
+    if (renderCount === 4 && showSeeAll === "Home") {
+        renderedVideos = videos.slice(0, 4); // Render only 4 videos if showSeeAll is "Home"
+    }
+
     return (
         <div className="courses">
             <div className="course_header">
@@ -36,7 +41,7 @@ const Course_Section = ({ showSeeAll }) => {
             </div>
             <div className="card-wrapper">
                 {/* Map through the videos array and render Video_Card for each video */}
-                {videos.map(video => (
+                {renderedVideos.map(video => (
                     <Video_Card 
                         key={video._id} // Assuming each video has a unique id
                         title={video.title} 
