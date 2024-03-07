@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import './ComponentCSS/UsersTable.css'; // Import CSS file for styling
+import './ComponentCSS/UsersTable.css'; 
+import { getAdminData } from '../Auth/AdminDataManager';
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Define the URL from which to fetch the users data (replace demoUrl with actual backend URL)
-    const demoUrl = 'http://localhost:3000/E-Grantha/admin/allUser';
-    
+
+
     // Fetch users data from the backend
-    fetch(demoUrl)
+    fetch('http://localhost:3000/E-Grantha/admin/allUser',{},{
+      method: 'GET', // or 'POST'
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch users data');

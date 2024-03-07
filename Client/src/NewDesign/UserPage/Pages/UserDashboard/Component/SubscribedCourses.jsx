@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../UsedDashboardCSS/SubscribedCourses.css'; // Import CSS file
+import {getUserData} from '../../../Auth/UserDataManager'
 
 const SubscribedCourses = () => {
   const [courses, setCourses] = useState([]);
 
+  
   useEffect(() => {
     fetchSubscribedCourses();
   }, []);
 
   const fetchSubscribedCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/E-Grantha/user/getUserSubscriptions');
+      const token = getUserData().token; // Assuming you have a function to get the user token
+      const response = await axios.get('http://localhost:3000/E-Grantha/user/getUserSubscriptions',{
+        withCredentials: true
+      });
       setCourses(response.data.subscribedVideosData);
     } catch (error) {
       console.error('Error fetching subscribed courses:', error);
     }
   };
-
   return (
     <div className="subscribed-courses-container">
       <table className="subscribed-courses-table">

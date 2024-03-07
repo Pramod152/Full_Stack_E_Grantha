@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
 
     console.log("Login successful"); // Debug statement
 
-    res.status(200).json({ status: "success", token , email, password, user });
+    res.status(200).json({ status: "success", token, email, password, user });
   } catch (err) {
     console.error("Error:", err); // Debug statement
     res.status(400).json({ status: "fail from catch", err });

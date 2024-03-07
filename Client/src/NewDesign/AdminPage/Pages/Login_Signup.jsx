@@ -3,7 +3,7 @@ import './Login_Signup.css'
 import LoginForm from '../Component/AdminLoginForm'
 import RegisterForm from '../Component/AdminRegisterForm'
 
-const UserRegistrationPage = () => {
+const AdminRegistrationPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSignInClick = () => {
@@ -27,4 +27,4 @@ const UserRegistrationPage = () => {
   );
 };
 
-export default UserRegistrationPage;
+export default AdminRegistrationPage;
