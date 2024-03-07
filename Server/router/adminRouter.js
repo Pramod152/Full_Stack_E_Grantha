@@ -32,4 +32,8 @@ adminRouter.route("/contact").get(adminController.contact);
 ////------------------------get operations for Fuzzy------------------------////
 adminRouter.route("/search").get(adminController.fuzzySearch);
 
+////------------------------admin login------------------------////
+adminRouter.route("/signup").post(adminController.signup);
+adminRouter.route("/login").post(adminController.login);
+
 module.exports = adminRouter;
