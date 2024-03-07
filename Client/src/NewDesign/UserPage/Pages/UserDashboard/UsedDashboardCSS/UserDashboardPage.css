@@ -25,6 +25,7 @@
 .sidebar img{
     width: 45px;
     height: 60px;
+    cursor: pointer;
 }
 hr{
     width: 80%;

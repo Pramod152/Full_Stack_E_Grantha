@@ -32,11 +32,11 @@
 }
 
 .heading,
-.description {
+#description {
     color: #333;
 }
 
-.description::after {
+#description::after {
     content: "See More";
     color: blue;
 }
@@ -56,6 +56,7 @@
 .view-details-link {
     font-size: 1.2rem;
     text-align: center;
+    cursor: pointer;
 }
 
 .buy-now-button {

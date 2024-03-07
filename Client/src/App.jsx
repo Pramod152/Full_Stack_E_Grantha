@@ -40,13 +40,12 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            {/* <Route path="/E-Grantha/dashboard" element={<UserDashboard />} /> */}
             <Route
               path="/E-Grantha/coursedetail"
               element={<CourseDetailPage />}
             />
-
             <Route path="/E-Grantha/admin" element={<AdminPanel />} />
+            <Route path="/" element={<HomePage />} /> {/* Add this line */}
           </Routes>
         </Fragment>
       </Router>
