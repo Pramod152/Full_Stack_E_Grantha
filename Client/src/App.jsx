@@ -1,5 +1,5 @@
 // App.jsx
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./NewDesign/UserPage/Auth/AuthContext";
 import PrivateRoute from "./NewDesign/UserPage/Auth/PrivateRoute";
@@ -9,28 +9,45 @@ import CoursesPage from "./NewDesign/UserPage/Pages/WelcomeUser/Course";
 import ContactPage from "./NewDesign/UserPage/Pages/WelcomeUser/Contact";
 import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserRegistrationPage";
 import UserDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
-import AdminPanel from './NewDesign/AdminPage/Pages/AdminPanel'
-import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
+import AdminPanel from "./NewDesign/AdminPage/Pages/AdminPanel";
+import CourseDetailPage from "./NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage";
+
+// Import Axios
+import axios from "axios";
+
+// Set up Axios defaults to include credentials in all requests
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-      <Fragment>
-        <Routes>
-          <Route path="/E-Grantha" element={<HomePage />} />
-          <Route path="/E-Grantha/about" element={<AboutPage />} />
-          <Route path="/E-Grantha/course" element={<CoursesPage />} />
-          <Route path="/E-Grantha/contact" element={<ContactPage />} />
-          <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
-          <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
-    <UserDashboard />
-  </PrivateRoute>} />
-          {/* <Route path="/E-Grantha/dashboard" element={<UserDashboard />} /> */}
-          <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+        <Fragment>
+          <Routes>
+            <Route path="/E-Grantha" element={<HomePage />} />
+            <Route path="/E-Grantha/about" element={<AboutPage />} />
+            <Route path="/E-Grantha/course" element={<CoursesPage />} />
+            <Route path="/E-Grantha/contact" element={<ContactPage />} />
+            <Route
+              path="/E-Grantha/register"
+              element={<UserRegistrationPage />}
+            />
+            <Route
+              path="/E-Grantha/dashboard"
+              element={
+                <PrivateRoute>
+                  <UserDashboard />
+                </PrivateRoute>
+              }
+            />
+            {/* <Route path="/E-Grantha/dashboard" element={<UserDashboard />} /> */}
+            <Route
+              path="/E-Grantha/coursedetail"
+              element={<CourseDetailPage />}
+            />
 
-          <Route path="/E-Grantha/admin" element={<AdminPanel />} />
-        </Routes>
+            <Route path="/E-Grantha/admin" element={<AdminPanel />} />
+          </Routes>
         </Fragment>
       </Router>
     </AuthProvider>
