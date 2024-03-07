@@ -6,6 +6,7 @@ const Video = require("../model/video");
 const { google } = require("googleapis");
 const fs = require("fs");
 const Contact = require("../model/contact");
+// const Admin = require("../model/admin");
 
 adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
@@ -382,5 +383,63 @@ exports.fuzzySearch = async (req, res) => {
     res
       .status(500)
       .json({ error: "An error occurred while fetching documents." });
+  }
+};
+
+////--------------------Register------------------------////
+const Admin = require("../model/admin");
+exports.signup = async (req, res) => {
+  try {
+    const data = await new Admin(req.body);
+    const existingUser = await User.findOne({ email: req.body.email });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "Email address already in use" });
+    }
+    await data.save();
+    const token = await data.generateAuthToken();
+    res.cookie("jwt", token, {
+      expires: new Date((Date.now() / +60) * 60 * 90 * 24),
+      httpOnly: true,
+    });
+    res.json({ status: "ok", data: data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+////------------------------login------------------------////
+const bcrypt = require("bcryptjs");
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await Admin.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isPassword = await bcrypt.compare(password, user.password);
+
+    if (!isPassword) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    // generate token
+    const token = await user.generateAuthToken();
+
+    // create cookie
+    res.cookie("jwt", token, {
+      expires: new Date(Date.now() + 60 * 60 * 90 * 24),
+      // httpOnly: true,
+    });
+
+    console.log("Login successful"); // Debug statement
+
+    res.status(200).json({ status: "success", token, email, password, user });
+  } catch (err) {
+    console.error("Error:", err); // Debug statement
+    res.status(400).json({ status: "fail from catch", err });
   }
 };

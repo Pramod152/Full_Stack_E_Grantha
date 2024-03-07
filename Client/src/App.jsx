@@ -1,5 +1,5 @@
 // App.jsx
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./NewDesign/UserPage/Auth/AuthContext";
 import PrivateRoute from "./NewDesign/UserPage/Auth/PrivateRoute";
