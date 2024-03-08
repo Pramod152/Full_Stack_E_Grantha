@@ -61,6 +61,7 @@ const RegisterForm = ({onSignInClick}) => {
   const saveAdminData = (data) => {
     localStorage.setItem("AdminData", JSON.stringify(data));
     Cookies.set('AdminData', JSON.stringify(data), { expires: 7 });
+    Cookies.set('AdminToken', data.token, { expires: 7 });
   };
 
   return (

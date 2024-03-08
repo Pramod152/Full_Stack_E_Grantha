@@ -20,9 +20,9 @@ adminRouter.route("/deleteUser/:userId").delete(auth, adminController.deleteUser
 // adminRouter.route("/uploadCourse").post(auth, adminController.uploadCourse);
 adminRouter
   .route("/uploadCourse")
-  .post(auth, uploadCourse.single("file"), adminController.uploadCourse);
+  .post(uploadCourse.single("file"), adminController.uploadCourse);
 ////------------------------update operations------------------------////
-adminRouter.route("/updateCourse/:videoId").put(auth, adminController.updateCourse);
+adminRouter.route("/updateCourse/:videoId").put( adminController.updateCourse);
 ////------------------------delete operations------------------------////
 adminRouter
   .route("/deleteCourse/:videoId")
@@ -35,6 +35,6 @@ adminRouter.route("/search").get( adminController.fuzzySearch);
 
 ////------------------------admin login------------------------////
 adminRouter.route("/signup").post( adminController.signup);
-adminRouter.route("/login").post(auth, adminController.login);
+adminRouter.route("/login").post(adminController.login);
 
 module.exports = adminRouter;

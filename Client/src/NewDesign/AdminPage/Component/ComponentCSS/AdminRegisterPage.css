@@ -12,14 +12,6 @@
   text-align: center;
 }
 
-.rregister_card_admin a {
-  color: blue;
-  text-decoration: none;
-}
-
-.rregister_card_admin a:hover {
-  text-decoration: underline;
-}
 
 .rregister_card_admin label {
   display: block;

@@ -32,12 +32,13 @@ const AddCourseModal = ({ isOpen, onClose }) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('video', file);
+    formData.append('file', file);
 
     // Example fetch usage
     fetch('http://localhost:3000/E-Grantha/admin/uploadCourse', {
       method: 'POST',
-      body: formData
+      body: formData,
+      credentials: 'include', // Include credentials for cookies
     })
       .then(response => response.json())
       .then(data => {

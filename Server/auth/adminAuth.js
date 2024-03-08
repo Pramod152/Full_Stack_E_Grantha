@@ -4,20 +4,16 @@ const Admin = require("../model/admin");
 const adminAuth = async (req, res, next) => {
   try {
     const token = req.cookies.Admintoken;
-    console.log("Token:", token);
-
     if (!token) {
       throw new Error("No JWT cookie found");
     }
 
-    const verifyAdmin = jwt.verify(token, "mynameisrajeshrajpandey");
-
+    const verifyAdmin = jwt.verify(token, 'mynameispramodghimire');
     if (!verifyAdmin) {
       throw new Error("Token verification failed");
     }
 
     const admin = await Admin.findOne({ _id: verifyAdmin._id });
-
     if (!admin) {
       throw new Error("Admin not found");
     }

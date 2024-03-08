@@ -6,30 +6,20 @@ const bcrypt = require("bcryptjs");
 const schema = new mongoose.Schema({
   userName: {
     type: String,
-    // required: [true, `Username must be filled`],
     trim: true,
   },
-
   email: {
     type: String,
-    reuired: [true, `name must be filled`],
+    required: [true, "Email must be provided"],
     trim: true,
     unique: true,
-    validate: [validator.isEmail, "provide valid email"],
+    validate: [validator.isEmail, "Please provide a valid email"],
   },
-
   password: {
     type: String,
-    require: [true, `please provide a passord`],
-    minlength: 4,
-    // select: false,
-  },
-  conformPassword: {
-    type: String,
-    require: [true, `please provide a passord`],
+    required: [true, "Please provide a password"],
     minlength: 4,
   },
-
   tokens: [
     {
       token: {
@@ -41,24 +31,15 @@ const schema = new mongoose.Schema({
 });
 
 schema.methods.generateAuthToken = async function () {
-  try {
-    const token = await jwt.sign({ _id: this._id }, "mynameisrajeshrajpandey");
-    this.tokens = this.tokens.concat({ token: token });
-    await this.save();
-    console.log(token);
-
-    return token;
-  } catch (err) {
-    console.log(err);
-  }
+  const token = jwt.sign({ _id: this._id }, 'mynameispramodghimire');
+  this.tokens = this.tokens.concat({ token });
+  await this.save();
+  return token;
 };
-
-//// pre ==>> hash password before saving it
 
 schema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
-    this.conformPassword = undefined;
   }
   next();
 });

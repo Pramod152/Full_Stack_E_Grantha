@@ -13,12 +13,13 @@ adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
 // // pandeyrajeshraj21@gmail.com
 const CLIENT_ID =
-  "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
+"823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04uGsh1gVb8jACgYIARAAGAQSNwF-L9IruoYtSbtZM3htUMrvRBJlJTN4x3K_Cv7QIiznMxE7Iwpm37A5S7Go7841eyDx7cii1Uk";
+"1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -150,10 +151,14 @@ exports.uploadCourse = async (req, res) => {
     console.log("Video saved to database!");
     console.log(video);
     res.sendStatus(200);
-  } catch (error) {
-    console.error("Error uploading video:", error.message);
+  }  catch (error) {
+    if (error.response && error.response.data && error.response.data.error) {
+        console.error("OAuth2 Error:", error.response.data.error);
+    } else {
+        console.error("Error uploading video:", error.message);
+    }
     res.sendStatus(500);
-  }
+}
 };
 
 // ////------------------------ get all courses courses------------------------////
@@ -399,10 +404,11 @@ exports.signup = async (req, res) => {
     }
     await data.save();
     const token = await data.generateAuthToken();
-    res.cookie("jwt", token, {
+    res.cookie("Admintoken", token, {
       expires: new Date((Date.now() / +60) * 60 * 90 * 24),
       httpOnly: true,
     });
+    console.log('Admintoken set:', token); // Debug statement
     res.json({ status: "ok", data: data });
   } catch (err) {
     console.log(err);
@@ -411,10 +417,10 @@ exports.signup = async (req, res) => {
 
 ////------------------------login------------------------////
 const bcrypt = require("bcryptjs");
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const user = await Admin.findOne({ email });
 
     if (!user) {
@@ -427,21 +433,18 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    // generate token
-    const Admintoken = await user.generateAuthToken();
+    const token = await user.generateAuthToken();
 
-    // create cookie
-    res.cookie("jwt", Admintoken, {
-      expires: new Date(Date.now() + 60 * 60 * 90 * 24),
-      // httpOnly: true,
+    res.cookie("jwt", token, {
+      expires: new Date(Date.now() + 86400000), // 24 hours
+      httpOnly: true,
     });
 
-    console.log("Login successful"); // Debug statement
-
-    res.status(200).json({ status: "success", token: Admintoken, email, password, user });
+    console.log("Login successful");
+    res.status(200).json({ status: "success", token });
   } catch (err) {
-    console.error("Error:", err); // Debug statement
-    res.status(400).json({ status: "fail from catch", err });
+    console.error("Error:", err);
+    res.status(400).json({ status: "fail", error: err.message });
   }
 };
 
