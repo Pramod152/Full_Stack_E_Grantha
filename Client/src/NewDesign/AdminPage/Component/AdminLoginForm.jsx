@@ -66,7 +66,7 @@ const AdminLoginForm = ({ onSignUpClick }) => {
       </div>
       <p>
         New to company?{" "}
-        <button onClick={onSignUpClick}>Sign up!</button>
+        <span onClick={onSignUpClick}>Sign up!</span>
       </p>
     </div>
   );

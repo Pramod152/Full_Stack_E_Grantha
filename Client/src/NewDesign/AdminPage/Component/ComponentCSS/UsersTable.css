@@ -1,7 +1,8 @@
 /* UsersTable.css */
 
 .users_table_container {
-    overflow-x: auto; /* Enable horizontal scrolling for the table */
+  overflow-x: scroll;
+  width: 90%; /* Enable horizontal scrolling for the table */
   }
   
   .users_table {

@@ -98,13 +98,7 @@ const CoursesTable = () => {
             <table className="courses_table">
                 <thead>
                     <tr>
-                        <th>
-                            <input
-                                type="checkbox"
-                                checked={selectAll}
-                                onChange={handleRowSelect}
-                            />
-                        </th>
+                        
                         <th>Title</th>
                         <th>Description</th>
                         <th>VideoId</th>
@@ -116,9 +110,7 @@ const CoursesTable = () => {
                 <tbody>
                     {courses.map(course => (
                         <tr key={course._id}>
-                            <td>
-                                <input type="checkbox" />
-                            </td>
+                            
                             <td>{course.title}</td>
                             <td>{course.description}</td>
                             <td>{course.videoId}</td>

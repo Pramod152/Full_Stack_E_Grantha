@@ -19,9 +19,6 @@ const ProfilePage = () => {
         setIsEditing(false); // Exit editing mode after submission
     };
 
-
-
-
     return (
         <div className="profile-container">
             <h1>Profile</h1>

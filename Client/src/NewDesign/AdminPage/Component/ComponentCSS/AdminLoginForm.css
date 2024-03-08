@@ -48,3 +48,13 @@
 .login_card_admin button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+.login_card_admin p span{
+  margin-top: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.login_card_admin p {
+  margin-top: 20px;
+  text-align: center;
+}

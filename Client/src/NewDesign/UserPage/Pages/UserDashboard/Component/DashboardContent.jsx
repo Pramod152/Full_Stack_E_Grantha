@@ -11,7 +11,7 @@ const UserDashboard = () => {
 
     return (
         <div>
-            <h1>Welcome, {userName}</h1>
+            <h1 style={{ fontSize: "40px" }}>Welcome, {userName}</h1>
             {/* Other content of UserDashboard */}
         </div>
     );
