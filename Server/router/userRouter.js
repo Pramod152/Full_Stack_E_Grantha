@@ -9,12 +9,12 @@ router.route("/login").post(controller.login);
 router.route("/secure").get(controller.secure);
 // router.route("/secure").get(auth, controller.secure);
 router.route("/getVideo/:videoId").get(controller.getVideo);
-router.route("/getUserSubscriptions").get(controller.getUserSubscriptions);
+router
+  .route("/getUserSubscriptions")
+  .get(auth, controller.getUserSubscriptions);
 router.route("/allVideos").get(controller.allVideos);
 router.route("/subscribe/:videoId").post(auth, controller.subscribe);
 router.route("/unsubscribe/:videoId").delete(controller.unsubscribe);
-
-router.route("/fuzzySearch").get(controller.fuzzySearch);
 
 ////contact us
 router.route("/contact").post(controller.contact);
