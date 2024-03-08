@@ -1,1 +1,0 @@
-// Course Render Garda muni tesko detail dekhauney

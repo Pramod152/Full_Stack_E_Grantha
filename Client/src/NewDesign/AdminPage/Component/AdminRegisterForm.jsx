@@ -1,57 +1,56 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { saveAdminData } from '../Auth/AdminDataManager'; // Import the saveAdminData function
-// import './ComponentCSS/AdminRegisterForm.css';
+import Cookies from 'js-cookie';
+import './ComponentCSS/AdminRegisterPage.css'
 
-const AdminRegisterForm = ({ onSignInClick }) => {
-  const navigate = useNavigate();
+const RegisterForm = ({onSignInClick}) => {
+  const [formData, setFormData] = useState({
+    userName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleSignIn = (e) => {
     e.preventDefault(); // Prevent default form submission
     onSignInClick(); // Call the function passed as prop to switch to login
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match'); // Set error state
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:3000/E-Grantha/admin/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userName: e.target.userName.value,
-          email: e.target.email.value,
-          password: e.target.password.value,
-          confirmPassword: e.target['confirm-password'].value,
-        }),
+          userName: formData.userName,
+          email: formData.email,
+          password: formData.password
+        })
       });
 
-      if (response.ok) {
-        // Registration successful, now log in the admin
-        const loginResponse = await fetch('http://localhost:3000/E-Grantha/admin/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: e.target.email.value,
-            password: e.target.password.value,
-          }),
-        });
+      const responseData = await response.json();
 
-        if (loginResponse.ok) {
-          const { token, admin } = await loginResponse.json();
-          // If login is successful, save the token and navigate to the main page
-          saveAdminData({ token, ...admin });
-          navigate('/E-Grantha/admin');
-        } else {
-          console.error('Login failed after registration');
-        }
+      if (response.ok) {
+        console.log('Admin registered successfully:', responseData.data);
+        saveAdminData(responseData.data);
+        alert('Admin registered successfully!');
       } else {
-        console.error('Registration failed');
+        console.error('Registration failed:', responseData.error);
+        setErrorMessage(responseData.error); // Set error state
       }
     } catch (error) {
       console.error('Error during registration:', error);
@@ -59,34 +58,41 @@ const AdminRegisterForm = ({ onSignInClick }) => {
     }
   };
 
+  const saveAdminData = (data) => {
+    localStorage.setItem("AdminData", JSON.stringify(data));
+    Cookies.set('AdminData', JSON.stringify(data), { expires: 7 });
+  };
+
   return (
-    <div className="admin-registration-card">
-      <h1>Admin Register</h1>
-      {errorMessage && <p>{errorMessage}</p>}
+    <div className='register_card_admin'>
+      <h2>Admin Registration Form</h2>
+      {/* {errorMessage && <p>{errorMessage}</p>} */}
+<div>
+      <form onSubmit={handleSubmit}>
       <div>
-        <form onSubmit={handleRegister}>
-          <div>
-            <label htmlFor="userName">Last Name</label>
-            <input type="text" id="userName" name="userName" required />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div>
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required />
-          </div>
-          <button type="submit">Register</button>
-        </form>
+        <label htmlFor="userName">Username:</label><br />
+        <input type="text" id="userName" name="userName" value={formData.userName} onChange={handleChange} required /><br />
+        </div>
+        <div>
+        <label htmlFor="email">Email:</label><br />
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required /><br />
+        </div>
+        <div>
+        <label htmlFor="password">Password:</label><br />
+        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required /><br />
+        </div>
+        <div>
+        <label htmlFor="confirmPassword">Confirm Password:</label><br />
+        <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required /><br /><br />
+        </div>
+        <button type="submit">Register</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message if there is any */}
+      </form>
       </div>
-      <p>Already have an admin account? <a href="#" onClick={handleSignIn}>Sign in!</a></p>
+
+      <p>Already have an account? <a href="" onClick={handleSignIn}>Sign in!</a></p>
     </div>
   );
 };
 
-export default AdminRegisterForm;
+export default RegisterForm;

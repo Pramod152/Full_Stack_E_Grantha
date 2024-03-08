@@ -22,6 +22,7 @@ const LoginForm = ({ onSignUpClick }) => {
     try {
       // Clear localStorage for a fresh start
       localStorage.clear();
+      
 
       // Here you should make the authentication request to your backend
       const response = await fetch("http://localhost:3000/E-Grantha/user/login", {
@@ -37,7 +38,7 @@ const LoginForm = ({ onSignUpClick }) => {
 
       if (response.ok) {
         // If authentication is successful, redirect to the previous page or main page
-        const { token, user } = await response.json();
+        const { token, user } = await response.json(); 
         setIsAuthenticated(true); // Update the state of the context
 
         // Save user data and token in local storage

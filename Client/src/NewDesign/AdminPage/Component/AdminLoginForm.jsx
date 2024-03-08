@@ -1,83 +1,88 @@
-import React, { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { AdminAuthContext } from "../Auth/AdminAuthContext";
-import { saveAdminData } from '../Auth/AdminDataManager'; // Import the saveAdminData function
-// import "./ComponentCSS/AdminLoginForm.css";
+import React, { useState, useContext } from 'react';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { AdminAuthContext } from '../Auth/AdminAuthContext';
+import './ComponentCSS/AdminLoginForm.css'
 
-const AdminLoginForm = ({ onSignUpClick }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const AdminLoginForm = ({onSignUpClick}) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [errorMessage, setErrorMessage] = useState("");
+
+
   const { setIsAdminAuthenticated } = useContext(AdminAuthContext);
+  const navigate = useNavigate();
 
   const handleSignUp = (e) => {
     e.preventDefault(); // Prevent default form submission
     onSignUpClick(); // Call the function passed as prop to switch to registration
   };
 
-  const handleSignIn = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      // Clear localStorage for a fresh start
-      localStorage.clear();
-
-      // Here you should make the authentication request to your backend
-      const response = await fetch("http://localhost:3000/E-Grantha/admin/login", {
-        method: "POST",
+      const response = await fetch('http://localhost:3000/E-Grantha/admin/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          email: e.target.email.value,
-          password: e.target.password.value,
-        }),
+        body: JSON.stringify(formData)
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
-        // If authentication is successful, redirect to the previous page or main page
-        const { token, admin } = await response.json();
-        setIsAdminAuthenticated(true); // Update the state of the context
-
-        // Save admin data and token in local storage
-        saveAdminData({ token, ...admin });
-
-        // Redirect to the previous page or main page
-        const { from } = location.state || { from: { pathname: "/E-Grantha/admin" } };
-        navigate(from);
+        console.log('Login successful:', responseData);
+        saveAdminData(responseData);
+        setIsAdminAuthenticated(true);
+        alert('Login successful!');
+        navigate('/E-Grantha/admin');
       } else {
-        // Handle authentication failure
-        setErrorMessage("Invalid Email or Password");
+       // Handle authentication failure
+       setErrorMessage("Invalid Email or Password");
       }
     } catch (error) {
       console.error("Error during authentication:", error);
       setErrorMessage("Error during authentication");
-    }
+      }
+  };
+
+  const saveAdminData = (data) => {
+    localStorage.setItem("AdminData", JSON.stringify(data));
+    Cookies.set('AdminData', JSON.stringify(data), { expires: 7 });
   };
 
   return (
-    <div className="admin-login-card">
-      <h1>Admin Sign in</h1>
+    <div className='login_card_admin'>
+      <h2>Admin Login Form</h2>
       {errorMessage && <p>{errorMessage}</p>}
       <div>
-        <form onSubmit={handleSignIn}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit">Sign in</button>
-        </form>
-      </div>
+      <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email:</label><br />
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required /><br />
+        </div>
+        <div>
+        <label htmlFor="password">Password:</label><br />
+        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required /><br /><br />
+        </div>
+        <button type="submit">Login</button>
+       </form>
+       </div>
       <p>
         New to company?{" "}
-        <a href="#" onClick={handleSignUp}>
+        <a href="/" onClick={handleSignUp}>
           Sign up!
         </a>
       </p>
+    
     </div>
   );
 };

@@ -16,7 +16,7 @@ router.route("/allVideos").get(controller.allVideos);
 router.route("/subscribe/:videoId").post(auth, controller.subscribe);
 router.route("/unsubscribe/:videoId").delete(controller.unsubscribe);
 
-router.route("/fuzzySearch").get(controller.fuzzySearch);
+// router.route("/fuzzySearch").get(controller.fuzzySearch);
 
 ////contact us
 router.route("/contact").post(controller.contact);

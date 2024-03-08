@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const schema = new mongoose.Schema({
   userName: {
     type: String,
-    required: [true, `name must be filled`],
+    // required: [true, `Username must be filled`],
     trim: true,
   },
 

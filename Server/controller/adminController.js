@@ -87,7 +87,7 @@ exports.getUser = async (req, res) => {
 // --------------------crud operation for videos in admin panel-----------------------
 //////////////////////////////////////////////////////////////////////////////////////
 ///////-----------------!!!!!!!!!!!!!!!-----------------/////
-// Upload video to Cloudflare Stream
+// Upload video to Youtube and save to database
 exports.uploadCourse = async (req, res) => {
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
   const { title, description } = req.body;
@@ -390,10 +390,11 @@ exports.fuzzySearch = async (req, res) => {
 const Admin = require("../model/admin");
 exports.signup = async (req, res) => {
   try {
-    const data = await new Admin(req.body);
-    const existingUser = await User.findOne({ email: req.body.email });
+    console.log(req.body)
+    const data= await new Admin(req.body);
+    const existingAdmin = await Admin.findOne({ email: req.body.email });
 
-    if (existingUser) {
+    if (existingAdmin) {
       return res.status(400).json({ error: "Email address already in use" });
     }
     await data.save();
@@ -413,7 +414,7 @@ const bcrypt = require("bcryptjs");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log(email, password);
     const user = await Admin.findOne({ email });
 
     if (!user) {
@@ -427,19 +428,20 @@ exports.login = async (req, res) => {
     }
 
     // generate token
-    const token = await user.generateAuthToken();
+    const Admintoken = await user.generateAuthToken();
 
     // create cookie
-    res.cookie("jwt", token, {
+    res.cookie("jwt", Admintoken, {
       expires: new Date(Date.now() + 60 * 60 * 90 * 24),
       // httpOnly: true,
     });
 
     console.log("Login successful"); // Debug statement
 
-    res.status(200).json({ status: "success", token, email, password, user });
+    res.status(200).json({ status: "success", token: Admintoken, email, password, user });
   } catch (err) {
     console.error("Error:", err); // Debug statement
     res.status(400).json({ status: "fail from catch", err });
   }
 };
+

@@ -9,10 +9,10 @@ const auth = require("../auth/adminAuth");
 adminRouter.route("/").get(adminController.dashboard);
 adminRouter.route("/allUser").get(adminController.allUser);
 adminRouter.route("/user/:userId").get(adminController.getUser);
-adminRouter.route("/course").get(adminController.courses);
+adminRouter.route("/course").get( adminController.courses);
 
 // ////------------------------Delete operations for user------------------------////
-adminRouter.route("/deleteUser/:userId").delete(adminController.deleteUser);
+adminRouter.route("/deleteUser/:userId").delete(auth, adminController.deleteUser);
 
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 ////------------------------router fro video------------------------////
@@ -22,11 +22,11 @@ adminRouter
   .route("/uploadCourse")
   .post(auth, uploadCourse.single("file"), adminController.uploadCourse);
 ////------------------------update operations------------------------////
-adminRouter.route("/updateCourse/:videoId").put(adminController.updateCourse);
+adminRouter.route("/updateCourse/:videoId").put(auth, adminController.updateCourse);
 ////------------------------delete operations------------------------////
 adminRouter
   .route("/deleteCourse/:videoId")
-  .delete( adminController.deleteCourse);
+  .delete(auth, adminController.deleteCourse);
 
 ////------------------------get operations for contact------------------------////
 adminRouter.route("/contact").get( adminController.contact);
@@ -34,7 +34,7 @@ adminRouter.route("/contact").get( adminController.contact);
 adminRouter.route("/search").get( adminController.fuzzySearch);
 
 ////------------------------admin login------------------------////
-adminRouter.route("/signup").post(adminController.signup);
-adminRouter.route("/login").post(adminController.login);
+adminRouter.route("/signup").post( adminController.signup);
+adminRouter.route("/login").post(auth, adminController.login);
 
 module.exports = adminRouter;
