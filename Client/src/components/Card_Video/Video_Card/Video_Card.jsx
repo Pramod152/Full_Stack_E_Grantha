@@ -7,39 +7,30 @@ import { getUserData } from "../../../NewDesign/UserPage/Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
 import "./Video_Card.css";
 
-const Video_Card = ({ title, description, videoLink, video_id }) => {
+const Video_Card = ({ title, description,videoId, video_id }) => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleAuth = () => {
     if (isAuthenticated) {
       const userData = getUserData();
-      if (userData) {
-        const userId = userData._id;
-        const authToken = userData.token;
+      console.log(video_id)
+      console.log(userData)
 
-        axios
-          .post(
-            `http://localhost:3000/E-Grantha/user/subscribe/${video_id}`,
-            {},
-            {
-              withCredentials: true, // Ensure credentials are sent with the request
-              headers: {
-                Authorization: `Bearer ${authToken}`, // Include the JWT token in the request headers
-              },
-            }
-          )
-          .then((response) => {
-            console.log("User subscribed to the video successfully.");
-          })
-          .catch((error) => {
-            console.error("Error subscribing to the video:", error);
-          });
+      if (userData) {
+        axios.post(`http://localhost:3000/E-Grantha/user/subscribe/${video_id}`, null, {
+          withCredentials: true,
+          
+        })
+        .then(() => {
+          console.log("User subscribed to the video successfully.");
+        })
+        .catch(error => {
+          console.error("Error subscribing to the video:", error);
+        });
       } else {
         console.error("User data not found.");
       }
-    } else {
-      navigate("/E-Grantha/register");
     }
   };
 
@@ -56,7 +47,7 @@ const Video_Card = ({ title, description, videoLink, video_id }) => {
     return urlParams.get("v");
   };
 
-  const videoId = getVideoIdFromLink(videoLink);
+  // const videoId = getVideoIdFromLink(videoLink);
 
   return (
     <div className="card">

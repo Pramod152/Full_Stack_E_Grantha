@@ -22,8 +22,7 @@ const AdminRegisterForm = ({ onSignInClick }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          firstName: e.target.firstName.value,
-          lastName: e.target.lastName.value,
+          userName: e.target.userName.value,
           email: e.target.email.value,
           password: e.target.password.value,
           confirmPassword: e.target['confirm-password'].value,
@@ -47,7 +46,7 @@ const AdminRegisterForm = ({ onSignInClick }) => {
           const { token, admin } = await loginResponse.json();
           // If login is successful, save the token and navigate to the main page
           saveAdminData({ token, ...admin });
-          navigate('/E-Grantha/admin/register');
+          navigate('/E-Grantha/admin');
         } else {
           console.error('Login failed after registration');
         }
@@ -67,12 +66,8 @@ const AdminRegisterForm = ({ onSignInClick }) => {
       <div>
         <form onSubmit={handleRegister}>
           <div>
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" required />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" required />
+            <label htmlFor="userName">Last Name</label>
+            <input type="text" id="userName" name="userName" required />
           </div>
           <div>
             <label htmlFor="email">Email</label>

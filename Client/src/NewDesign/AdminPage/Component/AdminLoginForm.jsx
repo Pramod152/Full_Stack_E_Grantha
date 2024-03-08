@@ -26,7 +26,7 @@ const AdminLoginForm = ({ onSignUpClick }) => {
       const response = await fetch("http://localhost:3000/E-Grantha/admin/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           email: e.target.email.value,

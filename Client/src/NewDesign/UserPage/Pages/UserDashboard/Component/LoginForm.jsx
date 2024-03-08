@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../Auth/AuthContext";
 import { saveUserData } from '../../../Auth/UserDataManager'; // Import the saveUserData function
+import Cookies from 'js-cookie'; // Import js-cookie for handling cookies
 import "./ComponentCSS/LoginForm.css";
 
 const LoginForm = ({ onSignUpClick }) => {
@@ -41,6 +42,9 @@ const LoginForm = ({ onSignUpClick }) => {
 
         // Save user data and token in local storage
         saveUserData({ token, ...user });
+
+        // Set cookie with token
+        Cookies.set('token', token, { expires: 7 }); // Expires in 7 days
 
         // Redirect to the previous page or main page
         const { from } = location.state || { from: { pathname: "/E-Grantha" } };
