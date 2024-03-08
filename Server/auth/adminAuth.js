@@ -8,7 +8,7 @@ const adminAuth = async (req, res, next) => {
       throw new Error("No JWT cookie found");
     }
 
-    const verifyAdmin = jwt.verify(token, 'mynameispramodghimire');
+    const verifyAdmin = jwt.verify(token, "mynameispramodghimire");
     if (!verifyAdmin) {
       throw new Error("Token verification failed");
     }

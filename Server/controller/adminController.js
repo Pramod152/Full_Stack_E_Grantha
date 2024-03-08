@@ -13,13 +13,12 @@ adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
 // // pandeyrajeshraj21@gmail.com
 const CLIENT_ID =
-"823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
+  "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-"1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
+  "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
-
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -151,14 +150,14 @@ exports.uploadCourse = async (req, res) => {
     console.log("Video saved to database!");
     console.log(video);
     res.sendStatus(200);
-  }  catch (error) {
+  } catch (error) {
     if (error.response && error.response.data && error.response.data.error) {
-        console.error("OAuth2 Error:", error.response.data.error);
+      console.error("OAuth2 Error:", error.response.data.error);
     } else {
-        console.error("Error uploading video:", error.message);
+      console.error("Error uploading video:", error.message);
     }
     res.sendStatus(500);
-}
+  }
 };
 
 // ////------------------------ get all courses courses------------------------////
@@ -377,7 +376,6 @@ exports.fuzzySearch = async (req, res) => {
   try {
     // Fetch documents from the database
     const documents = await Video.find({}); // Fetch all for example, adjust as needed
-    
 
     // Perform fuzzy search on fetched documents
     const results = fuzzySearch(query, documents, threshold);
@@ -395,8 +393,8 @@ exports.fuzzySearch = async (req, res) => {
 const Admin = require("../model/admin");
 exports.signup = async (req, res) => {
   try {
-    console.log(req.body)
-    const data= await new Admin(req.body);
+    console.log(req.body);
+    const data = await new Admin(req.body);
     const existingAdmin = await Admin.findOne({ email: req.body.email });
 
     if (existingAdmin) {
@@ -408,7 +406,7 @@ exports.signup = async (req, res) => {
       expires: new Date((Date.now() / +60) * 60 * 90 * 24),
       httpOnly: true,
     });
-    console.log('Admintoken set:', token); // Debug statement
+    console.log("Admintoken set:", token); // Debug statement
     res.json({ status: "ok", data: data });
   } catch (err) {
     console.log(err);
@@ -447,4 +445,3 @@ exports.login = async (req, res) => {
     res.status(400).json({ status: "fail", error: err.message });
   }
 };
-
