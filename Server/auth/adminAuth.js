@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../model/user");
+const User = require("../model/admin");
 
 const adminAuth = async (req, res, next) => {
   try {
@@ -25,10 +25,6 @@ const adminAuth = async (req, res, next) => {
 
     req.token = token;
     req.user = user;
-
-    if (!user.isAdmin) {
-      throw new Error("User is not authorized as admin");
-    }
 
     next();
   } catch (err) {

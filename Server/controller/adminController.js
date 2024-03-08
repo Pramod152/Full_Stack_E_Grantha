@@ -17,7 +17,7 @@ const CLIENT_ID =
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04uGsh1gVb8jACgYIARAAGAQSNwF-L9IruoYtSbtZM3htUMrvRBJlJTN4x3K_Cv7QIiznMxE7Iwpm37A5S7Go7841eyDx7cii1Uk";
+  "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(

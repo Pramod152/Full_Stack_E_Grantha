@@ -248,3 +248,109 @@ exports.contact = async (req, res) => {
     console.log(err);
   }
 };
+
+////------------------------fuzzy search------------------------////
+exports.fuzzySearch = async (req, res) => {
+  // Function to calculate Levenshtein distance
+  function levenshteinDistance(s1, s2) {
+    const m = s1.length;
+    const n = s2.length;
+    const dp = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+
+    for (let i = 0; i <= m; i++) {
+      dp[i][0] = i;
+    }
+
+    for (let j = 0; j <= n; j++) {
+      dp[0][j] = j;
+    }
+
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + cost
+        );
+      }
+    }
+
+    return dp[m][n];
+  }
+
+  // Function to perform fuzzy search on documents with misspelling handling
+  function fuzzySearch(query, documents, threshold) {
+    const results = [];
+
+    for (const doc of documents) {
+      const titleWords = doc.title.toLowerCase().split(/\s+/);
+      const descriptionWords = doc.description.toLowerCase().split(/\s+/);
+      const queryWords = query.toLowerCase().split(/\s+/);
+
+      let isMatch = false;
+
+      for (const queryWord of queryWords) {
+        let titleMatch = false;
+        let descriptionMatch = false;
+
+        for (const titleWord of titleWords) {
+          if (titleWord.includes(queryWord)) {
+            titleMatch = true;
+            break;
+          } else if (levenshteinDistance(titleWord, queryWord) <= threshold) {
+            titleMatch = true;
+            break;
+          }
+        }
+
+        for (const descriptionWord of descriptionWords) {
+          if (descriptionWord.includes(queryWord)) {
+            descriptionMatch = true;
+            break;
+          } else if (
+            levenshteinDistance(descriptionWord, queryWord) <= threshold
+          ) {
+            descriptionMatch = true;
+            break;
+          }
+        }
+
+        if (titleMatch || descriptionMatch) {
+          isMatch = true;
+          break;
+        }
+      }
+
+      if (isMatch) {
+        results.push({ document: doc });
+      }
+    }
+
+    return results;
+  }
+
+  // Get the query and threshold from the request
+  const query = req.query.q;
+  const threshold = parseInt(req.query.threshold) || 1;
+
+  if (!query) {
+    return res.status(400).json({ error: 'Query parameter "q" is required.' });
+  }
+
+  try {
+    // Fetch documents from the database
+    const documents = await Video.find({}); // Fetch all for example, adjust as needed
+    console.log(documents);
+
+    // Perform fuzzy search on fetched documents
+    const results = fuzzySearch(query, documents, threshold);
+
+    // Respond with the search results
+    res.json({ results });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching documents." });
+  }
+};
