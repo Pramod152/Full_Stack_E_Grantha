@@ -1,42 +1,38 @@
-import "./Search_Box.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import axios from 'axios';
+// import './SearchBox.css';
 
-const SearchBox = ({ size, iconName }) => {
-    const getSizeClassName = () => {
-        switch (size) {
-            case "small":
-                return "search-box-small";
-            case "medium":
-                return "search-box-medium";
-            case "large":
-                return "search-box-large";
-            default:
-                return "";
-        }
-    };
+const SearchBox = ({ onSearch }) => {
+  const [query, setQuery] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`http://localhost:3000/E-Grantha/user/fuzzySearch?q=Admin&threshold=2`);
+      if (response.status === 200) {
+        onSearch(response.data.results);
+        console.log('This is '+ response.data.results); // Pass search results to parent component
+      } else {
+        console.error('Failed to fetch search results');
+      }
+    } catch (error) {
+      console.error('Error searching:', error);
+    }
+  };
 
-    return (
-        <>
-            <div className="search-box">
-                <input
-                    type="text"
-                    placeholder="Search Courses"
-                    id={`${getSizeClassName()}`}
-                />
-                
-                <span className="icon">
-                    <FontAwesomeIcon icon={iconName} />
-                </span>
-            </div>
-        </>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="search-box">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+        className="search-input"
+      />
+      <button type="submit" className="search-btn">
+        <i className="fas fa-search"></i>
+      </button>
+    </form>
+  );
 };
-
-SearchBox.propTypes = {
-    size: PropTypes.string,
-    iconName: PropTypes.object.isRequired,
-};
-
 
 export default SearchBox;

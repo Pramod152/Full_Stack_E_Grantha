@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import Cookies from 'js-cookie'; // Import Cookies library
 import './AdminPanel.css';
@@ -6,6 +6,7 @@ import UsersTable from '../Component/UsersTable'; // Import the UsersTable compo
 import CoursesTable from '../Component/CoursesTable';
 import DashBoardContent from '../Component/DashBoardContent';
 import Messages from '../Component/Messages';
+import { AdminAuthContext } from '../Auth/AdminAuthContext';
 
 const clearAdminData = () => {
   localStorage.removeItem('AdminData');
@@ -14,11 +15,13 @@ const clearAdminData = () => {
 
 const AdminPanel = () => {
   const [selectedComponent, setSelectedComponent] = useState('Dashboard');
+  const {setIsAdminAuthenticated} = useContext(AdminAuthContext); // Initialize isAdminAuthenticated from AdminAuthContext
   const navigate = useNavigate(); // Initialize navigate
 
   const handleNavClick = (componentName) => {
     setSelectedComponent(componentName);
     if (componentName === 'LogOut') {
+      setIsAdminAuthenticated(false); // Set isAdminAuthenticated to false
       clearAdminData(); // Call clearAdminData function to remove admin data
       navigate('/E-Grantha/adminregister'); // Redirect to '/login' when LogOut is clicked using navigate
     }

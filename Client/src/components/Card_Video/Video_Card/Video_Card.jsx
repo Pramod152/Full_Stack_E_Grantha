@@ -7,15 +7,13 @@ import { getUserData } from "../../../NewDesign/UserPage/Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
 import "./Video_Card.css";
 
-const Video_Card = ({ title, description,videoId, video_id }) => {
+const Video_Card = ({ title, description, videoId, video_id }) => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleAuth = () => {
     if (isAuthenticated) {
       const userData = getUserData();
-      console.log(video_id)
-      console.log(userData)
 
       if (userData) {
         axios.post(`http://localhost:3000/E-Grantha/user/subscribe/${video_id}`, null, {
@@ -70,14 +68,8 @@ const Video_Card = ({ title, description,videoId, video_id }) => {
       </div>
       <h2 className="heading">{title}</h2>
       <p id="description">
-        {description.split(" ").slice(0, 10).join(" ")}
-        {description.split(" ").length > 10 ? (
-          <a href="#" style={{ color: "black", textDecoration: "none" }}>
-            ...{" "}
-          </a>
-        ) : (
-          ""
-        )}
+        {description && description.split(" ").slice(0, 10).join(" ")}
+        
       </p>
       <div className="stats"></div>
       <button onClick={handleAuth} className="buy-now-button">

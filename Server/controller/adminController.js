@@ -377,7 +377,7 @@ exports.fuzzySearch = async (req, res) => {
   try {
     // Fetch documents from the database
     const documents = await Video.find({}); // Fetch all for example, adjust as needed
-    console.log(documents);
+    
 
     // Perform fuzzy search on fetched documents
     const results = fuzzySearch(query, documents, threshold);

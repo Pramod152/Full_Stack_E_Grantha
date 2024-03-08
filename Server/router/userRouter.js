@@ -21,4 +21,7 @@ router.route("/unsubscribe/:videoId").delete(controller.unsubscribe);
 ////contact us
 router.route("/contact").post(controller.contact);
 
+// fuzzy search
+router.route("/fuzzySearch").get(controller.fuzzySearch);
+
 module.exports = router;

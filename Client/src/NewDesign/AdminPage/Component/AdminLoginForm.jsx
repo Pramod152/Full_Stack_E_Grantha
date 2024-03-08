@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import './ComponentCSS/AdminLoginForm.css';
+import {AdminAuthContext} from '../Auth/AdminAuthContext'
 
 const AdminLoginForm = ({ onSignUpClick }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const AdminLoginForm = ({ onSignUpClick }) => {
     password: ''
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const { setIsAdminAuthenticated } = useContext(AdminAuthContext);
 
   const navigate = useNavigate();
 
@@ -30,6 +32,9 @@ const AdminLoginForm = ({ onSignUpClick }) => {
       if (response.ok) {
         const { token } = await response.json();
         Cookies.set('jwt', token, { expires: 100 }); // Expires in 1 day
+
+        setIsAdminAuthenticated(true);
+
         alert('Login successful!');
         navigate('/E-Grantha/admin');
       } else {
