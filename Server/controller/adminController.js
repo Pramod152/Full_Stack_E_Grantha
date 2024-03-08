@@ -87,7 +87,7 @@ exports.getUser = async (req, res) => {
 // --------------------crud operation for videos in admin panel-----------------------
 //////////////////////////////////////////////////////////////////////////////////////
 ///////-----------------!!!!!!!!!!!!!!!-----------------/////
-// Upload video to Cloudflare Stream
+// Upload video to Youtube and save to database
 exports.uploadCourse = async (req, res) => {
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
   const { title, description } = req.body;
@@ -151,7 +151,11 @@ exports.uploadCourse = async (req, res) => {
     console.log(video);
     res.sendStatus(200);
   } catch (error) {
-    console.error("Error uploading video:", error.message);
+    if (error.response && error.response.data && error.response.data.error) {
+      console.error("OAuth2 Error:", error.response.data.error);
+    } else {
+      console.error("Error uploading video:", error.message);
+    }
     res.sendStatus(500);
   }
 };
@@ -372,7 +376,6 @@ exports.fuzzySearch = async (req, res) => {
   try {
     // Fetch documents from the database
     const documents = await Video.find({}); // Fetch all for example, adjust as needed
-    console.log(documents);
 
     // Perform fuzzy search on fetched documents
     const results = fuzzySearch(query, documents, threshold);
@@ -390,18 +393,20 @@ exports.fuzzySearch = async (req, res) => {
 const Admin = require("../model/admin");
 exports.signup = async (req, res) => {
   try {
+    console.log(req.body);
     const data = await new Admin(req.body);
-    const existingUser = await User.findOne({ email: req.body.email });
+    const existingAdmin = await Admin.findOne({ email: req.body.email });
 
-    if (existingUser) {
+    if (existingAdmin) {
       return res.status(400).json({ error: "Email address already in use" });
     }
     await data.save();
     const token = await data.generateAuthToken();
-    res.cookie("jwt", token, {
+    res.cookie("Admintoken", token, {
       expires: new Date((Date.now() / +60) * 60 * 90 * 24),
       httpOnly: true,
     });
+    console.log("Admintoken set:", token); // Debug statement
     res.json({ status: "ok", data: data });
   } catch (err) {
     console.log(err);
@@ -410,10 +415,10 @@ exports.signup = async (req, res) => {
 
 ////------------------------login------------------------////
 const bcrypt = require("bcryptjs");
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await Admin.findOne({ email });
 
     if (!user) {
@@ -426,20 +431,17 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    // generate token
     const token = await user.generateAuthToken();
 
-    // create cookie
     res.cookie("jwt", token, {
-      expires: new Date(Date.now() + 60 * 60 * 90 * 24),
-      // httpOnly: true,
+      expires: new Date(Date.now() + 86400000), // 24 hours
+      httpOnly: true,
     });
 
-    console.log("Login successful"); // Debug statement
-
-    res.status(200).json({ status: "success", token, email, password, user });
+    console.log("Login successful");
+    res.status(200).json({ status: "success", token });
   } catch (err) {
-    console.error("Error:", err); // Debug statement
-    res.status(400).json({ status: "fail from catch", err });
+    console.error("Error:", err);
+    res.status(400).json({ status: "fail", error: err.message });
   }
 };

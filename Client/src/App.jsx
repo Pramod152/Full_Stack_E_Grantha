@@ -12,7 +12,7 @@ import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserReg
 import UserDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
 import AdminPanel from './NewDesign/AdminPage/Pages/AdminPanel'
 import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
-import AdminRegistrationPage from './NewDesign/AdminPage/Pages/Login_Signup'
+import AdminRegistrationPage from './NewDesign/AdminPage/Pages/AdminRegistrationPage'
 import AdminPrivateRoute from "./NewDesign/AdminPage/Auth/AdminPrivateRoute";
 const App = () => {
   return (
@@ -37,7 +37,12 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/E-Grantha/adminregister" element={<AdminRegistrationPage />} />
-            <Route path="/E-Grantha/admin" element={<AdminPanel />} />
+
+            <Route path="/E-Grantha/admin" element={
+              <AdminPrivateRoute>
+            <AdminPanel />
+            </AdminPrivateRoute>
+            } />
           </Routes>
         </Router>
       </AdminAuthProvider>

@@ -23,8 +23,8 @@ const Table = () => {
   };
 
   return (
-    <div className="table-container">
-      <table className="contact-table">
+    <div className="table_container">
+      <table className="messages_table">
         <thead>
           <tr>
             <th>Name</th>

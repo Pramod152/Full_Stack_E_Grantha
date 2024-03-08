@@ -1,0 +1,44 @@
+/* RegisterForm.css */
+.rregister_card_admin {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #0000001a;
+  padding: 40px;
+}
+
+.rregister_card_admin h1 {
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+
+.rregister_card_admin label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.rregister_card_admin input[type="text"],
+.rregister_card_admin input[type="email"],
+.rregister_card_admin input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.rregister_card_admin button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rregister_card_admin button[type="submit"]:hover {
+  background-color: #0056b3;
+}

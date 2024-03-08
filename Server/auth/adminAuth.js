@@ -1,30 +1,25 @@
 const jwt = require("jsonwebtoken");
-const User = require("../model/admin");
+const Admin = require("../model/admin");
 
 const adminAuth = async (req, res, next) => {
   try {
-    // Ensure that req.cookies is defined before accessing req.cookies.jwt
-    const token = req.cookies && req.cookies.jwt;
-
+    const token = req.cookies.Admintoken;
     if (!token) {
       throw new Error("No JWT cookie found");
-      cd;
     }
 
-    const verifyUser = jwt.verify(token, "mynameisrajeshrajpandey");
-
-    if (!verifyUser) {
+    const verifyAdmin = jwt.verify(token, "mynameispramodghimire");
+    if (!verifyAdmin) {
       throw new Error("Token verification failed");
     }
 
-    const user = await User.findOne({ _id: verifyUser._id });
-
-    if (!user) {
-      throw new Error("User not found");
+    const admin = await Admin.findOne({ _id: verifyAdmin._id });
+    if (!admin) {
+      throw new Error("Admin not found");
     }
 
     req.token = token;
-    req.user = user;
+    req.admin = admin;
 
     next();
   } catch (err) {
@@ -32,7 +27,7 @@ const adminAuth = async (req, res, next) => {
     res.status(401).json({
       status: "fail",
       message: "Unauthorized",
-      error: err.message, // Include the error message for debugging
+      error: err.message,
     });
   }
 };
