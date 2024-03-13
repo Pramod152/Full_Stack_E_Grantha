@@ -52,6 +52,8 @@ const CourseSection = ({ isHome }) => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    const trimmedQuery = searchQuery.trim().replace(/\s+/g, ' '); // Trim leading/trailing whitespaces and replace consecutive whitespaces with a single space
+    setSearchQuery(trimmedQuery);
     handleSearch(searchQuery);
   };
 

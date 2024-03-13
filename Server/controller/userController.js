@@ -141,7 +141,9 @@ exports.subscribe = async (req, res) => {
 
 exports.unsubscribe = async (req, res) => {
   try {
+   
     const userId = req.user._id; // Assuming you have middleware to extract the user from the request
+   console.log(userId)
     const videoId = req.params.videoId;
 
     const user = await User.findById(userId);
@@ -251,107 +253,128 @@ exports.contact = async (req, res) => {
 ////------------------------search------------------------////
 
 ////------------------------fuzzy search------------------------////
-exports.fuzzySearch = async (req, res) => {
-  // Function to calculate Levenshtein distance
-  function levenshteinDistance(s1, s2) {
-    const m = s1.length;
-    const n = s2.length;
-    const dp = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+// const Video = require('./models/Video'); // Assuming you have a Video model
 
-    for (let i = 0; i <= m; i++) {
+// Function to calculate Levenshtein distance
+function levenshteinDistance(s1, s2) {
+  const m = s1.length;
+  const n = s2.length;
+  const dp = Array.from(Array(m + 1), () => Array(n + 1).fill(0));
+
+  for (let i = 0; i <= m; i++) {
       dp[i][0] = i;
-    }
-
-    for (let j = 0; j <= n; j++) {
-      dp[0][j] = j;
-    }
-
-    for (let i = 1; i <= m; i++) {
-      for (let j = 1; j <= n; j++) {
-        const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
-        dp[i][j] = Math.min(
-          dp[i - 1][j] + 1,
-          dp[i][j - 1] + 1,
-          dp[i - 1][j - 1] + cost
-        );
-      }
-    }
-
-    return dp[m][n];
   }
 
-  // Function to perform fuzzy search on documents with misspelling handling
+  for (let j = 0; j <= n; j++) {
+      dp[0][j] = j;
+  }
+
+  for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+          const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(
+              dp[i - 1][j] + 1,
+              dp[i][j - 1] + 1,
+              dp[i - 1][j - 1] + cost
+          );
+      }
+  }
+
+  return dp[m][n];
+}
+
+// Function to perform fuzzy search on documents with misspelling handling
+exports.fuzzySearch = async function(req, res) {
+  const excludedWords = [
+      // List of words to be excluded from the search
+      "I", "you", "he", "she", "it", "we", "they",
+      "me", "you", "him", "her", "it", "us", "them",
+      "mine", "yours", "his", "hers", "its", "ours", "theirs",
+      "this", "that", "these", "those",
+      "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves",
+      "each other", "one another",
+      "anyone", "everyone", "someone", "nobody", "everybody", "somebody", "no one", "each", "either", "neither", "anything", "everything", "something", "nothing", "all", "any", "some", "none", "few", "many", "several", "both", "several", "many", "much", "more", "most", "little", "less", "least",
+      "who", "whom", "whose", "which", "that",
+      "who", "whom", "whose", "which", "what",
+      "about", "above", "across", "after", "against", "along", "among", "around", "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "but", "by", "concerning", "despite", "down", "during", "except", "for", "from", "in", "inside", "into", "like", "near", "of", "off", "on", "onto", "out", "outside", "over", "past", "regarding", "round", "since", "through", "throughout", "till", "to", "toward", "under", "underneath", "until", "unto", "up", "upon", "with", "within", "without",
+      "according to", "apart from", "as for", "aside from", "because of", "by means of", "in addition to", "in front of", "in place of", "in spite of", "instead of", "on account of", "out of", "with regard to",
+      "for", "and", "nor", "but", "or", "yet", "so",
+      "after", "although", "as", "as if", "as long as", "as though", "because", "before", "even if", "even though", "if", "in order that", "lest", "once", "provided that", "since", "so that", "than", "that", "though", "till", "unless", "until", "when", "whenever", "where", "wherever", "while",
+      "both...and", "either...or", "neither...nor", "not only...but also", "whether...or"
+  ];
+
+  // Function to filter out excluded words
+  function filterExcludedWords(words) {
+      return words.filter(word => !excludedWords.includes(word));
+  }
+
+  // Function to perform fuzzy search
   function fuzzySearch(query, documents, threshold) {
-    const results = [];
+      const results = [];
 
-    for (const doc of documents) {
-      const titleWords = doc.title.toLowerCase().split(/\s+/);
-      const descriptionWords = doc.description.toLowerCase().split(/\s+/);
-      const queryWords = query.toLowerCase().split(/\s+/);
+      for (const doc of documents) {
+          const titleWords = filterExcludedWords(doc.title.toLowerCase().split(/\s+/));
+          const descriptionWords = filterExcludedWords(doc.description.toLowerCase().split(/\s+/));
+          const queryWords = filterExcludedWords(query.toLowerCase().split(/\s+/));
 
-      let isMatch = false;
+          let isMatch = false;
 
-      for (const queryWord of queryWords) {
-        let titleMatch = false;
-        let descriptionMatch = false;
+          for (const queryWord of queryWords) {
+              let titleMatch = false;
+              let descriptionMatch = false;
 
-        for (const titleWord of titleWords) {
-          if (titleWord.includes(queryWord)) {
-            titleMatch = true;
-            break;
-          } else if (levenshteinDistance(titleWord, queryWord) <= threshold) {
-            titleMatch = true;
-            break;
+              for (const titleWord of titleWords) {
+                  if (titleWord.includes(queryWord)) {
+                      titleMatch = true;
+                      break;
+                  } else if (levenshteinDistance(titleWord, queryWord) <= threshold) {
+                      titleMatch = true;
+                      break;
+                  }
+              }
+
+              for (const descriptionWord of descriptionWords) {
+                  if (descriptionWord.includes(queryWord)) {
+                      descriptionMatch = true;
+                      break;
+                  } else if (levenshteinDistance(descriptionWord, queryWord) <= threshold) {
+                      descriptionMatch = true;
+                      break;
+                  }
+              }
+
+              if (titleMatch || descriptionMatch) {
+                  isMatch = true;
+                  break;
+              }
           }
-        }
 
-        for (const descriptionWord of descriptionWords) {
-          if (descriptionWord.includes(queryWord)) {
-            descriptionMatch = true;
-            break;
-          } else if (
-            levenshteinDistance(descriptionWord, queryWord) <= threshold
-          ) {
-            descriptionMatch = true;
-            break;
+          if (isMatch) {
+              results.push({ document: doc });
           }
-        }
-
-        if (titleMatch || descriptionMatch) {
-          isMatch = true;
-          break;
-        }
       }
 
-      if (isMatch) {
-        results.push({ document: doc });
-      }
-    }
-
-    return results;
+      return results;
   }
 
   // Get the query and threshold from the request
   const query = req.query.q;
-  const threshold = parseInt(req.query.threshold) || 1;
+  const threshold = parseInt(req.query.threshold) || 2;
 
   if (!query) {
-    return res.status(400).json({ error: 'Query parameter "q" is required.' });
+      return res.status(400).json({ error: 'Query parameter "q" is required.' });
   }
 
   try {
-    // Fetch documents from the database
-    const documents = await Video.find({}); // Fetch all for example, adjust as needed
-    console.log(documents);
+      // Fetch documents from the database
+      const documents = await Video.find({}); // Fetch all for example, adjust as needed
 
-    // Perform fuzzy search on fetched documents
-    const results = fuzzySearch(query, documents, threshold);
+      // Perform fuzzy search on fetched documents
+      const results = fuzzySearch(query, documents, threshold);
 
-    // Respond with the search results
-    res.json({ results });
+      // Respond with the search results
+      res.json({ results });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching documents." });
+      res.status(500).json({ error: "An error occurred while fetching documents." });
   }
 };
