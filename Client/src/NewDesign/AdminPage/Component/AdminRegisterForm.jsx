@@ -91,7 +91,7 @@ const RegisterForm = ({onSignInClick}) => {
       </form>
       </div>
 
-      <p>Already have an account? <a href="" onClick={handleSignIn}>Sign in!</a></p>
+      <p >Already have an account? <a href="" onClick={handleSignIn}>Sign in!</a></p>
     </div>
   );
 };

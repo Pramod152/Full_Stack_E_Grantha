@@ -23,8 +23,8 @@ const SubscribedCourses = () => {
     }
   };
   return (
-    <div className="subscribed-courses-container">
-      <table className="subscribed-courses-table">
+    <div className="subscribed_courses_container">
+      <table className="subscribed_courses_table">
         <thead>
           <tr>
             <th>Title</th>
@@ -37,7 +37,7 @@ const SubscribedCourses = () => {
             <tr key={course._id}>
               <td>{course.title}</td>
               <td>{course.description}</td>
-              <td><a href={course.videoLink} target="_blank" rel="noopener noreferrer">Watch</a></td>
+              <td>{course.videoLink}</td>
             </tr>
           ))}
         </tbody>

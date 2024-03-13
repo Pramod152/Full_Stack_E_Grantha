@@ -36,10 +36,6 @@
     color: #333;
 }
 
-#description::after {
-    content: "See More";
-    color: blue;
-}
 
 .stats {
     display: flex;

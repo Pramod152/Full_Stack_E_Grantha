@@ -7,6 +7,8 @@ const userAuth = async (req, res, next) => {
     // Ensure that req.cookies is defined before accessing req.cookies.jwt
     const token = req.cookies.token;
     console.log(token);
+    // Ensure that req.cookies is defined before accessing req.cookies.token
+    const token = req.cookies.jwt;
     if (!token) {
       throw new Error("No JWT cookie found");
     }

@@ -7,16 +7,16 @@ import Course_Section from "../../../../components/Course_Section/Course_Section
 import Footer from "../../../../components/Footer/Footer";
 
 const HomePage = () => {
+  const isHome = true;
   return (
     <>
       <NavBar />
 
       <div className="hero-section">
         
-        <SearchBox size="large" iconName={faSearch} />
         <p className="hero-text">Learn Best Online Courses</p>
       </div>
-      <Course_Section  renderCount={4} showSeeAll="Home"/>
+      <Course_Section  renderCount={4} isHome={isHome}/>
       <Footer />
     </>
   );

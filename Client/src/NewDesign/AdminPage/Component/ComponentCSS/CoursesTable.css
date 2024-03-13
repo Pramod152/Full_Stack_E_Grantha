@@ -1,7 +1,9 @@
 /* CoursesTable.css */
 
 .courses_table_container {
-    margin-bottom: 20px; /* Add some margin at the bottom */
+  margin: 0 auto;
+  width: 90%;
+  overflow-x: scroll; 
   }
   
   .add_button {

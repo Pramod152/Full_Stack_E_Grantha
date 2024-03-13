@@ -3,9 +3,18 @@ import { Link } from 'react-router-dom';
 import './NavBar.css';
 import Button from '../../Button/Button';
 import { AuthContext } from '../../../NewDesign/UserPage/Auth/AuthContext'; // Update the path
+import { getUserData } from '../../../NewDesign/UserPage/Auth/UserDataManager'; // Update the path
 
 const NavBar = () => {
     const { isAuthenticated } = useContext(AuthContext);
+    let initials;
+
+    if(isAuthenticated){
+        const userData = getUserData();  
+        if (userData) {
+            initials = userData.firstName.charAt(0).toUpperCase() + userData.lastName.charAt(0).toUpperCase();
+        }
+    }
 
     const handleAvatarClick = () => {
         // Redirect to dashboard page on avatar click
@@ -27,7 +36,7 @@ const NavBar = () => {
                 {isAuthenticated ? (
                     <div className="avatar" onClick={handleAvatarClick}>
                         {/* Here you can fetch user initials from backend if needed */}
-                    EG
+                        {initials}
                     </div>
                 ) : (
                     <Link to='/E-Grantha/register'><Button BtnName="Get Started" /></Link>

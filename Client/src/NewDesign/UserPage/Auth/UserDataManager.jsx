@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'; // Import js-cookie for handling cookies
 
 export const saveUserData = (data) => {
-  localStorage.setItem("userData", JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
   // Set cookie with user data
   Cookies.set('userData', JSON.stringify(data), { expires: 7 }); // Expires in 7 days
 };

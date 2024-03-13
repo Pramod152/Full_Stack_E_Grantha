@@ -3,7 +3,7 @@ import React from 'react';
 const DashBoardContent = () => {
   return (
     <>
-      <h1>Welcome, Admin</h1>
+      <h1 style={{ fontSize: "40px" }}>Welcome, Admin</h1>
     </>
   );
 }

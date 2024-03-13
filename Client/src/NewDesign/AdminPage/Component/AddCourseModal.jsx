@@ -62,11 +62,11 @@ const AddCourseModal = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className='ThisisLabel' htmlFor="title">Title:</label>
-            <input type="text" id="titleField" value={title} onChange={handleTitleChange} required />
+            <input type="text" className= "titelModal" id="titleField" value={title} onChange={handleTitleChange} required />
           </div>
           <div className="form-group">
             <label className='ThisisLabel' htmlFor="description">Description:</label>
-            <textarea id="description" value={description} onChange={handleDescriptionChange} required />
+            <textarea id="description" className= "titelModal" value={description} onChange={handleDescriptionChange} required />
           </div>
           <div className="form-group">
             <label className='ThisisLabel' htmlFor="file">Upload Video:</label>

@@ -29,6 +29,7 @@ const App = () => {
             <UserDashboard />
             </PrivateRoute>} />
             <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </Router>
       </AuthProvider>

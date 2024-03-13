@@ -8,9 +8,6 @@ const Course = () => {
     return (
         <>
             <NavBar />
-            <div style={{ marginTop: "50px" }}>
-            <SearchBox size="large" iconName={faSearch} />
-            </div>
             <Course_Section />
             <Footer />
         </>
