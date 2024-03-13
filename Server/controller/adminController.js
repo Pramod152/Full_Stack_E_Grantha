@@ -11,13 +11,22 @@ const Contact = require("../model/contact");
 adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
-// // pandeyrajeshraj21@gmail.com
+// // // pandeyrajeshraj21@gmail.com
+// const CLIENT_ID =
+//   "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
+// const CLIENT_SECRET = "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";
+// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+// const REFRESH_TOKEN =
+//   "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
+// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+
+////////////////---E-grantha gmail account---////////////////
 const CLIENT_ID =
-  "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
+  "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
+  "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(
@@ -88,10 +97,12 @@ exports.getUser = async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////
 ///////-----------------!!!!!!!!!!!!!!!-----------------/////
 // Upload video to Youtube and save to database
+// Upload video to Youtube and save to database
+const sharp = require("sharp");
 exports.uploadCourse = async (req, res) => {
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
   const { title, description } = req.body;
-  const videoPath = req.file.path;
+  const { videoPath, thumbnailPath } = req.files; // Destructure videoPath and thumbnailPath
 
   try {
     // Fetch the list of supported video categories
@@ -100,14 +111,14 @@ exports.uploadCourse = async (req, res) => {
       regionCode: "US", // Provide a region code to ensure correct localization
     });
 
-    // Find the category ID based on the category title "Educational"
+    // Find the category ID based on the category title "Education"
     const educationalCategory = categoryResponse.data.items.find(
       (item) => item.snippet.title === "Education"
     );
 
     if (!educationalCategory) {
       console.error("Educational category not found.");
-      return;
+      return res.status(500).send("Educational category not found");
     }
 
     // Use the found category ID
@@ -128,7 +139,7 @@ exports.uploadCourse = async (req, res) => {
       part: "snippet,status",
       requestBody: videoMetadata,
       media: {
-        body: fs.createReadStream(videoPath),
+        body: fs.createReadStream(videoPath[0].path), // Read the first video file path
       },
     };
 
@@ -139,24 +150,48 @@ exports.uploadCourse = async (req, res) => {
     console.log("Video ID:", response.data.id);
     console.log("Video URL:", videoUrl);
     console.log("Category ID:", categoryId); // Log the categoryId
-    const video = new Video({
+
+    // Upload the thumbnail
+    const resizedThumbnail = await sharp(thumbnailPath[0].path)
+      .resize({ width: 1280, height: 720 }) // Set the dimensions to 1280x720 or adjust as needed
+      .toBuffer();
+
+    // Upload the resized thumbnail
+    const thumbnailParams = {
+      videoId: response.data.id,
+      media: {
+        mimeType: "image/jpeg", // Assuming JPEG format for the thumbnail
+        body: resizedThumbnail, // Use the resized thumbnail buffer
+      },
+    };
+
+    await youtube.thumbnails.set(thumbnailParams);
+    console.log("Thumbnail uploaded successfully!");
+
+    // Instead of using thumbnailResponse, use thumbnailUrl directly
+    const thumbnailUrl = `https://i.ytimg.com/vi/${response.data.id}/default.jpg`;
+
+    // Save video information to the database
+    const videoData = {
       title,
       description,
       videoId: response.data.id,
       videoLink: videoUrl,
-    });
+      thumbnailPath: thumbnailPath[0].path, // Read the first thumbnail file path
+      thumbnailUrl: thumbnailUrl, // Use thumbnailUrl directly
+    };
 
-    await video.save();
+    // Create a new Video document and save it to the database
+    const videoDoc = new Video(videoData);
+    await videoDoc.save();
+
     console.log("Video saved to database!");
-    console.log(video);
+    console.log(videoDoc);
+
     res.sendStatus(200);
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.error) {
-      console.error("OAuth2 Error:", error.response.data.error);
-    } else {
-      console.error("Error uploading video:", error.message);
-    }
-    res.sendStatus(500);
+    console.error("Error uploading video:", error);
+    res.status(500).send("Error uploading video");
   }
 };
 

@@ -31,6 +31,14 @@ const videoSchema = new mongoose.Schema({
     required: true,
     default: "Education",
   },
+  thumbnailPath: {
+    type: String, // Change the type to String to store the path
+    required: true,
+  },
+  thumbnailUrl: {
+    type: String,
+    required: true,
+  },
 });
 
 const Video = mongoose.model("Video", videoSchema);
