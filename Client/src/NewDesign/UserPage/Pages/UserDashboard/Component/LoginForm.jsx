@@ -45,7 +45,7 @@ const LoginForm = ({ onSignUpClick }) => {
         saveUserData({ token, ...user });
 
         // Set cookie with token
-        Cookies.set('token', token, { expires: 7 }); // Expires in 7 days
+        Cookies.set('jwt', token, { expires: 7 }); // Expires in 7 days
 
         // Redirect to the previous page or main page
         const { from } = location.state || { from: { pathname: "/E-Grantha" } };

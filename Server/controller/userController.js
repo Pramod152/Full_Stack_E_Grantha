@@ -170,6 +170,30 @@ exports.unsubscribe = async (req, res) => {
   }
 };
 
+///////////////////////////////////////////////////////////////
+//                      Check Subscribed or not 
+exports.checkSubscription = async (req, res) => {
+  try {
+    const userId = req.user._id; // Assuming you have middleware to extract the user from the request
+    const videoId = req.params.videoId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Check if the video is subscribed
+    const isSubscribed = user.subscribedVideos.includes(videoId);
+
+    res.status(200).json({ subscribed: isSubscribed });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 //                     Get Subscribed Videos
 // =============//////////////////===============
 exports.getUserSubscriptions = async (req, res) => {
