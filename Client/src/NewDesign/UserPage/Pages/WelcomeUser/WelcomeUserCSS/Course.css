@@ -1,4 +1,6 @@
-
+.error_message{
+    color: red;
+}
     h1 {
         text-align: center;
         margin-top: 50px;
@@ -12,7 +14,7 @@
         margin-top: 100px;
         background-color: #f1f1f1;
         width: fit-content;
-        margin: 170px auto;
+        margin: 120px auto;
         padding: 89px;
         border: 1px solid #a7a7a7;
         border-radius: 25px;
@@ -46,10 +48,14 @@
 
     .error-message {
         color: red;
+        font-size: 20px;
+        margin-bottom: 18px;
     }
 
     .success-message {
+        font-size: 20px;
         color: green;
+        margin-bottom: 18px;
     }
 
     .contactButton{

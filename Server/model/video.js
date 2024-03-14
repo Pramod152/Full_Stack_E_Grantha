@@ -33,11 +33,11 @@ const videoSchema = new mongoose.Schema({
   },
   thumbnailPath: {
     type: String, // Change the type to String to store the path
-    // required: true,
+    required: true,
   },
   thumbnailUrl: {
     type: String,
-    // required: true,
+    required: true,
   },
 });
 
