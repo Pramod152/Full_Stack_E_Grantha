@@ -318,6 +318,19 @@ exports.contact = async (req, res) => {
     console.log(err);
   }
 };
+
+////------------------------ delete contact ------------------------////
+exports.deleteContact = async (req, res) => {
+  try {
+    const data = await Contact.findByIdAndDelete(req.params.contactId);
+    res.status(200).json({
+      status: "ok",
+      data: data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 // // ////------------------------ fuzzy search algorithm ------------------------////
 
 exports.fuzzySearch = async (req, res) => {
