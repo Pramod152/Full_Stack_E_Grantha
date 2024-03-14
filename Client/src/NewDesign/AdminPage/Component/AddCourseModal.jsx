@@ -4,7 +4,8 @@ import './ComponentCSS/AddCourseModal.css'
 const AddCourseModal = ({ isOpen, onClose }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [file, setFile] = useState(null);
+  const [videoFile, setVideoFile] = useState(null);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -14,15 +15,27 @@ const AddCourseModal = ({ isOpen, onClose }) => {
     setDescription(e.target.value);
   };
 
-  const handleFileChange = (e) => {
+  const handleVideoFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type.includes('video')) {
-      setFile(selectedFile);
+      setVideoFile(selectedFile);
     } else {
       // Reset file input if not a video
       e.target.value = null;
-      setFile(null);
+      setVideoFile(null);
       alert('Please upload a valid video file.');
+    }
+  };
+
+  const handleThumbnailFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type.includes('image')) {
+      setThumbnailFile(selectedFile);
+    } else {
+      // Reset file input if not an image
+      e.target.value = null;
+      setThumbnailFile(null);
+      alert('Please upload a valid image file for thumbnail.');
     }
   };
 
@@ -32,7 +45,8 @@ const AddCourseModal = ({ isOpen, onClose }) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('file', file);
+    formData.append('videoPath', videoFile);
+    formData.append('thumbnailPath', thumbnailFile);
 
     // Example fetch usage
     fetch('http://localhost:3000/E-Grantha/admin/uploadCourse', {
@@ -69,8 +83,12 @@ const AddCourseModal = ({ isOpen, onClose }) => {
             <textarea id="description" className= "titelModal" value={description} onChange={handleDescriptionChange} required />
           </div>
           <div className="form-group">
-            <label className='ThisisLabel' htmlFor="file">Upload Video:</label>
-            <input type="file" id="file" accept="video/*" onChange={handleFileChange} required />
+            <label className='ThisisLabel' htmlFor="videoFile">Upload Video:</label>
+            <input type="file" id="videoFile" accept="video/*" name='videoPath' onChange={handleVideoFileChange} required />
+          </div>
+          <div className="form-group">
+            <label className='ThisisLabel' htmlFor="thumbnailFile">Upload Thumbnail:</label>
+            <input type="file" id="thumbnailFile" accept="image/*"name='thumbnailPath' onChange={handleThumbnailFileChange} required />
           </div>
           <button id='btnn' type="submit">Submit</button>
         </form>

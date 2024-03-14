@@ -27,4 +27,6 @@ router.route("/contact").post(controller.contact);
 // fuzzy search
 router.route("/fuzzySearch").get(controller.fuzzySearch);
 
+router.route("/recommendations/:videoId").get(controller.recommendVideos);
+
 module.exports = router;
