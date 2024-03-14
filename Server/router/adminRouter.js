@@ -41,6 +41,7 @@ adminRouter
 
 ////------------------------get operations for contact------------------------////
 adminRouter.route("/contact").get(adminController.contact);
+adminRouter.route("/contact/:contactId").delete(adminController.deleteContact);
 ////------------------------get operations for Fuzzy------------------------////
 adminRouter.route("/search").get(adminController.fuzzySearch);
 
