@@ -13,7 +13,6 @@ const ContactPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
         try {
             const response = await fetch("http://localhost:3000/E-Grantha/user/contact", {
                 method: "POST",
@@ -29,6 +28,10 @@ const ContactPage = () => {
 
             if (response.ok) {
                 setSuccessMessage("Message sent successfully!");
+                // Clear the form fields after successful submission
+            setName('');
+            setEmail('');
+            setMessage('');
             } else {
                 setErrorMessage("Failed to send message. Please try again later.");
             }
@@ -42,7 +45,7 @@ const ContactPage = () => {
         <>
             <NavBar />  
             <div className="form_wrapper">
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                {errorMessage && <p className="error_message">{errorMessage}</p>}
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className='form_element_wrapper'>
