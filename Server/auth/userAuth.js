@@ -4,8 +4,11 @@ const User = require("../model/user");
 
 const userAuth = async (req, res, next) => {
   try {
+    // Ensure that req.cookies is defined before accessing req.cookies.jwt
+    // const token = req.cookies.token;
+
     // Ensure that req.cookies is defined before accessing req.cookies.token
-    const token =  req.cookies.jwt;
+    const token = req.cookies.jwt;
     if (!token) {
       throw new Error("No JWT cookie found");
     }

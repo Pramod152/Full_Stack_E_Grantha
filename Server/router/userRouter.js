@@ -15,7 +15,9 @@ router
 router.route("/allVideos").get(controller.allVideos);
 router.route("/subscribe/:videoId").post(auth, controller.subscribe);
 router.route("/unsubscribe/:videoId").post(auth, controller.unsubscribe);
-router.route("/checksubscribe/:videoId").get(auth, controller.checkSubscription);
+router
+  .route("/checksubscribe/:videoId")
+  .get(auth, controller.checkSubscription);
 
 // router.route("/fuzzySearch").get(controller.fuzzySearch);
 
