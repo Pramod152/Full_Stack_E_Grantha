@@ -28,4 +28,6 @@ router.route("/contact").post(controller.contact);
 router.route("/fuzzySearch").get(controller.fuzzySearch);
 router.route("/word2vec").get(controller.word2vec);
 
+router.route("/recommendations/:videoId").get(controller.recommendVideos);
+
 module.exports = router;

@@ -14,7 +14,7 @@ adminRouter.route("/course").get(adminController.courses);
 // ////------------------------Delete operations for user------------------------////
 adminRouter
   .route("/deleteUser/:userId")
-  .delete(auth, adminController.deleteUser);
+  .delete(adminController.deleteUser);
 
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 ////------------------------router fro video------------------------////
@@ -28,9 +28,9 @@ adminRouter
 //   adminController.uploadCourse
 // );
 
-adminRouter
-  .route("/uploadCourse")
-  .post(uploadCourse.single("file"), adminController.uploadCourse);
+// adminRouter
+//   .route("/uploadCourse")
+//   .post(uploadCourse.single("file"), adminController.uploadCourse);
 
 ////------------------------update operations------------------------////
 adminRouter.route("/updateCourse/:videoId").put(adminController.updateCourse);

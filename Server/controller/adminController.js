@@ -284,16 +284,10 @@ exports.deleteCourse = async (req, res) => {
     await youtube.videos.delete({
       id: videoId,
     });
-    console.log(
-      `Video with ID ${videoId} was deleted successfully from YouTube.`
-    );
-
+    
     // Delete the video document from the database
     await Video.findOneAndDelete({ videoId: videoId });
-    console.log(
-      `Video with ID ${videoId} was deleted successfully from the database.`
-    );
-
+    
     res
       .status(200)
       .send("Video deleted successfully from both YouTube and the database");
