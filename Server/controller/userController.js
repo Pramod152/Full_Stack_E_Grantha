@@ -127,6 +127,7 @@ exports.subscribe = async (req, res) => {
 
     // Add the video to the user's subscribed videos
     user.subscribedVideos.push(videoId);
+    
     await user.save();
 
     res.status(200).json({ message: "Subscribed successfully" });

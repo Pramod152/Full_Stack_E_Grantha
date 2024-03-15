@@ -14,7 +14,7 @@ adminRouter.route("/course").get(adminController.courses);
 // ////------------------------Delete operations for user------------------------////
 adminRouter
   .route("/deleteUser/:userId")
-  .delete(auth, adminController.deleteUser);
+  .delete(adminController.deleteUser);
 
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 ////------------------------router fro video------------------------////

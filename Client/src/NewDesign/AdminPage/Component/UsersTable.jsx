@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './ComponentCSS/UsersTable.css'; 
 import { getAdminData } from '../Auth/AdminDataManager';
+import { AiFillDelete } from 'react-icons/ai';
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
@@ -28,36 +29,62 @@ const UsersTable = () => {
         console.error('Error fetching users data:', error);
       });
   }, []); // Empty dependency array ensures useEffect runs only once on component mount
+
+  const handleDeleteUsers = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/E-Grantha/admin/deleteUser/${userId}`, {
+        method: 'DELETE',
+
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status === "ok") {
+          // Delete user from the state
+          setUsers(users.filter(user => user._id !== userId));
+          // Show success message
+          alert("User deleted successfully");
+        } else {
+          console.error("Failed to delete user");
+        }
+      } else {
+        console.error("Failed to delete user");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  }
+
   return (
     <div className="users_table_container">
       <table className="users_table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
-            <th>Password</th>
             <th>Subscribed Videos</th>
-            <th>Is Admin</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {users.map(user => (
             <tr key={user._id}>
-            <td>{typeof user.name === 'string' ? user.firstName.charAt(0).toUpperCase() + user.name.slice(1) : user.firstName}</td>
+              <td>{typeof user.fistName === 'string' ? user.firstName.charAt(0).toUpperCase() + user.fistName.slice(1) : user.firstName}</td>
+              <td>{typeof user.lastName === 'string' ? user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) : user.firstName}</td>
               <td>{user.email}</td>
-              <td>{user.password}</td>
               <td>
                 {user.subscribedVideos.length > 0 ? (
-                  <ul>
-                    {user.subscribedVideos.map((video, index) => (
-                      <li key={index}>{video}</li>
-                    ))}
-                  </ul>
+                  <span>{user.subscribedVideos.length}</span>
                 ) : (
                   <span>No subscribed videos</span>
                 )}
               </td>
-              <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+              <td>
+                <AiFillDelete
+                  style={{ cursor: "pointer", color: "red" }}
+                  onClick={() => handleDeleteUsers(user._id)}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

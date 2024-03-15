@@ -73,6 +73,7 @@ const CoursesTable = () => {
                 const demoUrl = 'http://localhost:3000/E-Grantha/admin/course';
                 const responseData = await axios.get(demoUrl);
                 setCourses(responseData.data.message); // Update the courses list after deletion
+                
             } else {
                 console.error('Failed to delete course');
             }
