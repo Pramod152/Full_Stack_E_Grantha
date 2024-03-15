@@ -27,6 +27,9 @@ router.route("/contact").post(controller.contact);
 // fuzzy search
 router.route("/fuzzySearch").get(controller.fuzzySearch);
 router.route("/getTopSubscribedVideos").get(controller.getTopSubscribedVideos);
+router
+  .route("/videosWithSimilarCategory/:category")
+  .get(controller.videosWithSimilarCategory);
 
 router.route("/recommendations/:videoId").get(controller.recommendVideos);
 
