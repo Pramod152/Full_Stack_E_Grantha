@@ -11,23 +11,23 @@ const Contact = require("../model/contact");
 adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
-// // // pandeyrajeshraj21@gmail.com
-// const CLIENT_ID =
-//   "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
-// const CLIENT_SECRET = "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";
-// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-// const REFRESH_TOKEN =
-//   "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
-// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
-
-////////////////---E-grantha gmail account---////////////////
+// // pandeyrajeshraj21@gmail.com
 const CLIENT_ID =
-  "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
+  "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
+  "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+
+////////////////---E-grantha gmail account---////////////////
+// const CLIENT_ID =
+//   "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
+// const CLIENT_SECRET = "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";
+// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+// const REFRESH_TOKEN =
+//   "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
+// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
