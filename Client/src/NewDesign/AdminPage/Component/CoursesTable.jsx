@@ -58,6 +58,11 @@ const CoursesTable = () => {
 
     const updateCourse = (updatedCourse) => {
         // Implement logic to update the course data
+        const index = courses.findIndex(course => course.videoId === updatedCourse.videoId);
+        const newCourses = [...courses];
+        newCourses[index] = updatedCourse;
+        setCourses(newCourses);
+
         console.log('Updated course:', updatedCourse);
     };
 

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import './NavBar.css';
-import Button from '../../Button/Button';
-import { AuthContext } from '../../../NewDesign/UserPage/Auth/AuthContext'; // Update the path
-import { getUserData } from '../../../NewDesign/UserPage/Auth/UserDataManager'; // Update the path
+import './ComponentCSS/NavBar.css';
+import Button from './Button';
+import { AuthContext } from '../../../Auth/AuthContext' // Update the path
+import { getUserData } from '../../../Auth/UserDataManager'; // Update the path
 
 const NavBar = () => {
     const { isAuthenticated } = useContext(AuthContext);

@@ -103,7 +103,6 @@ exports.uploadCourse = async (req, res) => {
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
   const { title, description } = req.body;
   const { videoPath, thumbnailPath } = req.files; // Destructure videoPath and thumbnailPath
-
   try {
     // Fetch the list of supported video categories
     const categoryResponse = await youtube.videoCategories.list({

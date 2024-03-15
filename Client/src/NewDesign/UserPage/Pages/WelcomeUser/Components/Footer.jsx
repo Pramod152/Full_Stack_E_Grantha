@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./Footer.css";
+import "./ComponentCSS/Footer.css";
 import { FaFacebook, FaInstagram , FaYoutube, FaTwitter, FaTiktok} from "react-icons/fa";
 
 const Footer = () => {
@@ -14,13 +14,13 @@ const Footer = () => {
                         <h3>About</h3>
                         <ul>
                             <li>
-                                <Link to="#">Courses</Link>
+                                <Link to="/E-Grantha/course">Courses</Link>
                             </li>
                             <li>
-                                <Link to="#">Contact</Link>
+                                <Link to="/E-Grantha/contact">Contact</Link>
                             </li>
                             <li>
-                                <Link to="#">About Us</Link>
+                                <Link to="/E-Grantha/about">About Us</Link>
                             </li>
                         </ul>
                     </div>

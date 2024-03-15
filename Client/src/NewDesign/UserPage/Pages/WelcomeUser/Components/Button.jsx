@@ -1,9 +1,8 @@
-import './Button.css'
+import './ComponentCSS/Button.css'
 
 const Button = ({BtnName})=>{
     return (
         <>
-
         <button>{BtnName}</button>
         </>
     )

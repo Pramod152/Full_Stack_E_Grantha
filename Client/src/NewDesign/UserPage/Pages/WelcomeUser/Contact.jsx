@@ -1,7 +1,7 @@
-import NavBar from '../../../../components/NavBar/NavBar_Welcome/NavBar';
+import NavBar from './Components/NavBar';
 import React, { useState } from 'react';
 import './WelcomeUserCSS/Course.css';
-import Button from '../../../../components/Button/Button';
+import Button from './Components/Button';
 
 
 const ContactPage = () => {

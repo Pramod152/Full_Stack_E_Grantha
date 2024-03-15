@@ -11,7 +11,7 @@ import ContactPage from "./NewDesign/UserPage/Pages/WelcomeUser/Contact";
 import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserRegistrationPage";
 import UserDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
 import AdminPanel from './NewDesign/AdminPage/Pages/AdminPanel'
-import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
+// import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
 import AdminRegistrationPage from './NewDesign/AdminPage/Pages/AdminRegistrationPage'
 import AdminPrivateRoute from "./NewDesign/AdminPage/Auth/AdminPrivateRoute";
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
             <UserDashboard />
             </PrivateRoute>} />
-            <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+            {/* <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} /> */}
             <Route path="/" element={<HomePage />} />
           </Routes>
         </Router>

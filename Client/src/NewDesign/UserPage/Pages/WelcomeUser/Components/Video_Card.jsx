@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faStar, faClock } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUser, faStar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../NewDesign/UserPage/Auth/AuthContext";
-import { getUserData } from "../../../NewDesign/UserPage/Auth/UserDataManager";
+import { AuthContext } from "../../../Auth/AuthContext";
+import { getUserData } from "../../../Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
-import "./Video_Card.css";
+import "./ComponentCSS/Video_Card.css";
 
 const Video_Card = ({ title, description, videoId, video_id }) => {
   const { isAuthenticated } = useContext(AuthContext);
