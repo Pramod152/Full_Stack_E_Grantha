@@ -127,7 +127,7 @@ exports.subscribe = async (req, res) => {
 
     // Add the video to the user's subscribed videos
     user.subscribedVideos.push(videoId);
-    
+
     await user.save();
 
     res.status(200).json({ message: "Subscribed successfully" });
@@ -579,6 +579,7 @@ exports.fuzzySearch = async function (req, res) {
       .json({ error: "An error occurred while fetching documents." });
   }
 };
+////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
 //                  Word2Vec
@@ -705,7 +706,7 @@ exports.fuzzySearch = async function (req, res) {
 //     "title": "Tala System: Rhythmic Framework in Indian Music",
 //     "description": "Explore the rhythmic framework of Indian music through the study of Talas, intricate rhythmic cycles that form the backbone of classical compositions and improvisation."
 // }
-  
+
 // ];
 
 // async function fetchVideos() {
@@ -723,71 +724,83 @@ exports.fuzzySearch = async function (req, res) {
 // const Video = require('./models/Video'); // Import your Video model definition
 
 exports.recommendVideos = async function recommendVideos(req, res) {
+  const courses = await Video.find();
+  const videos = courses.map((video) => ({
+    title: video.title,
+    description: video.description,
+  }));
 
-    const courses = await Video.find();
-    const videos = courses.map(video => ({
-      "title": video.title,
-      "description": video.description,
-    }));
+  // Preprocessing
+  function preprocessText(text) {
+    const tokens = text
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/);
+    return tokens;
+  }
 
-// Preprocessing
-function preprocessText(text) {
-  const tokens = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
-  return tokens;
-}
+  // Build vocabulary and document vectors
+  const wordEmbeddings = {};
 
-// Build vocabulary and document vectors
-const wordEmbeddings = {};
-
-   videos.forEach(video => {
+  videos.forEach((video) => {
     const titleTokens = preprocessText(video.title);
     const descriptionTokens = preprocessText(video.description);
     const allTokens = [...titleTokens, ...descriptionTokens];
-  
-    allTokens.forEach(token => {
-        if (!wordEmbeddings[token]) {
-            wordEmbeddings[token] = Array.from({ length: 100 }, () => Math.random());
-        }
+
+    allTokens.forEach((token) => {
+      if (!wordEmbeddings[token]) {
+        wordEmbeddings[token] = Array.from({ length: 100 }, () =>
+          Math.random()
+        );
+      }
     });
-  
+
     // Calculate average word embedding for the document
-    const docVector = allTokens.reduce((acc, token) => acc.map((val, i) => val + wordEmbeddings[token][i]), Array.from({ length: 100 }, () => 0));
-    video.vector = docVector.map(val => val / allTokens.length);
+    const docVector = allTokens.reduce(
+      (acc, token) => acc.map((val, i) => val + wordEmbeddings[token][i]),
+      Array.from({ length: 100 }, () => 0)
+    );
+    video.vector = docVector.map((val) => val / allTokens.length);
   });
 
+  // Function to calculate cosine similarity between two vectors
+  function cosineSimilarity(vec1, vec2) {
+    const dotProduct = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
+    const magnitudeVec1 = Math.sqrt(
+      vec1.reduce((acc, val) => acc + val ** 2, 0)
+    );
+    const magnitudeVec2 = Math.sqrt(
+      vec2.reduce((acc, val) => acc + val ** 2, 0)
+    );
 
+    return dotProduct / (magnitudeVec1 * magnitudeVec2);
+  }
 
-// Function to calculate cosine similarity between two vectors
-function cosineSimilarity(vec1, vec2) {
-  const dotProduct = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
-  const magnitudeVec1 = Math.sqrt(vec1.reduce((acc, val) => acc + val ** 2, 0));
-  const magnitudeVec2 = Math.sqrt(vec2.reduce((acc, val) => acc + val ** 2, 0));
+  // Recommendation function
+  function recommendSimilarVideos(clickedVideoVector, topN = 3) {
+    const similarities = [];
 
-  return dotProduct / (magnitudeVec1 * magnitudeVec2);
-}
-
-// Recommendation function
-function recommendSimilarVideos(clickedVideoVector, topN = 3) {
-  const similarities = [];
-
-  videos.forEach(video => {
-      const similarityScore = cosineSimilarity(clickedVideoVector, video.vector);
+    videos.forEach((video) => {
+      const similarityScore = cosineSimilarity(
+        clickedVideoVector,
+        video.vector
+      );
       similarities.push({ video, similarityScore });
-  });
+    });
 
-  similarities.sort((a, b) => b.similarityScore - a.similarityScore);
-  const topVideos = similarities.slice(0, topN);
+    similarities.sort((a, b) => b.similarityScore - a.similarityScore);
+    const topVideos = similarities.slice(0, topN);
 
-  return topVideos;
-}
+    return topVideos;
+  }
 
-// module.exports = async function recommendVideos(req, res) {
+  // module.exports = async function recommendVideos(req, res) {
 
   const videoId = req.params.videoId;
-  const clickedVideo = videos.find(video => video.title === videoId);
+  const clickedVideo = videos.find((video) => video.title === videoId);
 
   if (!clickedVideo) {
-      return res.status(404).json({ error: "Video not found" });
+    return res.status(404).json({ error: "Video not found" });
   }
 
   const clickedVideoVector = clickedVideo.vector;
@@ -796,3 +809,55 @@ function recommendSimilarVideos(clickedVideoVector, topN = 3) {
   res.json({ recommendedVideos });
 };
 
+// =============//////////////////===============
+//function to get top 4 videos from the database of video User document and send it to the client side on the basis of subscription in descending order.
+
+exports.getTopSubscribedVideos = async (req, res) => {
+  try {
+    // Fetch all users
+    const users = await User.find();
+
+    // Initialize an object to store video subscription counts
+    const videoCounts = {};
+
+    // Iterate through each user
+    users.forEach((user) => {
+      // Iterate through user's subscribed videos
+      user.subscribedVideos.forEach((videoId) => {
+        // Increment count for video
+        if (videoCounts[videoId]) {
+          videoCounts[videoId]++;
+        } else {
+          videoCounts[videoId] = 1;
+        }
+      });
+    });
+
+    // Convert videoCounts object to an array of objects
+    const videoCountsArray = Object.entries(videoCounts).map(
+      ([videoId, count]) => ({
+        videoId,
+        count,
+      })
+    );
+
+    // Sort videos by count in descending order
+    videoCountsArray.sort((a, b) => b.count - a.count);
+
+    // Retrieve top 4 videos
+    const topSubscribedVideos = videoCountsArray.slice(0, 4);
+
+    // Fetch video details for the top subscribed videos
+    const topVideosDetails = await Promise.all(
+      topSubscribedVideos.map(async ({ videoId }) => {
+        const video = await Video.findById(videoId);
+        return video;
+      })
+    );
+
+    res.status(200).json({ topSubscribedVideos: topVideosDetails });
+  } catch (error) {
+    console.error("Error fetching top subscribed videos:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
