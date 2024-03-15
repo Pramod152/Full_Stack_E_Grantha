@@ -11,7 +11,7 @@ import ContactPage from "./UserPage/Pages/WelcomeUser/Contact";
 import UserRegistrationPage from "./UserPage/Pages/WelcomeUser/UserRegistrationPage";
 import UserDashboard from "./UserPage/Pages/UserDashboard/UserDashboardPage";
 import AdminPanel from './AdminPage/Pages/AdminPanel'
-// import CourseDetailPage from './UserPage/Pages/WelcomeUser/CourseDetailPage'
+import CourseDetailPage from './UserPage/Pages/WelcomeUser/CourseDetailPage'
 import AdminRegistrationPage from './AdminPage/Pages/AdminRegistrationPage'
 import AdminPrivateRoute from "./AdminPage/Auth/AdminPrivateRoute";
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
             <UserDashboard />
             </PrivateRoute>} />
-            {/* <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} /> */}
+            <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
             <Route path="/" element={<HomePage />} />
           </Routes>
         </Router>

@@ -35,7 +35,7 @@ adminRouter.route("/updateCourse/:videoId").put(adminController.updateCourse);
 ////------------------------delete operations------------------------////
 adminRouter
   .route("/deleteCourse/:videoId")
-  .delete(adminController.deleteCourse);
+  .delete( adminController.deleteCourse);
 
 ////------------------------get operations for contact------------------------////
 adminRouter.route("/contact").get(adminController.contact);

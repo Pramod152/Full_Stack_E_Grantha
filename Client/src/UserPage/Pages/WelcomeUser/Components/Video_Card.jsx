@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser, faStar, faClock } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Auth/AuthContext";
 import { getUserData } from "../../../Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
 import "./ComponentCSS/Video_Card.css";
 
-const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
+const Video_Card = ({ title, description,videoId, video_id, thumbnail }, index) => {
+
+  console.log(title, description, videoId, video_id, thumbnail, index)
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(false);
@@ -37,29 +37,31 @@ const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
       const userData = getUserData();
 
       if (userData) {
-        axios.post(
-          `http://localhost:3000/E-Grantha/user/subscribe/${video_id}`,
-          null,
-          {
-            withCredentials: true,
-          }
-        )
+        axios
+          .post(
+            `http://localhost:3000/E-Grantha/user/subscribe/${video_id}`,
+            null,
+            {
+              withCredentials: true,
+            }
+          )
           .then(() => {
             alert("Subscribed to the video successfully.");
             // console.log("User subscribed to the video successfully.");
             setSubscribed(true);
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error subscribing to the video:", error);
           });
       } else {
         console.error("User data not found.");
       }
-    }
-    else{
-      const confirmUnsub = window.confirm('Please Log in before Unsubscribing. Do you want to proceed?');
+    } else {
+      const confirmUnsub = window.confirm(
+        "Please Log in before Unsubscribing. Do you want to proceed?"
+      );
       if (confirmUnsub) {
-        navigate('/E-Grantha/register');
+        navigate("/E-Grantha/register");
       }
     }
   };
@@ -68,25 +70,30 @@ const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
     if (isAuthenticated) {
       const userData = getUserData();
       if (userData) {
-        axios.post(
-          `http://localhost:3000/E-Grantha/user/unsubscribe/${video_id}`, null, {
-          withCredentials: true,
-        })
+        axios
+          .post(
+            `http://localhost:3000/E-Grantha/user/unsubscribe/${video_id}`,
+            null,
+            {
+              withCredentials: true,
+            }
+          )
           .then(() => {
             // console.log("User unsubscribed to the video successfully.");
             setSubscribed(false);
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error unsubscribing to the video:", error);
           });
       } else {
         console.error("User data not found.");
       }
-    }
-    else{
-      const confirmUnsub = window.confirm('Please Log in before Unsubscribing. Do you want to proceed?');
+    } else {
+      const confirmUnsub = window.confirm(
+        "Please Log in before Unsubscribing. Do you want to proceed?"
+      );
       if (confirmUnsub) {
-        navigate('/E-Grantha/register');
+        navigate("/E-Grantha/register");
       }
     }
   };
@@ -99,32 +106,34 @@ const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
     }
   };
 
-
   return (
     <div className="card">
-      <div className="video-thumbnail" onClick={handleViewDetail}>
-        {/* <iframe
-          title={title}
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-          frameBorder="0"
-          allowFullScreen
-        ></iframe> */}
-        <img src={thumbnail} alt="thumbnail" />
-        <div className="rating-stars">
-          {/* <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span>
-                    <span><FontAwesomeIcon icon={faStar} /></span> */}
+      {index === 0 ? (
+        {/* <div className="video-thumbnail" onClick={handleViewDetail}>
+        <iframe
+  title={title}
+  width="100%"
+  height="100%"
+  src={`https://www.youtube.com/embed/${videoId}`}
+  frameBorder="0"
+  allowFullScreen
+></iframe>
+        </div> */}
+      ) : (
+        <div id="card">
+          <div id="video_thumbnail" onClick={handleViewDetail}>
+            <img id="thumbnail_topsubscribed" src={thumbnail} alt="thumbnail" />
+          </div>
+          <h2 id="heading">{title}</h2>
+          <p id="description">
+            {description && description.split(" ").slice(0, 10).join(" ")}
+          </p>
+
+          <a id="view_details_link" onClick={handleViewDetail}>
+            View Details
+          </a>
         </div>
-      </div>
-      <h2 className="heading">{title}</h2>
-      <p id="description">
-        {description && description.split(" ").slice(0, 10).join(" ")}
-      </p>
-      <div className="stats"></div>
+      )}
       {isAuthenticated && subscribed ? (
         <button onClick={handleUnsub} className="buy-now-button">
           Unsubscribe
@@ -134,9 +143,6 @@ const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
           Subscribe
         </button>
       )}
-      <a onClick={handleViewDetail} className="view-details-link">
-        View Details
-      </a>
     </div>
   );
 };

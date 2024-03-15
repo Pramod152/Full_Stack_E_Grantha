@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Video_Card from './Video_Card';
+import './TopSubscribedVideo_Card'
 import './ComponentCSS/Course_Section.css';
+import TopSubscribedVideo_Card from './TopSubscribedVideo_Card';
 
 const CourseSection = ({ isHome }) => {
   const [videos, setVideos] = useState([]);
@@ -78,7 +79,7 @@ const CourseSection = ({ isHome }) => {
       )}
       <div className="video_cards">
         {(searchQuery.trim() === '' ? videos.map((video) => (
-            <Video_Card 
+            <TopSubscribedVideo_Card 
                 key={video._id} // Assuming each video has a unique id
                 title={video.title} 
                 description={video.description} 
@@ -88,11 +89,12 @@ const CourseSection = ({ isHome }) => {
                 thumbnail = {video.thumbnailUrl}
             />
         )) : searchResults.map((video) => (
-            <Video_Card
+            <TopSubscribedVideo_Card
               key={video.document._id}
               title={video.document.title}
               description={video.document.description}
               videoId={video.document.videoId}
+              thumbnail = {video.document.thumbnailUrl}
             />
         )))}
       </div>

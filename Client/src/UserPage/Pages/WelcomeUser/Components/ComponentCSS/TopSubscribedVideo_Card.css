@@ -1,0 +1,49 @@
+
+#card {
+    overflow: hidden;
+    max-width: 270px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+#video_thumbnail {
+    position: relative;
+}
+#thumbnail_topsubscribed{
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: all 0.3s;
+
+}
+
+#video_thumbnail:hover img {
+    filter: blur(4px);
+    opacity: 0.8;
+}
+
+
+#heading,
+#description {
+    color: #333;
+}
+
+
+
+
+#view_details_link {
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    #card {
+        margin: 10px;
+    }
+}

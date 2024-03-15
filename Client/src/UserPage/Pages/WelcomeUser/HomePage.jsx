@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from './Components/NavBar';
 import "./WelcomeUserCSS/HomePage.css";
-import Course_Section from './Components/Course_Section';
+import TopSubscribedCourses from './Components/TopSubscribedCourse_Section';
 import Footer from './Components/Footer';
 
 const HomePage = () => {
@@ -14,7 +14,7 @@ const HomePage = () => {
         
         <p className="hero-text">Learn Best Online Courses</p>
       </div>
-      <Course_Section  renderCount={4} isHome={isHome}/>
+      <TopSubscribedCourses />
       <Footer />
     </>
   );

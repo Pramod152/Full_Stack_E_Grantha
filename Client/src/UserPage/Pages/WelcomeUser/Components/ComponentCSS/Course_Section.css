@@ -73,6 +73,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
 }
 .video-thumbnail {
     position: relative;
@@ -137,4 +138,22 @@
     .card {
         margin: 10px;
     }
+    .search_box{
+        width: 60%;
+    
+    }
+}
+@media screen and (max-width: 550px) {
+    .video_cards{
+        justify-content: center;
+        
+    }
+    .search_box{
+        width: 230px;
+    
+    }
+    .course_section_wrapper{
+        margin: 100px auto;
+        width: 95%;
+    }  
 }
