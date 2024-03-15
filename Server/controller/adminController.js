@@ -11,23 +11,32 @@ const Contact = require("../model/contact");
 adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
-// // pandeyrajeshraj21@gmail.com
+// // // pandeyrajeshraj21@gmail.com
 // const CLIENT_ID =
 //   "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
 // const CLIENT_SECRET = "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";
 // const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 // const REFRESH_TOKEN =
-//   "1//04BYHGPpnBFRWCgYIARAAGAQSNwF-L9Irx1hrO2GC8AyvynzopwUSM_H6nnJ1_pCPykUG-ihvaVfLHq3fgknYUa4JrO6MT4UW7kw";
+//   "1//04HTNSclMMDR3CgYIARAAGAQSNwF-L9IrAJZKJZ1fWPtPYDUQOf85mLNTEy_pZx4vToburk6_1t_ZUpx0S73vvFzyKmljWqRWu5E";
 // const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
-//////////////---E-grantha gmail account---////////////////
+// // // rajeshpandry24@gmail.com
 const CLIENT_ID =
-  "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
+  "185755348482-3m8nn1mv1ectgpliejplsfdtke29mc73.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
+  "1//04jyAsGoiw9v0CgYIARAAGAQSNwF-L9IrFUMrJlQFekEPzQw_-9Asg5iHcxcyXz-C9nt6Jwu3aAiUecdj38bc-sLS4ydQWQDWX9k";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+
+//////////////---E-grantha gmail account---////////////////
+// const CLIENT_ID =
+//   "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
+// const CLIENT_SECRET = "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";
+// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+// const REFRESH_TOKEN =
+//   "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
+// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -274,28 +283,79 @@ exports.updateCourse = async (req, res) => {
 
 // // ////------------------------ delete video ------------------------////
 
+// exports.deleteCourse = async (req, res) => {
+//   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
+
+//   const videoId = req.params.videoId;
+
+//   try {
+//     // Delete the video from YouTube
+//     await youtube.videos.delete({
+//       id: videoId,
+//     });
+
+//     // Delete the video document from the database
+//     await Video.findOneAndDelete({ videoId: videoId });
+
+//     res
+//       .status(200)
+//       .send("Video deleted successfully from both YouTube and the database");
+//   } catch (error) {
+//     console.error("Error deleting video:", error.message);
+//     res.status(500).send("Error deleting video");
+//   }
+// };
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
 exports.deleteCourse = async (req, res) => {
   const youtube = google.youtube({ version: "v3", auth: oauth2Client });
 
   const videoId = req.params.videoId;
 
   try {
-    // Delete the video from YouTube
+    //  Delete the video from YouTube
     await youtube.videos.delete({
       id: videoId,
     });
 
-    // Delete the video document from the database
-    await Video.findOneAndDelete({ videoId: videoId });
+    const video = await Video.findOne({ videoId: videoId });
 
-    res
-      .status(200)
-      .send("Video deleted successfully from both YouTube and the database");
+    if (!video) {
+      return res.status(404).send("Video not found");
+    }
+
+    const videoObjectId = video._id; // Get the ObjectId from the video document
+
+    // Find users who have subscribed to this video
+    const users = await User.find({ subscribedVideos: videoObjectId });
+
+    console.log("Users who have subscribed to this video:", users);
+
+    // Iterate through each user and remove videoObjectId from subscribedVideos
+    for (const user of users) {
+      const index = user.subscribedVideos.indexOf(videoObjectId);
+      if (index !== -1) {
+        user.subscribedVideos.splice(index, 1);
+        await user.save();
+        console.log(
+          `Removed ${videoObjectId} from user ${user._id}'s subscribedVideos`
+        );
+      }
+    }
+    await Video.findOneAndDelete({ videoId: videoId });
+    res.status(200).json({
+      status: "ok",
+      message: "Video deleted successfully from both YouTube and the database",
+    });
+    // Rest of your code...
   } catch (error) {
     console.error("Error deleting video:", error.message);
     res.status(500).send("Error deleting video");
   }
 };
+
+// // ////------------------------ contact video ------------------------////
 
 exports.contact = async (req, res) => {
   try {

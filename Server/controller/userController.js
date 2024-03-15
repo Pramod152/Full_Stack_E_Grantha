@@ -861,3 +861,21 @@ exports.getTopSubscribedVideos = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// =============/////////get simiar videos that have similar video category /////////===============
+//function to get the videos with similae VideoCategory and send it to the client side.
+
+exports.videosWithSimilarCategory = async (req, res) => {
+  try {
+    const category = req.params.category;
+    // const category = Vocal;
+
+    // Fetch videos with the same category
+    const similarVideos = await Video.find({ videoCategory: category });
+
+    res.status(200).json({ similarVideos });
+  } catch (err) {
+    console.error("Error fetching videos with similar category:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
