@@ -20,13 +20,13 @@ adminRouter
 ////------------------------router fro video------------------------////
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 // adminRouter.route("/uploadCourse").post(auth, adminController.uploadCourse);
-adminRouter.route("/uploadCourse").post(
-  uploadCourse.fields([
-    { name: "videoPath", maxCount: 1 },
-    { name: "thumbnailPath", maxCount: 1 },
-  ]),
-  adminController.uploadCourse
-);
+// adminRouter.route("/uploadCourse").post(
+//   uploadCourse.fields([
+//     { name: "videoPath", maxCount: 1 },
+//     { name: "thumbnailPath", maxCount: 1 },
+//   ]),
+//   adminController.uploadCourse
+// );
 
 adminRouter
   .route("/uploadCourse")
