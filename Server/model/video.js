@@ -14,9 +14,9 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ratings: {
-    type: Number,
-    default: 0,
+  videoCategory: {
+    type: String,
+    required: true,
   },
   videoId: {
     type: String,
@@ -32,7 +32,7 @@ const videoSchema = new mongoose.Schema({
     default: "Education",
   },
   thumbnailPath: {
-    type: String, // Change the type to String to store the path
+    type: String,
     required: true,
   },
   thumbnailUrl: {

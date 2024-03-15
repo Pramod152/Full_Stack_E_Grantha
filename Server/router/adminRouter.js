@@ -12,21 +12,19 @@ adminRouter.route("/user/:userId").get(adminController.getUser);
 adminRouter.route("/course").get(adminController.courses);
 
 // ////------------------------Delete operations for user------------------------////
-adminRouter
-  .route("/deleteUser/:userId")
-  .delete(adminController.deleteUser);
+adminRouter.route("/deleteUser/:userId").delete(adminController.deleteUser);
 
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 ////------------------------router fro video------------------------////
 ////------------------------!!!!!!!!!!!!!!!!------------------------////
 // adminRouter.route("/uploadCourse").post(auth, adminController.uploadCourse);
-// adminRouter.route("/uploadCourse").post(
-//   uploadCourse.fields([
-//     { name: "videoPath", maxCount: 1 },
-//     { name: "thumbnailPath", maxCount: 1 },
-//   ]),
-//   adminController.uploadCourse
-// );
+adminRouter.route("/uploadCourse").post(
+  uploadCourse.fields([
+    { name: "videoPath", maxCount: 1 },
+    { name: "thumbnailPath", maxCount: 1 },
+  ]),
+  adminController.uploadCourse
+);
 
 // adminRouter
 //   .route("/uploadCourse")

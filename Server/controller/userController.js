@@ -127,7 +127,7 @@ exports.subscribe = async (req, res) => {
 
     // Add the video to the user's subscribed videos
     user.subscribedVideos.push(videoId);
-    
+
     await user.save();
 
     res.status(200).json({ message: "Subscribed successfully" });
@@ -579,210 +579,228 @@ exports.fuzzySearch = async function (req, res) {
       .json({ error: "An error occurred while fetching documents." });
   }
 };
-
-//create video array and insert the title and description from the database
-exports.word2vec = async (req, res) => {
-  try {
-    const videos = await Video.find();
-    const videoArray = videos.map((video) => {
-      return {
-        title: video.title,
-        description: video.description,
-      };
-    });
-    res.status(200).json(videoArray);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
 //                  Word2Vec
 // Sample data stored in the database
-const videos = [
-  {
-    "title": "Introduction to Hindustani Classical Music",
-    "description": "Explore the basics of Hindustani classical music, including ragas, talas, and vocal techniques."
-},
-{
-    "title": "Carnatic Music Fundamentals",
-    "description": "Learn the foundational principles of Carnatic music, covering ragas, swaras, and rhythmic patterns."
-},
-{
-    "title": "Raga Theory and Practice",
-    "description": "Dive deep into the theory and practical application of ragas, the melodic frameworks of Indian classical music."
-},
-{
-    "title": "Tabla Mastery: The Art of Percussion",
-    "description": "Master the intricate rhythms and techniques of the tabla, a fundamental percussion instrument in Indian classical music."
-},
-{
-    "title": "Sitar Techniques and Performance",
-    "description": "Develop your skills in playing the sitar, exploring its unique techniques and performance styles."
-},
-{
-    "title": "Exploring the Veena: South Indian String Instrument",
-    "description": "Discover the rich heritage of the veena, a classical string instrument from South India, and learn to play its mesmerizing melodies."
-},
-{
-    "title": "Dhrupad Vocal Tradition: Ancient Indian Singing Style",
-    "description": "Delve into the ancient tradition of Dhrupad singing, exploring its techniques, compositions, and spiritual significance."
-},
-{
-    "title": "Flute Melodies of Indian Classical Music",
-    "description": "Immerse yourself in the enchanting melodies of the Indian classical flute, learning both traditional compositions and improvisational techniques."
-},
-{
-    "title": "Tanpura Tuning and Accompaniment",
-    "description": "Learn the art of tuning and playing the tanpura, a drone instrument essential for accompaniment in Indian classical music."
-},
-{
-    "title": "Ghatam: The Clay Pot Percussion",
-    "description": "Discover the rhythmic possibilities of the ghatam, a traditional clay pot percussion instrument used in South Indian classical music."
-},
-{
-    "title": "Bharatanatyam: Classical Indian Dance",
-    "description": "Explore the expressive movements and intricate footwork of Bharatanatyam, a classical dance form from South India."
-},
-{
-    "title": "Kathak: The North Indian Classical Dance Form",
-    "description": "Dive into the graceful and dynamic movements of Kathak, a classical dance form known for its storytelling and rhythmic complexity."
-},
-{
-    "title": "Mridangam Mastery: South Indian Percussion",
-    "description": "Master the mridangam, a versatile percussion instrument integral to Carnatic music, and explore its rhythmic intricacies."
-},
-{
-    "title": "Sarod: The Soulful String Instrument",
-    "description": "Learn to play the sarod, a beautiful and soulful string instrument prominent in North Indian classical music, and explore its expressive capabilities."
-},
-{
-    "title": "Dholak Rhythms and Beats",
-    "description": "Develop your skills in playing the dholak, a versatile drum used in various musical genres, focusing on its rhythmic patterns and techniques."
-},
-{
-    "title": "Tarang: The Art of Indian Percussion Ensemble",
-    "description": "Discover the art of playing in an Indian percussion ensemble, exploring the rhythms, compositions, and dynamics of traditional Tarang performances."
-},
-{
-    "title": "Thumri: Expressive Vocal Genre of Hindustani Music",
-    "description": "Explore the emotive and lyrical style of Thumri singing, delving into its repertoire, ornamentation techniques, and expressive nuances."
-},
-{
-    "title": "Carnatic Flute Techniques",
-    "description": "Master the techniques specific to playing the flute in Carnatic music, including breath control, ornamentation, and improvisation."
-},
-{
-    "title": "Khyal Gayaki: Vocal Style of Hindustani Classical Music",
-    "description": "Study the intricate art of Khyal singing, a prominent vocal style in Hindustani classical music, focusing on its improvisational aspects and emotive expression."
-},
-{
-    "title": "Vichitra Veena: Unconventional String Instrument Exploration",
-    "description": "Explore the unique sound and playing techniques of the Vichitra Veena, a rare and mesmerizing string instrument used in Indian classical music."
-},
-{
-    "title": "Sufi Music Traditions of South Asia",
-    "description": "Delve into the mystical and devotional music traditions of Sufism in South Asia, exploring the poetry, melodies, and spiritual significance of Sufi music."
-},
-{
-    "title": "Ghazal Singing: Poetry in Music",
-    "description": "Discover the art of Ghazal singing, a poetic and emotive form of vocal music, exploring its repertoire, lyrical themes, and expressive techniques."
-},
-{
-    "title": "Gat: Composition in Hindustani Classical Music",
-    "description": "Learn about the intricate compositions known as Gat in Hindustani classical music, exploring their structure, rhythm, and melodic intricacies."
-},
-{
-    "title": "Rudra Veena: Ancient Indian Plucked String Instrument",
-    "description": "Explore the rich history and profound sound of the Rudra Veena, an ancient plucked string instrument revered in Indian classical music."
-},
-{
-    "title": "Dholki: Folk Percussion Instrument of South Asia",
-    "description": "Discover the rhythmic versatility of the dholki, a popular folk percussion instrument used in traditional music across South Asia."
-},
-{
-    "title": "Rabab: Traditional Afghan Musical Instrument",
-    "description": "Learn about the history and playing techniques of the Rabab, a traditional musical instrument originating from Afghanistan, and explore its role in Afghan music traditions."
-},
-{
-    "title": "Rasa: Understanding the Emotional Essence in Indian Music",
-    "description": "Explore the concept of Rasa in Indian music, delving into how different musical elements evoke and express emotions in classical and traditional compositions."
-},
-{
-    "title": "Qawwali: Mystical Music of Sufism",
-    "description": "Immerse yourself in the ecstatic and devotional music of Qawwali, a vibrant tradition rooted in Sufi mysticism, exploring its history, poetry, and performance styles."
-},
-{
-    "title": "Indian Classical Music Notation and Theory",
-    "description": "Master the notation and theoretical concepts of Indian classical music, including ragas, talas, and the intricate nuances of traditional compositions."
-},
-{
-    "title": "Tala System: Rhythmic Framework in Indian Music",
-    "description": "Explore the rhythmic framework of Indian music through the study of Talas, intricate rhythmic cycles that form the backbone of classical compositions and improvisation."
-}
-  
-];
 
-// Preprocessing
-function preprocessText(text) {
-  const tokens = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
-  return tokens;
-}
+// const videos = [
+//   {
+//     "title": "Introduction to Hindustani Classical Music",
+//     "description": "Explore the basics of Hindustani classical music, including ragas, talas, and vocal techniques."
+// },
+// {
+//     "title": "Carnatic Music Fundamentals",
+//     "description": "Learn the foundational principles of Carnatic music, covering ragas, swaras, and rhythmic patterns."
+// },
+// {
+//     "title": "Raga Theory and Practice",
+//     "description": "Dive deep into the theory and practical application of ragas, the melodic frameworks of Indian classical music."
+// },
+// {
+//     "title": "Tabla Mastery: The Art of Percussion",
+//     "description": "Master the intricate rhythms and techniques of the tabla, a fundamental percussion instrument in Indian classical music."
+// },
+// {
+//     "title": "Sitar Techniques and Performance",
+//     "description": "Develop your skills in playing the sitar, exploring its unique techniques and performance styles."
+// },
+// {
+//     "title": "Exploring the Veena: South Indian String Instrument",
+//     "description": "Discover the rich heritage of the veena, a classical string instrument from South India, and learn to play its mesmerizing melodies."
+// },
+// {
+//     "title": "Dhrupad Vocal Tradition: Ancient Indian Singing Style",
+//     "description": "Delve into the ancient tradition of Dhrupad singing, exploring its techniques, compositions, and spiritual significance."
+// },
+// {
+//     "title": "Flute Melodies of Indian Classical Music",
+//     "description": "Immerse yourself in the enchanting melodies of the Indian classical flute, learning both traditional compositions and improvisational techniques."
+// },
+// {
+//     "title": "Tanpura Tuning and Accompaniment",
+//     "description": "Learn the art of tuning and playing the tanpura, a drone instrument essential for accompaniment in Indian classical music."
+// },
+// {
+//     "title": "Ghatam: The Clay Pot Percussion",
+//     "description": "Discover the rhythmic possibilities of the ghatam, a traditional clay pot percussion instrument used in South Indian classical music."
+// },
+// {
+//     "title": "Bharatanatyam: Classical Indian Dance",
+//     "description": "Explore the expressive movements and intricate footwork of Bharatanatyam, a classical dance form from South India."
+// },
+// {
+//     "title": "Kathak: The North Indian Classical Dance Form",
+//     "description": "Dive into the graceful and dynamic movements of Kathak, a classical dance form known for its storytelling and rhythmic complexity."
+// },
+// {
+//     "title": "Mridangam Mastery: South Indian Percussion",
+//     "description": "Master the mridangam, a versatile percussion instrument integral to Carnatic music, and explore its rhythmic intricacies."
+// },
+// {
+//     "title": "Sarod: The Soulful String Instrument",
+//     "description": "Learn to play the sarod, a beautiful and soulful string instrument prominent in North Indian classical music, and explore its expressive capabilities."
+// },
+// {
+//     "title": "Dholak Rhythms and Beats",
+//     "description": "Develop your skills in playing the dholak, a versatile drum used in various musical genres, focusing on its rhythmic patterns and techniques."
+// },
+// {
+//     "title": "Tarang: The Art of Indian Percussion Ensemble",
+//     "description": "Discover the art of playing in an Indian percussion ensemble, exploring the rhythms, compositions, and dynamics of traditional Tarang performances."
+// },
+// {
+//     "title": "Thumri: Expressive Vocal Genre of Hindustani Music",
+//     "description": "Explore the emotive and lyrical style of Thumri singing, delving into its repertoire, ornamentation techniques, and expressive nuances."
+// },
+// {
+//     "title": "Carnatic Flute Techniques",
+//     "description": "Master the techniques specific to playing the flute in Carnatic music, including breath control, ornamentation, and improvisation."
+// },
+// {
+//     "title": "Khyal Gayaki: Vocal Style of Hindustani Classical Music",
+//     "description": "Study the intricate art of Khyal singing, a prominent vocal style in Hindustani classical music, focusing on its improvisational aspects and emotive expression."
+// },
+// {
+//     "title": "Vichitra Veena: Unconventional String Instrument Exploration",
+//     "description": "Explore the unique sound and playing techniques of the Vichitra Veena, a rare and mesmerizing string instrument used in Indian classical music."
+// },
+// {
+//     "title": "Sufi Music Traditions of South Asia",
+//     "description": "Delve into the mystical and devotional music traditions of Sufism in South Asia, exploring the poetry, melodies, and spiritual significance of Sufi music."
+// },
+// {
+//     "title": "Ghazal Singing: Poetry in Music",
+//     "description": "Discover the art of Ghazal singing, a poetic and emotive form of vocal music, exploring its repertoire, lyrical themes, and expressive techniques."
+// },
+// {
+//     "title": "Gat: Composition in Hindustani Classical Music",
+//     "description": "Learn about the intricate compositions known as Gat in Hindustani classical music, exploring their structure, rhythm, and melodic intricacies."
+// },
+// {
+//     "title": "Rudra Veena: Ancient Indian Plucked String Instrument",
+//     "description": "Explore the rich history and profound sound of the Rudra Veena, an ancient plucked string instrument revered in Indian classical music."
+// },
+// {
+//     "title": "Dholki: Folk Percussion Instrument of South Asia",
+//     "description": "Discover the rhythmic versatility of the dholki, a popular folk percussion instrument used in traditional music across South Asia."
+// },
+// {
+//     "title": "Rabab: Traditional Afghan Musical Instrument",
+//     "description": "Learn about the history and playing techniques of the Rabab, a traditional musical instrument originating from Afghanistan, and explore its role in Afghan music traditions."
+// },
+// {
+//     "title": "Rasa: Understanding the Emotional Essence in Indian Music",
+//     "description": "Explore the concept of Rasa in Indian music, delving into how different musical elements evoke and express emotions in classical and traditional compositions."
+// },
+// {
+//     "title": "Qawwali: Mystical Music of Sufism",
+//     "description": "Immerse yourself in the ecstatic and devotional music of Qawwali, a vibrant tradition rooted in Sufi mysticism, exploring its history, poetry, and performance styles."
+// },
+// {
+//     "title": "Indian Classical Music Notation and Theory",
+//     "description": "Master the notation and theoretical concepts of Indian classical music, including ragas, talas, and the intricate nuances of traditional compositions."
+// },
+// {
+//     "title": "Tala System: Rhythmic Framework in Indian Music",
+//     "description": "Explore the rhythmic framework of Indian music through the study of Talas, intricate rhythmic cycles that form the backbone of classical compositions and improvisation."
+// }
 
-// Build vocabulary and document vectors
-const wordEmbeddings = {};
+// ];
 
-videos.forEach(video => {
-  const titleTokens = preprocessText(video.title);
-  const descriptionTokens = preprocessText(video.description);
-  const allTokens = [...titleTokens, ...descriptionTokens];
+// async function fetchVideos() {
+//   const courses = await Video.find();
+//   let videoTitleDesc =[];
+//   courses.map((video) => {
+//     return videoTitleDesc = [{
+//       "title": video.title,
+//       "description": video.description,
+//     }
+//   ]
+//   });
+// }
 
-  allTokens.forEach(token => {
-      if (!wordEmbeddings[token]) {
-          wordEmbeddings[token] = Array.from({ length: 100 }, () => Math.random());
-      }
-  });
-
-  // Calculate average word embedding for the document
-  const docVector = allTokens.reduce((acc, token) => acc.map((val, i) => val + wordEmbeddings[token][i]), Array.from({ length: 100 }, () => 0));
-  video.vector = docVector.map(val => val / allTokens.length);
-});
-
-// Function to calculate cosine similarity between two vectors
-function cosineSimilarity(vec1, vec2) {
-  const dotProduct = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
-  const magnitudeVec1 = Math.sqrt(vec1.reduce((acc, val) => acc + val ** 2, 0));
-  const magnitudeVec2 = Math.sqrt(vec2.reduce((acc, val) => acc + val ** 2, 0));
-
-  return dotProduct / (magnitudeVec1 * magnitudeVec2);
-}
-
-// Recommendation function
-function recommendSimilarVideos(clickedVideoVector, topN = 3) {
-  const similarities = [];
-
-  videos.forEach(video => {
-      const similarityScore = cosineSimilarity(clickedVideoVector, video.vector);
-      similarities.push({ video, similarityScore });
-  });
-
-  similarities.sort((a, b) => b.similarityScore - a.similarityScore);
-  const topVideos = similarities.slice(0, topN);
-
-  return topVideos;
-}
+// const Video = require('./models/Video'); // Import your Video model definition
 
 exports.recommendVideos = async function recommendVideos(req, res) {
-// module.exports = async function recommendVideos(req, res) {
+  const courses = await Video.find();
+  const videos = courses.map((video) => ({
+    title: video.title,
+    description: video.description,
+  }));
+
+  // Preprocessing
+  function preprocessText(text) {
+    const tokens = text
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .split(/\s+/);
+    return tokens;
+  }
+
+  // Build vocabulary and document vectors
+  const wordEmbeddings = {};
+
+  videos.forEach((video) => {
+    const titleTokens = preprocessText(video.title);
+    const descriptionTokens = preprocessText(video.description);
+    const allTokens = [...titleTokens, ...descriptionTokens];
+
+    allTokens.forEach((token) => {
+      if (!wordEmbeddings[token]) {
+        wordEmbeddings[token] = Array.from({ length: 100 }, () =>
+          Math.random()
+        );
+      }
+    });
+
+    // Calculate average word embedding for the document
+    const docVector = allTokens.reduce(
+      (acc, token) => acc.map((val, i) => val + wordEmbeddings[token][i]),
+      Array.from({ length: 100 }, () => 0)
+    );
+    video.vector = docVector.map((val) => val / allTokens.length);
+  });
+
+  // Function to calculate cosine similarity between two vectors
+  function cosineSimilarity(vec1, vec2) {
+    const dotProduct = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
+    const magnitudeVec1 = Math.sqrt(
+      vec1.reduce((acc, val) => acc + val ** 2, 0)
+    );
+    const magnitudeVec2 = Math.sqrt(
+      vec2.reduce((acc, val) => acc + val ** 2, 0)
+    );
+
+    return dotProduct / (magnitudeVec1 * magnitudeVec2);
+  }
+
+  // Recommendation function
+  function recommendSimilarVideos(clickedVideoVector, topN = 3) {
+    const similarities = [];
+
+    videos.forEach((video) => {
+      const similarityScore = cosineSimilarity(
+        clickedVideoVector,
+        video.vector
+      );
+      similarities.push({ video, similarityScore });
+    });
+
+    similarities.sort((a, b) => b.similarityScore - a.similarityScore);
+    const topVideos = similarities.slice(0, topN);
+
+    return topVideos;
+  }
+
+  // module.exports = async function recommendVideos(req, res) {
 
   const videoId = req.params.videoId;
-  const clickedVideo = videos.find(video => video.title === videoId);
+  const clickedVideo = videos.find((video) => video.title === videoId);
 
   if (!clickedVideo) {
-      return res.status(404).json({ error: "Video not found" });
+    return res.status(404).json({ error: "Video not found" });
   }
 
   const clickedVideoVector = clickedVideo.vector;
@@ -790,5 +808,56 @@ exports.recommendVideos = async function recommendVideos(req, res) {
 
   res.json({ recommendedVideos });
 };
-  
 
+// =============//////////////////===============
+//function to get top 4 videos from the database of video User document and send it to the client side on the basis of subscription in descending order.
+
+exports.getTopSubscribedVideos = async (req, res) => {
+  try {
+    // Fetch all users
+    const users = await User.find();
+
+    // Initialize an object to store video subscription counts
+    const videoCounts = {};
+
+    // Iterate through each user
+    users.forEach((user) => {
+      // Iterate through user's subscribed videos
+      user.subscribedVideos.forEach((videoId) => {
+        // Increment count for video
+        if (videoCounts[videoId]) {
+          videoCounts[videoId]++;
+        } else {
+          videoCounts[videoId] = 1;
+        }
+      });
+    });
+
+    // Convert videoCounts object to an array of objects
+    const videoCountsArray = Object.entries(videoCounts).map(
+      ([videoId, count]) => ({
+        videoId,
+        count,
+      })
+    );
+
+    // Sort videos by count in descending order
+    videoCountsArray.sort((a, b) => b.count - a.count);
+
+    // Retrieve top 4 videos
+    const topSubscribedVideos = videoCountsArray.slice(0, 4);
+
+    // Fetch video details for the top subscribed videos
+    const topVideosDetails = await Promise.all(
+      topSubscribedVideos.map(async ({ videoId }) => {
+        const video = await Video.findById(videoId);
+        return video;
+      })
+    );
+
+    res.status(200).json({ topSubscribedVideos: topVideosDetails });
+  } catch (error) {
+    console.error("Error fetching top subscribed videos:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
