@@ -580,25 +580,6 @@ exports.fuzzySearch = async function (req, res) {
   }
 };
 
-//create video array and insert the title and description from the database
-exports.word2vec = async (req, res) => {
-  try {
-    const videos = await Video.find();
-    const videoArray = videos.map((video) => {
-      return {
-        title: video.title,
-        description: video.description,
-      };
-    });
-    res.status(200).json(videoArray);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-
-
-
 /////////////////////////////////////////////////
 //                  Word2Vec
 // Sample data stored in the database

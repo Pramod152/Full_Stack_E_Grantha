@@ -1,19 +1,19 @@
 // App.jsx
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./NewDesign/UserPage/Auth/AuthContext";
-import { AdminAuthProvider } from "./NewDesign/AdminPage/Auth/AdminAuthContext";
-import PrivateRoute from "./NewDesign/UserPage/Auth/PrivateRoute";
-import HomePage from "./NewDesign/UserPage/Pages/WelcomeUser/HomePage";
-import AboutPage from "./NewDesign/UserPage/Pages/WelcomeUser/About";
-import CoursesPage from "./NewDesign/UserPage/Pages/WelcomeUser/Course";
-import ContactPage from "./NewDesign/UserPage/Pages/WelcomeUser/Contact";
-import UserRegistrationPage from "./NewDesign/UserPage/Pages/WelcomeUser/UserRegistrationPage";
-import UserDashboard from "./NewDesign/UserPage/Pages/UserDashboard/UserDashboardPage";
-import AdminPanel from './NewDesign/AdminPage/Pages/AdminPanel'
-// import CourseDetailPage from './NewDesign/UserPage/Pages/WelcomeUser/CourseDetailPage'
-import AdminRegistrationPage from './NewDesign/AdminPage/Pages/AdminRegistrationPage'
-import AdminPrivateRoute from "./NewDesign/AdminPage/Auth/AdminPrivateRoute";
+import { AuthProvider } from "./UserPage/Auth/AuthContext";
+import { AdminAuthProvider } from "./AdminPage/Auth/AdminAuthContext";
+import PrivateRoute from "./UserPage/Auth/PrivateRoute";
+import HomePage from "./UserPage/Pages/WelcomeUser/HomePage";
+import AboutPage from "./UserPage/Pages/WelcomeUser/About";
+import CoursesPage from "./UserPage/Pages/WelcomeUser/Course";
+import ContactPage from "./UserPage/Pages/WelcomeUser/Contact";
+import UserRegistrationPage from "./UserPage/Pages/WelcomeUser/UserRegistrationPage";
+import UserDashboard from "./UserPage/Pages/UserDashboard/UserDashboardPage";
+import AdminPanel from './AdminPage/Pages/AdminPanel'
+// import CourseDetailPage from './UserPage/Pages/WelcomeUser/CourseDetailPage'
+import AdminRegistrationPage from './AdminPage/Pages/AdminRegistrationPage'
+import AdminPrivateRoute from "./AdminPage/Auth/AdminPrivateRoute";
 const App = () => {
   return (
     <>

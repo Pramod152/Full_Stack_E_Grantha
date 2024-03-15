@@ -7,7 +7,7 @@ import { getUserData } from "../../../Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
 import "./ComponentCSS/Video_Card.css";
 
-const Video_Card = ({ title, description, videoId, video_id }) => {
+const Video_Card = ({ title, description, videoId, video_id , thumbnail }) => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(false);
@@ -103,14 +103,15 @@ const Video_Card = ({ title, description, videoId, video_id }) => {
   return (
     <div className="card">
       <div className="video-thumbnail" onClick={handleViewDetail}>
-        <iframe
+        {/* <iframe
           title={title}
           width="100%"
           height="100%"
           src={`https://www.youtube.com/embed/${videoId}?rel=0`}
           frameBorder="0"
           allowFullScreen
-        ></iframe>
+        ></iframe> */}
+        <img src={thumbnail} alt="thumbnail" />
         <div className="rating-stars">
           {/* <span><FontAwesomeIcon icon={faStar} /></span>
                     <span><FontAwesomeIcon icon={faStar} /></span>

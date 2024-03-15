@@ -85,6 +85,7 @@ const CourseSection = ({ isHome }) => {
                 videoLink={video.videoLink} 
                 videoId={video.videoId}
                 video_id={video._id}
+                thumbnail = {video.thumbnailUrl}
             />
         )) : searchResults.map((video) => (
             <Video_Card
