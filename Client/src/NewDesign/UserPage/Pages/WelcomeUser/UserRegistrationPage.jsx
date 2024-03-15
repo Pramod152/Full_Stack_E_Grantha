@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LoginForm from '../UserDashboard/Component/LoginForm';
 import RegisterForm from '../UserDashboard/Component/RegisterForm';
-import NavBar from '../../../../components/NavBar//NavBar_Welcome/NavBar'
+import NavBar from './Components/NavBar'
 import './WelcomeUserCSS/UserRegistrationPage.css'
 
 const UserRegistrationPage = () => {

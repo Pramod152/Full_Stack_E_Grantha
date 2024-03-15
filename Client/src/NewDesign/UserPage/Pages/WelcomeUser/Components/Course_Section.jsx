@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Video_Card from '../Card_Video/Video_Card/Video_Card';
-import './Course_Section.css';
+import Video_Card from './Video_Card';
+import './ComponentCSS/Course_Section.css';
 
 const CourseSection = ({ isHome }) => {
   const [videos, setVideos] = useState([]);
