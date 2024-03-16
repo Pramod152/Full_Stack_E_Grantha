@@ -20,7 +20,6 @@ const TopSubscribedCourse_Section = () => {
 
     }, []);
 
-
   return (
     <div id='course_section_wrapper'>
     <h1 id='top_subscribed_courses_heading'>Top Subscribed Courses</h1>

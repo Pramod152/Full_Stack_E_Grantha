@@ -9,35 +9,40 @@ const CourseDetailPage = () => {
   const responseData = location?.state?.responseData || null;
   const { isAuthenticated } = useContext(AuthContext);
   const recommendedVideos = responseData?.recommendedVideos;
-  console.log(recommendedVideos)
+
 
   return (
     <div className="course-detail-page">
       {recommendedVideos && recommendedVideos.map((videoData, index) => (
         index === 0 ? (
           // Render video itself in iframe for the first index
-          <iframe
-            key={index}
-            title={videoData.video.title}
-            width="560"
-            height="315"
-            // src={videoData.video.videoLink}
-            // src={`https://www.youtube.com/watch?v=oCkGmxS2EiA`}
-            src={`https://www.youtube.com/embed/${videoData.video.videoId}`}
-            // src={`https://www.youtube.com/embed/oCkGmxS2EiA`}
-            frameBorder="0"
-            allowFullScreen
-          > hello </iframe>
-          
+          <>
+            {/* <iframe
+              key={index}
+              title={videoData.video.title}
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${videoData.video.videoId}`}
+              frameBorder="0"
+              allowFullScreen
+            /> */}
+            <Video_Card
+              key={videoData.video._id}
+              title={videoData.video.title}
+              description={videoData.video.description}
+              _id={videoData.video._id}
+              videoLink={videoData.video.videoLink}
+              videoId={videoData.video.videoId}
+            />
+          </>
         ) : (
           // Render Video_Card component for the remaining videos
           <TopSubscribedVideo_Card
-            key={index}
-            title={videoData.video.title}
-            description={videoData.video.description}
-            video_id={videoData.video.videoId}
-            thumbnail={videoData.video.thumnailUrl}
-            subscribe={true}
+            key={videoData.video._id}
+              title={videoData.video.title}
+              description={videoData.video.description}
+              _id={videoData.video._id}
+            thumbnail={videoData.video.thumbnailUrl}
           />
         )
       ))}

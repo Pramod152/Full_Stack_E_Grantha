@@ -72,3 +72,76 @@ body {
         font-size: 20px;
     }
 }
+
+
+.hero-wrapper {
+    border-radius: 20px;
+    background-color: #f5f2ea;
+    padding: 80px;
+  }
+  
+  .hero-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .hero-text-content {
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+  }
+  
+  .hero-title {
+    color: rgba(26, 39, 35, 0.9);
+    text-transform: capitalize;
+    font: 700 81px/1.2 Raleway, sans-serif;
+  }
+  
+  .hero-subtitle {
+    color: rgba(0, 0, 0, 0.65);
+    font-family: Rambla, sans-serif;
+    margin-top: 125px;
+  }
+  
+  .hero-description {
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 51px;
+    font: 400 20px/1.1 Rambla, sans-serif;
+  }
+  
+  .hero-button-group {
+    display: flex;
+    margin-top: 39px;
+    gap: 17px;
+    color: #000;
+    font-weight: 400;
+  }
+  
+  .hero-button {
+    font-family: Rambla, sans-serif;
+    border-radius: 18px;
+    padding: 20px 50px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  .hero-button.primary {
+    background-color: #ffb769;
+    border: none;
+  }
+  
+  .hero-button.secondary {
+    background-color: #f5f2ea;
+    border: 1px solid rgba(255, 183, 105, 1);
+  }
+  
+  .hero-image-wrapper {
+    width: 68%;
+  }
+  
+  .hero-image {
+    aspect-ratio: 0.91;
+    object-fit: cover;
+    width: 100%;
+  }
+  

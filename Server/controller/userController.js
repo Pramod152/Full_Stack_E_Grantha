@@ -587,11 +587,12 @@ exports.fuzzySearch = async function (req, res) {
 exports.recommendVideos = async function recommendVideos(req, res) {
   const courses = await Video.find();
   const videos = courses.map((video) => ({
+    _id: video._id, // Include the _id field
     title: video.title,
     description: video.description,
     videoId: video.videoId,
-    thumnailUrl : video.thumbnailUrl,
-    videoLink : video.videoLink,
+    thumbnailUrl: video.thumbnailUrl, // Corrected the field name
+    videoLink: video.videoLink, // Corrected the field name
   }));
 
   // Preprocessing
