@@ -1,7 +1,8 @@
 
 #card {
     overflow: hidden;
-    max-width: 270px;
+    width: 400px;
+    height: auto;
     background: #fff;
     padding: 20px;
     border-radius: 15px;
@@ -11,6 +12,9 @@
 
 #video_thumbnail {
     position: relative;
+    width: 100%;
+    height: 80%;
+    margin-bottom: 14px;
 }
 #thumbnail_topsubscribed{
     width: 100%;
@@ -18,7 +22,14 @@
     object-fit: cover;
     border-radius: 10px;
     transition: all 0.3s;
+}
 
+#video_thumbnail img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: all 0.3s;
 }
 
 #video_thumbnail:hover img {
@@ -27,18 +38,25 @@
 }
 
 
-#heading,
-#description {
+#heading
+ {
     color: #333;
+    font-size: 27px;
+    font-weight: 700;
 }
-
-
-
+#description{
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+}
 
 #view_details_link {
     font-size: 1.2rem;
     text-align: center;
     cursor: pointer;
+}
+#view_detail{
+    margin: 20px 0;
 }
 
 /* Responsive Styles */

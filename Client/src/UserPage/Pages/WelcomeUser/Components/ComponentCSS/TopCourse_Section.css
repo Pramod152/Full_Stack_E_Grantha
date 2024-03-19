@@ -4,9 +4,22 @@
     width: 95%;
 
 }
+.course_header_wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
+
+}
+.course_header_wrapper span{
+    font-size: 2rem;
+    color: black;
+    cursor: pointer;
+
+}
 #top_subscribed_courses_heading{
     text-align: left;
     margin: 20px;
+    font-size: 32px;
 
 }
 #video_cards{

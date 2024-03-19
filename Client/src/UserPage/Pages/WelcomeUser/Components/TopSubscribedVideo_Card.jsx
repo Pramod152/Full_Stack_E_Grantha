@@ -38,7 +38,7 @@ const TopSubscribedVideo_Card = ({ title, description, thumbnail,_id }) => {
 
       
       <a id="view_details_link" onClick={handleViewDetails}>
-        View Details
+        <button id="view_detail"> View Details </button>
       </a>
     </div>
   );

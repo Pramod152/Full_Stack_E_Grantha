@@ -3,7 +3,11 @@ import axios from 'axios';
 import TopSubscribedVideo_Card from './TopSubscribedVideo_Card';
 import './ComponentCSS/TopCourse_Section.css'
 
-const TopSubscribedCourse_Section = () => {
+const TopSubscribedCourse_Section = (isHome) => {
+
+  const handleClick = () => {
+    window.location.href = "/E-Grantha/course";
+  };
     
     const [videos, setVideos] = useState([]);
     useEffect(() => {
@@ -22,7 +26,10 @@ const TopSubscribedCourse_Section = () => {
 
   return (
     <div id='course_section_wrapper'>
+    <div className="course_header_wrapper">
     <h1 id='top_subscribed_courses_heading'>Top Subscribed Courses</h1>
+    <span onClick={handleClick}>See All</span>
+    </div>
       <div id="video_cards">
         {videos.map((video, index) => (
           <TopSubscribedVideo_Card

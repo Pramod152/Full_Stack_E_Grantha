@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './TopSubscribedVideo_Card'
+import './TopSubscribedVideo_Card';
 import './ComponentCSS/Course_Section.css';
 import TopSubscribedVideo_Card from './TopSubscribedVideo_Card';
 
-const CourseSection = ({ isHome }) => {
+const CourseSection = ({ isHome, searchResults, searchQuery }) => {
   const [videos, setVideos] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [showSearchButton, setShowSearchButton] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     fetchVideos();
-    if (isHome) {
-      setShowSearchButton(false);
-    }
-  }, [isHome]);
+  }, [selectedCategory]); // Fetch videos when selectedCategory changes
 
   const fetchVideos = async () => {
     try {
-      const response = await fetch("http://localhost:3000/E-Grantha/user/allVideos");
+      let url;
+      if (selectedCategory === 'All') {
+        url = "http://localhost:3000/E-Grantha/user/allVideos";
+      } else {
+        url = `http://localhost:3000/E-Grantha/user/videosWithSimilarCategory/${selectedCategory}`;
+      }
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        if (data.status === "ok") {
-          setVideos(data.message); // Set fetched videos data to state
-        } else {
-          console.error("API returned error status:", data.status);
-        }
+
+          // If selectedCategory is 'All', set videos from data.message
+          // Otherwise, set videos from data.similarVideos
+          setVideos(selectedCategory === 'All' ? data.message : data.similarVideos);       
       } else {
         console.error("Failed to fetch videos");
       }
@@ -35,69 +35,59 @@ const CourseSection = ({ isHome }) => {
     }
   };
 
-  const handleSearch = async (query) => {
-    setSearchQuery(query);
-    console.log('Searching for:', query);
-    try {
-      const response = await axios.get(`http://localhost:3000/E-Grantha/user/fuzzySearch?q=${searchQuery}&threshold=2`);
-      if (response.status === 200) {
-        setSearchResults(response.data.results);
-        console.log('Search results:', response.data.results);
-      } else {
-        console.error('Failed to fetch search results');
-      }
-    } catch (error) {
-      console.error('Error searching:', error);
-    }
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const trimmedQuery = searchQuery.trim().replace(/\s+/g, ' '); // Trim leading/trailing whitespaces and replace consecutive whitespaces with a single space
-    setSearchQuery(trimmedQuery);
-    handleSearch(searchQuery);
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
   };
 
   return (
     <div className='course_section_wrapper'>
       {!isHome && (
-        <form onSubmit={handleSearchSubmit} className="search_box">
-          <input
-            type="text"
-            value={searchQuery}
-            id='fuzzy_search_input'
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search..."
-            className="search_input"
-          />
-          {showSearchButton && (
-            <button type="submit" className="search_btn_fuzzy">
-              Search
-            </button>
-          )}
-        </form>
+        <>
+          <div className="course_header">
+            <h1 id='all_courses'>Courses</h1>
+            <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
+              <option value="All">All</option>
+              <option value="Instrument">Instrument</option>
+              <option value="Vocal">Vocal</option>
+              <option value="Song">Song</option>
+            </select>
+          </div>
+          <p className='selected_category'>Category: {selectedCategory}</p> {/* Render selected category */}
+        </>
       )}
-      <div className="video_cards">
-        {(searchQuery.trim() === '' ? videos.map((video) => (
-            <TopSubscribedVideo_Card 
-                key={video._id} // Assuming each video has a unique id
-                title={video.title} 
-                description={video.description} 
-                videoLink={video.videoLink} 
-                videoId={video.videoId}
-                video_id={video._id}
-                thumbnail = {video.thumbnailUrl}
-            />
-        )) : searchResults.map((video) => (
-            <TopSubscribedVideo_Card
-              key={video.document._id}
-              title={video.document.title}
-              description={video.document.description}
-              videoId={video.document.videoId}
-              thumbnail = {video.document.thumbnailUrl}
-            />
-        )))}
-      </div>
+      
+
+<div className="video_cards">
+  {(searchQuery.trim() === '' ? 
+    // If there's no search query, map over videos based on selected category
+    videos
+      .filter(video => selectedCategory === 'All' || video.videoCategory === selectedCategory) // Filter based on selected category
+      .map((video) => (
+        <TopSubscribedVideo_Card 
+          key={video._id} // Assuming each video has a unique id
+          title={video.title} 
+          description={video.description} 
+          videoLink={video.videoLink} 
+          videoId={video.videoId}
+          video_id={video._id}
+          thumbnail={video.thumbnailUrl}
+        />
+      )) 
+    : 
+    // If there's a search query, filter searchResults based on selected category
+    searchResults
+      .filter(video => selectedCategory === 'All' || video.document.videoCategory === selectedCategory) // Filter based on selected category
+      .map((video) => (
+        <TopSubscribedVideo_Card
+          key={video.document._id}
+          title={video.document.title}
+          description={video.document.description}
+          videoId={video.document.videoId}
+          thumbnail={video.document.thumbnailUrl}
+        />
+      ))
+  )}
+</div>
     </div>
   );
 };

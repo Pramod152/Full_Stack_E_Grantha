@@ -5,8 +5,7 @@ import { getUserData } from "../../../Auth/UserDataManager";
 import axios from "axios"; // Import Axios for making HTTP requests
 import "./ComponentCSS/Video_Card.css";
 
-const Video_Card = ({ title, description,_id,  videoId}) => {
-
+const Video_Card = ({ title, description, _id, videoId }) => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
   const [subscribed, setSubscribed] = useState(false);
@@ -16,7 +15,7 @@ const Video_Card = ({ title, description,_id,  videoId}) => {
       try {
         if (isAuthenticated) {
           const response = await axios.get(
-            `http://localhost:3000/E-Grantha/user/checksubscribe/${videoId}`,
+            `http://localhost:3000/E-Grantha/user/checksubscribe/${_id}`,
             {
               withCredentials: true,
             }
@@ -30,26 +29,15 @@ const Video_Card = ({ title, description,_id,  videoId}) => {
 
     checkSubscription();
   }, [isAuthenticated, _id]);
-
-  console.log(subscribed)
-
-
-  console.log(isAuthenticated)
-  const handleAuth = () => {
+  const handleSubscribe = () => {
     if (isAuthenticated) {
       const userData = getUserData();
-      console.log(videoId)
       if (userData) {
         axios
-          .post(
-            `http://localhost:3000/E-Grantha/user/subscribe/${_id}`,
-            null,
-            {
-              withCredentials: true,
-            }
-          )
+          .post(`http://localhost:3000/E-Grantha/user/subscribe/${_id}`, null, {
+            withCredentials: true,
+          })
           .then(() => {
-            alert("Subscribed to the video successfully.");
             // console.log("User subscribed to the video successfully.");
             setSubscribed(true);
           })
@@ -70,79 +58,71 @@ const Video_Card = ({ title, description,_id,  videoId}) => {
   };
 
   const handleUnsub = () => {
-    if (isAuthenticated) {
-      const userData = getUserData();
-      if (userData) {
-        axios
-          .post(
-            `http://localhost:3000/E-Grantha/user/unsubscribe/${_id}`,
-            null,
-            {
-              withCredentials: true,
-            }
-          )
-          .then(() => {
-            // console.log("User unsubscribed to the video successfully.");
-            setSubscribed(false);
-          })
-          .catch((error) => {
-            console.error("Error unsubscribing to the video:", error);
-          });
+    const confirmUnsub = window.confirm(
+      "Please Log in before Unsubscribing. Do you want to proceed?"
+    );
+    if (confirmUnsub) {
+      if (isAuthenticated) {
+        const userData = getUserData();
+        if (userData) {
+          axios
+            .post(
+              `http://localhost:3000/E-Grantha/user/unsubscribe/${_id}`,
+              null,
+              {
+                withCredentials: true,
+              }
+            )
+            .then(() => {
+              // console.log("User unsubscribed to the video successfully.");
+             
+                setSubscribed(false);
+              
+            })
+            .catch((error) => {
+              console.error("Error unsubscribing to the video:", error);
+            });
+        } else {
+          console.error("User data not found.");
+        }
       } else {
-        console.error("User data not found.");
+        const confirmUnsub = window.confirm(
+          "Please Log in before Unsubscribing. Do you want to proceed?"
+        );
+        if (confirmUnsub) {
+          navigate("/E-Grantha/register");
+        }
       }
-    } else {
-      const confirmUnsub = window.confirm(
-        "Please Log in before Unsubscribing. Do you want to proceed?"
-      );
-      if (confirmUnsub) {
-        navigate("/E-Grantha/register");
-      }
-    }
-  };
-
-  const handleViewDetail = () => {
-    if (isAuthenticated) {
-      navigate("/E-Grantha/coursedetail");
-    } else {
-      navigate("/E-Grantha/register");
     }
   };
 
   return (
-    <div className="card">
-     
-          <div className="video-thumbnail" onClick={handleViewDetail}>
-          <iframe
-          title={title}
+    <>
+      <div className="card">
+        <iframe
           width="100%"
-          height="100%"
+          height="90%"
           src={`https://www.youtube.com/embed/${videoId}`}
-          frameborder="0"
+          frameBorder="0"
           allowFullScreen
         ></iframe>
-          </div>
-     
-          <h2 id="heading">{title}</h2>
-          <p id="description">
-            {description && description.split(" ").slice(0, 10).join(" ")}
-          </p>
 
-          <a id="view_details_link" onClick={handleViewDetail}>
-            View Details
-          </a>
-       
-      
-      {isAuthenticated && subscribed ? (
-        <button onClick={handleUnsub} className="buy-now-button">
-          Unsubscribe
-        </button>
-      ) : (
-        <button onClick={handleAuth} className="buy-now-button">
-          Subscribe
-        </button>
-      )}
+        <h2 id="heading">{title}</h2>
+        <p id="description">
+          {description && description.split(" ").slice(0, 10).join(" ")}
+        </p>
+
+        {isAuthenticated && subscribed ? (
+          <button onClick={handleUnsub} className="buy-now-button">
+            Unsubscribe
+          </button>
+        ) : (
+          <button onClick={handleSubscribe} className="buy-now-button">
+            Subscribe
+          </button>
+        )}
       </div>
+    </>
   );
 };
 
