@@ -176,6 +176,7 @@ exports.checkSubscription = async (req, res) => {
   try {
     const userId = req.user._id; // Assuming you have middleware to extract the user from the request
     const videoId = req.params.videoId;
+    console.log(videoId)
 
     const user = await User.findById(userId);
 
@@ -659,8 +660,6 @@ exports.recommendVideos = async function recommendVideos(req, res) {
     return topVideos;
   }
 
-  // module.exports = async function recommendVideos(req, res) {
-
   const videoId = req.params.videoId; //videoId is title of the video
   const clickedVideo = videos.find((video) => video.title === videoId);
 
@@ -733,11 +732,12 @@ exports.getTopSubscribedVideos = async (req, res) => {
 exports.videosWithSimilarCategory = async (req, res) => {
   try {
     const category = req.params.category;
+    console.log(category); // Debug statement
     // const category = Vocal;
 
     // Fetch videos with the same category
     const similarVideos = await Video.find({ videoCategory: category });
-
+    console.log(similarVideos); // Debug statement
     res.status(200).json({ similarVideos });
   } catch (err) {
     console.error("Error fetching videos with similar category:", err);

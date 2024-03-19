@@ -1,13 +1,15 @@
-import React from 'react';
-import { getUserData } from '../../../Auth/UserDataManager'; // Import the utility functions
+import React, { useState, useEffect } from 'react';
+import { getUserData } from '../../../Auth/UserDataManager';
 
 const UserDashboard = () => {
-    // Retrieve user's data from localStorage
-    const userData = getUserData();
-    // console.log(userData.firstName);
+    const [userName, setUserName] = useState('');
 
-    // Extract user's name
-    const userName = userData ? userData.firstName : '';
+    useEffect(() => {
+        const userData = getUserData();
+        if (userData) {
+            setUserName(userData.firstName);
+        }
+    }, []);
 
     return (
         <div>

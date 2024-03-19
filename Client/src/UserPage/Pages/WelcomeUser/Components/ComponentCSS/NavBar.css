@@ -1,5 +1,5 @@
 :root {
-    --nav-padding: 0px 180px;
+    --nav-padding: 20px 180px 0;
     --nav-img-width: 60px;
     --nav-margin-left: 60px;
     --nav-font-size: 2.5rem;

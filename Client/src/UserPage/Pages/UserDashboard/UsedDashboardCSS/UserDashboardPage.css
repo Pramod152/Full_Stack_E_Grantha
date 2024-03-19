@@ -10,8 +10,17 @@
     justify-content: flex-start;
     width: 100vw;
     height: 100vh;
+    position: relative;
     
 }
+.back_arrow{
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 32px;
+    cursor: pointer;
+
+ }
 .sidebar{
     background-color: black;
     width: 15vw;
@@ -52,7 +61,7 @@ hr{
     font-weight: 500;
     color: white;
     cursor: pointer;
-    /* padding-left: 30%; */
+    padding-left: 30%;
     padding: 10px 0 10px 30%;
 }
 
@@ -70,4 +79,4 @@ hr{
     justify-content: flex-start;
     gap: 20px;
     padding: 50px 0;
-}          
+}           

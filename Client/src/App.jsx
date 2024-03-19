@@ -28,7 +28,9 @@ const App = () => {
             <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
             <UserDashboard />
             </PrivateRoute>} />
-            <Route path="/E-Grantha/coursedetail" element={<CourseDetailPage />} />
+            <Route path="/E-Grantha/coursedetail" element={<PrivateRoute>
+              <CourseDetailPage />
+            </PrivateRoute>} />
             <Route path="/" element={<HomePage />} />
           </Routes>
         </Router>
