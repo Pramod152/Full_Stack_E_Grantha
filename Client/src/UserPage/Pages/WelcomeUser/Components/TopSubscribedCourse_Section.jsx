@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TopSubscribedVideo_Card from './TopSubscribedVideo_Card';
+import Video_Card from './Video_Card';
 import './ComponentCSS/TopCourse_Section.css'
 
 const TopSubscribedCourse_Section = (isHome) => {
@@ -33,7 +33,7 @@ const TopSubscribedCourse_Section = (isHome) => {
     </div>
       <div id="video_cards">
         {videos.map((video, index) => (
-          <TopSubscribedVideo_Card
+          <Video_Card
              key={video._id} // Assuming each video has a unique id
                 title={video.title} 
                 description={video.description} 

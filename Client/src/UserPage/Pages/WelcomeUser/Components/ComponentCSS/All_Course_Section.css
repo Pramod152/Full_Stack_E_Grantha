@@ -20,39 +20,11 @@
     color: black;
 }
 .course_section_wrapper{
-    margin: 0 auto;
+    margin: 30px auto;
     width: 95%;
 
 }
-.search_box{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 43px 56px;
-    width: 37%;
 
-}
- .search_input{
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #000;
-    outline: none;
-    font-size: 18px;
-
-}
-.search_btn_fuzzy{
-    padding: 15px 13px;
-    border-radius: 8px;
-    border: 1px solid #000;
-    /* background-color: #000; */
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    outline: none;
-    margin-left: 20px;
-
-}
 .card-wrapper{
     display: flex;
     flex-wrap: wrap;
@@ -128,17 +100,17 @@
     float: right;
 }
 .selected_category{
-    color: #000;
+    color: #898484;
     font-size: 3.5rem;
     font-weight: 700;
     margin: 20px 30px;
 
 }
 #all_courses{
-    color: #000;
     font-size: 5.5rem;
     font-weight: 700;
     margin: 0 auto;
+    color: #898484;
 }
 .course_header select{
     padding: 10px;

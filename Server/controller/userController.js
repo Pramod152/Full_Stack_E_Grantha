@@ -710,7 +710,7 @@ exports.getTopSubscribedVideos = async (req, res) => {
     videoCountsArray.sort((a, b) => b.count - a.count);
 
     // Retrieve top 4 videos
-    const topSubscribedVideos = videoCountsArray.slice(0, 4);
+    const topSubscribedVideos = videoCountsArray.slice(0, 3);
 
     // Fetch video details for the top subscribed videos
     const topVideosDetails = await Promise.all(

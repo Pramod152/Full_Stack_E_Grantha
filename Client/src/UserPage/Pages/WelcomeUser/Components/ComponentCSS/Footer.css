@@ -9,8 +9,14 @@ footer {
 /* Grid container */
 .footer_container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+    justify-items: center;
+    padding: 35px;
+}
+.footer_container img{
+    width: 35%;
+    height: auto;
 }
 
 /* About section */
@@ -64,4 +70,29 @@ footer {
 
 .social-icons i {
     font-size: 18px;
+}
+
+@media screen and (max-width: 950px) {
+    footer {
+        font-size: 1.5rem;
+    }
+    
+}
+@media screen and (max-width: 750px) {
+    footer {
+        font-size: 1.5rem;
+    }
+    .footer_container{
+        justify-self: center;
+    }
+    
+}
+@media screen and (max-width: 550px) {
+    footer {
+        font-size: 1.5rem;
+    }
+    .footer_container img{
+        width: 30%;
+    }
+    
 }

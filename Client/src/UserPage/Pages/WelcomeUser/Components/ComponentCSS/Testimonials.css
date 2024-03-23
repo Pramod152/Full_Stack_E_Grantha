@@ -12,9 +12,17 @@
   #avatar {
     width: 80px;
     height: 80px;
-    background-color: #ccc;
+    background-color: #656565;
     border-radius: 50%;
     margin: 0 auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #avatar span{
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
   }
   
   .testimonial_text h3 {
@@ -25,4 +33,12 @@
   .testimonial_text p {
     font-size: 16px;
     color: #555;
+  }
+
+  @media screen  and (max-width: 1200px){
+    .testimonial_card{
+      height: auto ;
+
+    }
+    
   }

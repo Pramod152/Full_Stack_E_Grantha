@@ -1,55 +1,58 @@
-h1{
-    text-align: center;
-    margin: 60px 0 0 0;
-    font-size: 5rem;
-}
 
-.fomr-wrapper{
+    #form_wrapper label{
+        font-size: 20px;
+        
+    }
+    #form_wrapper  input, #message{
+        font-size: 20px;
+        padding: 12px;
+        border-radius: 7px;
+        border: 1px solid #a7a7a7;
+        color: #616161;
+        margin-bottom: 20px;
+        margin-top: 5px;
+    }
+    
+    #form_wrapper button{
+        padding: 10px 10px;
+        background-color: #25645d;
+        color: white;
+        font-size: 24px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        text-align: center;
+        margin-left: 35px;
+    }
+
+    
+
+    #success-message {
+        font-size: 20px;
+        color: green;
+        margin-bottom: 18px;
+    }
+
+    #contactButton{
+        padding: 10px 0;
+        background-color: red;
+    }
+#form_wrapper{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80vh;
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto;
     justify-content: center;
-
-}
-
-form {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    width: 44%;
-    margin: 0 auto;
-    border-radius: 10px;
+    flex-direction: column;
+    margin-top: 100px;
+    width: fit-content;
+    margin: 120px auto;
+    padding: 89px;
+    border: 1px solid #a7a7a7;
+    border-radius: 25px;
+
 }
 
-form div {
-    margin-bottom: 10px;
-    width: 100%;
-}
 
 form label {
     font-size: 2rem;
 }
 
-form input,
-form textarea {
-    width: 100%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-
-
-}
-
-form button:hover {
-    background-color: #0056b3;
-}
-
-#message{
-    height: 15rem;
-}

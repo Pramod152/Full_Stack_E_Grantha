@@ -11,14 +11,14 @@
 
 }
 .course_header_wrapper span{
-    font-size: 2rem;
+    font-size: 3rem;
     color: black;
     cursor: pointer;
 
 }
 #top_subscribed_courses_heading{
     text-align: left;
-    margin: 20px;
+    margin: 0;
     font-size: 32px;
 
 }
@@ -30,6 +30,16 @@
     flex-wrap: wrap;
 }
 
+@media screen and (max-width: 1380px) {
+    
+    #video_cards {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+}
 @media screen and (max-width: 550px) {
     #course_section_wrapper {
         margin: 10px;

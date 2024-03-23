@@ -107,7 +107,6 @@ const CoursesTable = () => {
                         
                         <th>Title</th>
                         <th>Description</th>
-                        <th>VideoId</th>
                         <th>VideoLink</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -119,7 +118,6 @@ const CoursesTable = () => {
                             
                             <td>{course.title}</td>
                             <td>{course.description}</td>
-                            <td>{course.videoId}</td>
                             <td>{course.videoLink}</td>
                             <td>
                                 <FiEdit2 style={{ cursor: 'pointer', color: 'blue' }} onClick={() => openModal(course)} />

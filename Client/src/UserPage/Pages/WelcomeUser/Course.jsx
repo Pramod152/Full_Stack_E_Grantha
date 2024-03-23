@@ -3,6 +3,7 @@ import NavBar from './Components/NavBar';
 import Course_Section from './Components/Course_Section';
 import Footer from './Components/Footer'
 import axios from 'axios';
+import './WelcomeUserCSS/Course.css'
 const Course = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -36,6 +37,7 @@ const Course = () => {
     return (
         <>
             <NavBar />
+            <div className="search_container">
             <form onSubmit={handleSearchSubmit} className="search_box">
             <input
               type="text"
@@ -51,6 +53,7 @@ const Course = () => {
               </button>
             )}
           </form>
+          </div>
             <Course_Section  searchResults={searchResults} searchQuery= {searchQuery}/>
             <Footer />
         </>

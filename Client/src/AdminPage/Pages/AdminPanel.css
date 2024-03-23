@@ -39,13 +39,6 @@ hr{
     width: 100%;
 
 }
-.sidebar ul::before{
-    content: "";
-    height: 100%;
-    width: 100%;
-    background-color: blue;
-
-}
 .sidebar ul li{
     font-size: 20px;
     font-weight: 500;
@@ -56,9 +49,10 @@ hr{
 }
 
 .sidebar ul li:hover{
-    background-color: #c51e1e;
-    border-radius: 10px;
+    background-color: #ffffff;
+    /* border-radius: 10px; */
     transition: 0.5s;
+    color: black;
 }
 .mainContainer{
     width: calc(100vw - 15vw);

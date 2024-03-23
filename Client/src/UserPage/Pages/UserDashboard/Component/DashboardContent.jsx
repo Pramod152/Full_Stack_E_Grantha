@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getUserData } from '../../../Auth/UserDataManager';
+import './ComponentCSS/DashboardContent.css'
+
 
 const UserDashboard = () => {
     const [userName, setUserName] = useState('');
@@ -12,10 +14,11 @@ const UserDashboard = () => {
     }, []);
 
     return (
-        <div>
-            <h1 style={{ fontSize: "40px" }}>Welcome, {userName}</h1>
+        <>
+        
+            <h1 id='Welcome_User'>Welcome, {userName}</h1>
             {/* Other content of UserDashboard */}
-        </div>
+        </>
     );
 }
 

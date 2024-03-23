@@ -1,0 +1,58 @@
+
+.card {
+    overflow: hidden;
+    max-width: 60%;
+    background: #fff;
+    padding: 66px 66px 20px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    height: auto;
+    
+}
+
+.video-thumbnail {
+    position: relative;
+}
+
+.video-thumbnail:hover img {
+    filter: blur(4px);
+    opacity: 0.8;
+}
+
+.video-thumbnail:hover .watch-button {
+    display: block;
+}
+
+#heading
+ {
+    color: #333;
+    font-size: 27px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+#description{
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+
+.view-details-link {
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+}
+.UnSub{
+    font-size: 40px;
+}
+
+
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .card {
+        margin: 10px;
+    }
+}
