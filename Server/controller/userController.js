@@ -176,7 +176,7 @@ exports.checkSubscription = async (req, res) => {
   try {
     const userId = req.user._id; // Assuming you have middleware to extract the user from the request
     const videoId = req.params.videoId;
-    console.log(videoId)
+    console.log(videoId);
 
     const user = await User.findById(userId);
 
