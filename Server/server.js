@@ -14,9 +14,9 @@ mongoose
     "mongodb+srv://egranntha:6fnPEegOKxrofXzg@e-grantha-db.v4bbumj.mongodb.net/E-Grantha"
   )
   .then(() => {
-    console.log(`connecction successful`);
+    console.log(`Connection Successful`);
   });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });

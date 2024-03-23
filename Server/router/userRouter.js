@@ -31,6 +31,7 @@ router
   .route("/videosWithSimilarCategory/:category")
   .get(controller.videosWithSimilarCategory);
 
-router.route("/recommendations/:videoId").get(controller.recommendVideos);
+// router.route("/recommendations/:videoId").get(controller.recommendationsController);
+router.route("/recommendations_data/:id").get(controller.getRecommendations);
 
 module.exports = router;

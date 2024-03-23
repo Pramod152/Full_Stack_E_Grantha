@@ -20,23 +20,15 @@ adminController.use(cookieParser());
 //   "1//04HTNSclMMDR3CgYIARAAGAQSNwF-L9IrAJZKJZ1fWPtPYDUQOf85mLNTEy_pZx4vToburk6_1t_ZUpx0S73vvFzyKmljWqRWu5E";
 // const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
-// // // rajeshpandry24@gmail.com
-const CLIENT_ID =
-  "185755348482-3m8nn1mv1ectgpliejplsfdtke29mc73.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN =
-  "1//04jyAsGoiw9v0CgYIARAAGAQSNwF-L9IrFUMrJlQFekEPzQw_-9Asg5iHcxcyXz-C9nt6Jwu3aAiUecdj38bc-sLS4ydQWQDWX9k";
-const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 //////////////---E-grantha gmail account---////////////////
-// const CLIENT_ID =
-//   "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
-// const CLIENT_SECRET = "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";
-// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-// const REFRESH_TOKEN =
-//   "1//04RIAQQ9YZgO-CgYIARAAGAQSNwF-L9IrVs0akeUhxfGH9qWVy7DDMdQeKLyCMhhPq9ekMqdCtUoVMyE8xgjgguO82tsStxm6lJI";
-// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
+const CLIENT_ID =
+  "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
+const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+const REFRESH_TOKEN =
+  "1//04qc52Rl_Au3BCgYIARAAGAQSNwF-L9IrQcKfKEZTjVsAw5oHSVP5XDZrS8ue191W-s8Ev94aCs_-heIKnQkJCb2z8GBMI32kzUM";
+const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
