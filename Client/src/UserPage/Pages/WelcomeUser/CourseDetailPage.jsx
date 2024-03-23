@@ -11,8 +11,9 @@ const CourseDetailPage = () => {
   const location = useLocation();
   const responseData = location?.state?.responseData || null;
   const { isAuthenticated } = useContext(AuthContext);
-  const recommendedVideos = responseData?.recommendedVideos;
+  const recommendedVideos = responseData?.message;
   const navigate = useNavigate();
+console.log(recommendedVideos)
 
   const handleBackNavigation = () => {
     navigate('/E-Grantha/course')
@@ -26,12 +27,12 @@ const CourseDetailPage = () => {
         index === 0 && (
           <>
             <Video_Card
-              key={videoData.video._id}
-              title={videoData.video.title}
-              description={videoData.video.description}
-              _id={videoData.video._id}
-              videoLink={videoData.video.videoLink}
-              videoId={videoData.video.videoId}
+              key={videoData._id}
+              title={videoData.title}
+              description={videoData.description}
+              _id={videoData._id}
+              videoLink={videoData.videoLink}
+              videoId={videoData.videoId}
             />
           </>
         ) 
@@ -43,11 +44,11 @@ const CourseDetailPage = () => {
       {recommendedVideos && recommendedVideos.map((videoData, index) => (
         index !== 0 && (
           <TopSubscribedVideo_Card
-            key={videoData.video._id}
-              title={videoData.video.title}
-              description={videoData.video.description}
-              _id={videoData.video._id}
-            thumbnail={videoData.video.thumbnailUrl}
+            key={videoData._id}
+              title={videoData.title}
+              description={videoData.description}
+              _id={videoData._id}
+            thumbnail={videoData.thumbnailUrl}
           />
         )
       ))}

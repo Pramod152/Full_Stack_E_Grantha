@@ -8,6 +8,7 @@ const Video = require("../model/video");
 userController.use(express.json());
 userController.use(express.urlencoded({ extended: false }));
 userController.use(cookieParser());
+const { spawn } = require('child_process');
 
 ////------------------------signUp------------------------////
 
@@ -744,3 +745,89 @@ exports.videosWithSimilarCategory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+////////////////////////////////////////////////////////
+//              Word2Vec Recommendation Fetching from Python
+const { exec } = require('child_process');
+const path = require('path');
+
+// Define a route handler
+exports.getRecommendations = async (req, res) => {
+  const pythonScriptPath = path.join(__dirname, 'RecommendationFile.py');
+  const pythonScriptDir = path.dirname(pythonScriptPath);
+  const Id = req.params.id;
+  const numberOfRecommendations = req.query.num || 4; // Default to 4 recommendations
+
+  exec(`python ${pythonScriptPath} ${Id} ${numberOfRecommendations}`, { cwd: pythonScriptDir }, (error, stdout, stderr) => {
+      console.log('Python script output:', stdout); // Debug statement
+      if (error) {
+          console.error(`Error executing Python script: ${error}`);
+          return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      if (stderr) {
+          console.error(`Python script returned an error: ${stderr}`);
+          return res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+      try {
+          // const pramod = JSON.parse(stdout);
+          // console.log('Parsed pramod:', pramod); // Debug statement
+          res.json( JSON.parse(stdout) );
+      } catch (parseError) {
+          console.error(`Error parsing JSON: ${parseError}`);
+          return res.status(500).json({ error: 'Internal Server Error' });
+      }
+  });
+};
+
+
+// const { exec } = require('child_process');
+// const path = require('path');
+
+// // Define a route handler
+// exports.getRecommendations = async (req, res) => {
+//   // Define data to be passed to the Python script
+//   const inputData = {
+//     userId: "65fe4bb6177bd5a61f4f973b",
+//     numberOfRecommendations: 4
+//   };
+
+//   const pythonScriptPath = path.join(__dirname, 'RecommendationFile.py');
+//   const pythonScriptDir = path.dirname(pythonScriptPath);
+
+//   exec(`python ${pythonScriptPath} '${JSON.stringify(inputData)}'`, { cwd: pythonScriptDir }, (error, stdout, stderr) => {
+//       console.log('Python script output:', stdout); // Debug statement
+//       if (error) {
+//           console.error(`Error executing Python script: ${error}`);
+//           return res.status(500).json({ error: 'Internal Server Error' });
+//       }
+//       if (stderr) {
+//           console.error(`Python script returned an error: ${stderr}`);
+//           return res.status(500).json({ error: 'Internal Server Error' });
+//       }
+
+//       try {
+//           const recommendations = JSON.parse(stdout);
+//           console.log('Parsed recommendations:', recommendations); // Debug statement
+//           res.json({ recommendations });
+//       } catch (parseError) {
+//           console.error(`Error parsing JSON: ${parseError}`);
+//           return res.status(500).json({ error: 'Internal Server Error' });
+//       }
+//   });
+// };
+// // Example usage:
+// const pythonScriptPath = './RecommendationFile.py';
+// const inputData = {
+//     userId: "65fe4bb6177bd5a61f4f973b",
+//     numberOfRecommendations: 4
+// };
+
+// getPythonScriptOutput = (pythonScriptPath, inputData)
+//     .then((output) => {
+//         console.log(output);
+//     })
+//     .catch((error) => {
+//         console.error('Error executing Python script:', error);
+//     });

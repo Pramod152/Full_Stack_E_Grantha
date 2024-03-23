@@ -71,6 +71,7 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
           videoId={video.videoId}
           video_id={video._id}
           thumbnail={video.thumbnailUrl}
+          _id={video._id}
         />
       )) 
     : 
@@ -84,6 +85,7 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
           description={video.document.description}
           videoId={video.document.videoId}
           thumbnail={video.document.thumbnailUrl}
+          _id = {video.document._id}
         />
       ))
   )}

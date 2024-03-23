@@ -12,21 +12,12 @@ adminController.use(express.json());
 adminController.use(express.urlencoded({ extended: false }));
 adminController.use(cookieParser());
 // // pandeyrajeshraj21@gmail.com
-// const CLIENT_ID =
-//   "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
-// const CLIENT_SECRET = "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";
-// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-// const REFRESH_TOKEN =
-//   "1//04HTNSclMMDR3CgYIARAAGAQSNwF-L9IrAJZKJZ1fWPtPYDUQOf85mLNTEy_pZx4vToburk6_1t_ZUpx0S73vvFzyKmljWqRWu5E";
-// const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
-
-//////////////---E-grantha gmail account---////////////////
 const CLIENT_ID =
-  "896014529303-ac9dm0ino09r4rvqn2ba77aob3fel8ns.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
+  "823512880578-e04u338ijsmoomvi166lvs7n3n7u69j9.apps.googleusercontent.com";
+const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
 const REFRESH_TOKEN =
-  "1//04qc52Rl_Au3BCgYIARAAGAQSNwF-L9IrQcKfKEZTjVsAw5oHSVP5XDZrS8ue191W-s8Ev94aCs_-heIKnQkJCb2z8GBMI32kzUM";
+  "1//04HTNSclMMDR3CgYIARAAGAQSNwF-L9IrAJZKJZ1fWPtPYDUQOf85mLNTEy_pZx4vToburk6_1t_ZUpx0S73vvFzyKmljWqRWu5E";
 const SCOPE = "https://www.googleapis.com/auth/youtube.upload";
 
 const oauth2Client = new google.auth.OAuth2(

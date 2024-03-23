@@ -23,6 +23,7 @@ const TopSubscribedCourse_Section = (isHome) => {
         fetchVideos();
 
     }, []);
+    // console.log(videos)
 
   return (
     <div id='course_section_wrapper'>
@@ -37,6 +38,7 @@ const TopSubscribedCourse_Section = (isHome) => {
                 title={video.title} 
                 description={video.description} 
                 thumbnail = {video.thumbnailUrl}
+                _id = {video._id}
           />
         ))}
       </div>
