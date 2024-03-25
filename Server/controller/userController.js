@@ -8,7 +8,7 @@ const Video = require("../model/video");
 userController.use(express.json());
 userController.use(express.urlencoded({ extended: false }));
 userController.use(cookieParser());
-const { spawn } = require('child_process');
+const { spawn } = require("child_process");
 
 ////------------------------signUp------------------------////
 
@@ -298,9 +298,9 @@ function levenshteinDistance(s1, s2) {
     for (let j = 1; j <= n; j++) {
       const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
       dp[i][j] = Math.min(
-        dp[i - 1][j] + 1,
-        dp[i][j - 1] + 1,
-        dp[i - 1][j - 1] + cost
+        dp[i - 1][j] + 1, // Cost of deleting a character from s1
+        dp[i][j - 1] + 1, //Cost of inserting a character into s1
+        dp[i - 1][j - 1] + cost //Cost of substituting a character in s1 with the corresponding character in s2.
       );
     }
   }
@@ -746,41 +746,43 @@ exports.videosWithSimilarCategory = async (req, res) => {
   }
 };
 
-
 ////////////////////////////////////////////////////////
 //              Word2Vec Recommendation Fetching from Python
-const { exec } = require('child_process');
-const path = require('path');
+const { exec } = require("child_process");
+const path = require("path");
 
 // Define a route handler
 exports.getRecommendations = async (req, res) => {
-  const pythonScriptPath = path.join(__dirname, 'RecommendationFile.py');
+  const pythonScriptPath = path.join(__dirname, "RecommendationFile.py");
   const pythonScriptDir = path.dirname(pythonScriptPath);
   const Id = req.params.id;
   const numberOfRecommendations = req.query.num || 4; // Default to 4 recommendations
 
-  exec(`python ${pythonScriptPath} ${Id} ${numberOfRecommendations}`, { cwd: pythonScriptDir }, (error, stdout, stderr) => {
-      console.log('Python script output:', stdout); // Debug statement
+  exec(
+    `python ${pythonScriptPath} ${Id} ${numberOfRecommendations}`,
+    { cwd: pythonScriptDir },
+    (error, stdout, stderr) => {
+      console.log("Python script output:", stdout); // Debug statement
       if (error) {
-          console.error(`Error executing Python script: ${error}`);
-          return res.status(500).json({ error: 'Internal Server Error' });
+        console.error(`Error executing Python script: ${error}`);
+        return res.status(500).json({ error: "Internal Server Error" });
       }
       if (stderr) {
-          console.error(`Python script returned an error: ${stderr}`);
-          return res.status(500).json({ error: 'Internal Server Error' });
+        console.error(`Python script returned an error: ${stderr}`);
+        return res.status(500).json({ error: "Internal Server Error" });
       }
 
       try {
-          // const pramod = JSON.parse(stdout);
-          // console.log('Parsed pramod:', pramod); // Debug statement
-          res.json( JSON.parse(stdout) );
+        // const pramod = JSON.parse(stdout);
+        // console.log('Parsed pramod:', pramod); // Debug statement
+        res.json(JSON.parse(stdout));
       } catch (parseError) {
-          console.error(`Error parsing JSON: ${parseError}`);
-          return res.status(500).json({ error: 'Internal Server Error' });
+        console.error(`Error parsing JSON: ${parseError}`);
+        return res.status(500).json({ error: "Internal Server Error" });
       }
-  });
+    }
+  );
 };
-
 
 // const { exec } = require('child_process');
 // const path = require('path');
