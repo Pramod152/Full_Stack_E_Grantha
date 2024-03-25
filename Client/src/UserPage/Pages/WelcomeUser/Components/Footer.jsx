@@ -7,12 +7,10 @@ const Footer = () => {
         <>
             <footer>
                 <div className="footer_container">
-                    <div>
-                        <img src="/Logo_.png" alt="Logo" />
-                    </div>
-                    <div>
-                        <h3>About</h3>
+                    
+                    <div id="firstDiv">
                         <ul>
+                        <h3>About</h3>
                             <li>
                                 <Link to="/E-Grantha/course">Courses</Link>
                             </li>
@@ -24,9 +22,9 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <h3>Follow us</h3>
+                    <div id="secondDiv">
                         <ul>
+                        <h3>Follow us</h3>
                             <li>
                                 <Link to="#">Facebook</Link>
                             </li>
@@ -38,9 +36,9 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <h3>Legal</h3>
+                    <div id="thirdDiv">
                         <ul>
+                        <h3>Legal</h3>
                             <li>
                                 <Link to="#">Privacy Policy</Link>
                             </li>

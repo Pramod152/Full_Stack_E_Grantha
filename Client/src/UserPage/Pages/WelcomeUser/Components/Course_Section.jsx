@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './TopSubscribedVideo_Card';
-import './ComponentCSS/Course_Section.css';
-import TopSubscribedVideo_Card from './TopSubscribedVideo_Card';
+import './Video_Card';
+import './ComponentCSS//All_Course_Section.css';
+import Video_Card from './Video_Card';
 
-const CourseSection = ({ isHome, searchResults, searchQuery }) => {
+const All_CourseSection = ({ isHome, searchResults, searchQuery }) => {
   const [videos, setVideos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -49,8 +48,8 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
               <option value="All">All</option>
               <option value="Instrument">Instrument</option>
               <option value="Vocal">Vocal</option>
-              <option value="Song">Song</option>
             </select>
+            
           </div>
           <p className='selected_category'>Category: {selectedCategory}</p> {/* Render selected category */}
         </>
@@ -63,7 +62,7 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
     videos
       .filter(video => selectedCategory === 'All' || video.videoCategory === selectedCategory) // Filter based on selected category
       .map((video) => (
-        <TopSubscribedVideo_Card 
+        <Video_Card 
           key={video._id} // Assuming each video has a unique id
           title={video.title} 
           description={video.description} 
@@ -79,7 +78,7 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
     searchResults
       .filter(video => selectedCategory === 'All' || video.document.videoCategory === selectedCategory) // Filter based on selected category
       .map((video) => (
-        <TopSubscribedVideo_Card
+        <Video_Card
           key={video.document._id}
           title={video.document.title}
           description={video.document.description}
@@ -94,4 +93,4 @@ const CourseSection = ({ isHome, searchResults, searchQuery }) => {
   );
 };
 
-export default CourseSection;
+export default All_CourseSection;

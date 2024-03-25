@@ -12,6 +12,25 @@ const HomePage = () => {
   const handleClick = () => {
     window.location.href = "/E-Grantha/course";
   };
+
+  const userTestimonial = [
+    {
+      name: "Pramod Ghimire",
+      testimonial:
+        "E-Grantha helped me to enhance my skills and knowledge. The courses are well-structured and easy to follow. Highly recommended!",
+    },
+    {
+      name: "Rajesh Pandey",
+      testimonial:
+        "E-Grantha is a great platform to learn new things. The courses are designed to help you learn at your own pace. I am very happy with the courses.",
+    },
+    {
+      name: "Addwin Niraula",
+      testimonial:
+        "I have been using E-Grantha for a while now and I am very satisfied with the courses. The instructors are very knowledgeable and the content is top-notch.",
+    },
+  ]
+
   return (
     <>
       <NavBar />
@@ -45,9 +64,13 @@ const HomePage = () => {
         <div className="testimonials_container">
           <h2>Testimonial</h2>
           <div className="testimonials_card_container">
-            <Testimonials />
-            <Testimonials />
-            <Testimonials />
+            {userTestimonial.map((testimonial, index) => (
+              <Testimonials
+                key={index}
+                name={testimonial.name}
+                testimonial={testimonial.testimonial}
+              />
+            ))}
           </div>
         </div>
       </section>

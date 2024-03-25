@@ -10,10 +10,11 @@
   }
   
   .messages_table th {
-    background-color: #f3f3f3;
+    background-color: #1C5739;
     height: 37px;
     font-size: 16px;
     font-weight: 600;
+    color: white;
   }
   .messages_table th, .messages_table td {
     padding: 10px 15px;

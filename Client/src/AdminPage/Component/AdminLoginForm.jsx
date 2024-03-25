@@ -49,8 +49,8 @@ const AdminLoginForm = ({ onSignUpClick }) => {
 
   return (
     <div className='login_card_admin'>
-      <h2>Admin Login Form</h2>
-      {errorMessage && <p>{errorMessage}</p>}
+      <h1 style={{textAlign: "center"}}>Admin Login Form</h1>
+      {errorMessage && <p>{errsorMessage}</p>}
       <div>
         <form onSubmit={handleSubmit}>
           <div>
@@ -64,10 +64,7 @@ const AdminLoginForm = ({ onSignUpClick }) => {
           <button type="submit">Login</button>
         </form>
       </div>
-      <p>
-        New to company?{" "}
-        <span onClick={onSignUpClick}>Sign up!</span>
-      </p>
+      
     </div>
   );
 };

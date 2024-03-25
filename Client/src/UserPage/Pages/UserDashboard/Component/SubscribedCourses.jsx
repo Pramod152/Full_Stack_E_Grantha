@@ -51,7 +51,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import '../UsedDashboardCSS/SubscribedCourses.css';
 import {getUserData} from '../../../Auth/UserDataManager'
-import Video_Card from '../../WelcomeUser/Components/Video_Card';
+import Detail_Video_Card from '../../WelcomeUser/Components/Detail_Video_Card';
 
 const SubscribedCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -73,10 +73,11 @@ const SubscribedCourses = () => {
   }, [fetchSubscribedCourses]);
 
   return (
-    <div className="subscribed_courses_container">
+    // <div className="subscribed_courses_container">
+    <>
       {
         courses.length === 0 ? <h1>No courses available</h1> : courses.map(courses => (
-          <Video_Card
+          <Detail_Video_Card
               key={courses._id}
               title={courses.title}
               description={courses.description}
@@ -86,7 +87,8 @@ const SubscribedCourses = () => {
             />
         ))
       }
-    </div>
+      </>
+    // </div>
   );
 };
 

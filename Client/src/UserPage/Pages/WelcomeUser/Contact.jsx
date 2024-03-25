@@ -1,6 +1,6 @@
 import NavBar from './Components/NavBar';
 import React, { useState } from 'react';
-import './WelcomeUserCSS/Course.css';
+import './WelcomeUserCSS/Contact.css'
 import Button from './Components/Button';
 
 
@@ -44,12 +44,12 @@ const ContactPage = () => {
     return (
         <>
             <NavBar />  
-            <div className="form_wrapper">
-                {errorMessage && <p className="error_message">{errorMessage}</p>}
-                {successMessage && <p className="success-message">{successMessage}</p>}
+            <div id="form_wrapper">
+                {errorMessage && <p id="error_message">{errorMessage}</p>}
+                {successMessage && <p id="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div className='form_element_wrapper'>
-                        <label className='name' htmlFor="name">Name:</label> <br />
+                    <div id='form_element_wrapper'>
+                        <label id='name' htmlFor="name">Name:</label> <br />
                         <input
                             type="text"
                             id="name"
@@ -74,7 +74,7 @@ const ContactPage = () => {
                             onChange={(e) => setMessage(e.target.value)}
                         ></textarea>
                     </div>
-                    <Button BtnName="Send Message" className="contactButton" type="submit" />
+                    <Button BtnName="Send Message" id="contactButton" type="submit" />
                 </form>
             </div>
         </>

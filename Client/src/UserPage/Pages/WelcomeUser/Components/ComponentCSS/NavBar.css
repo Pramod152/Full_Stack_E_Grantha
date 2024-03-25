@@ -2,7 +2,7 @@
     --nav-padding: 20px 180px 0;
     --nav-img-width: 60px;
     --nav-margin-left: 60px;
-    --nav-font-size: 2.5rem;
+    --nav-font-size: 34px;
     --nav-button-padding: 12px 22px;
     --nav-button-font-size: 20px;
 }
@@ -32,13 +32,14 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #343232;
+    color:#5d5c5c;
     font-size: var(--nav-font-size);
 }
 
 @media (max-width: 1200px) {
     nav {
-        padding: 0px 100px;
+        padding: 0 100px 0;
+    margin-top: 17px;
     }
 
     nav img {
@@ -73,7 +74,7 @@ nav ul li a {
     }
 
     nav ul li a {
-        font-size: 20px;
+        font-size: 24px;
     }
 
     nav button {
@@ -82,9 +83,9 @@ nav ul li a {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     nav {
-        padding: 0px 20px;
+        padding: 5px 20px;
     }
 
     nav img {
@@ -105,17 +106,18 @@ nav ul li a {
     }
 }
 .avatar {
+    padding: 30px;
     width: 50px;
     height: 50px;
-    background-color: #656565;
+    background-color: #1C5739;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     cursor: pointer;
     align-items: center;
     text-align: center;
-    font-size: 21px;
-    font-weight: 600;
+    font-size: 26px;
+    font-weight: bold;
     color: #ededed;
     border: 1px solid #555454;
 

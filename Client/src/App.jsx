@@ -24,7 +24,7 @@ const App = () => {
             <Route path="/E-Grantha/about" element={<AboutPage />} />
             <Route path="/E-Grantha/course" element={<CoursesPage />} />
             <Route path="/E-Grantha/contact" element={<ContactPage />} />
-            <Route path="/E-Grantha/contact" element={<ContactPage />} />
+            <Route path="/E-Grantha/register" element={<UserRegistrationPage />} />
             <Route path="/E-Grantha/dashboard" element={<PrivateRoute>
             <UserDashboard />
             </PrivateRoute>} />

@@ -1,64 +1,38 @@
-.error_message{
-    color: red;
-}
-    h1 {
-        text-align: center;
-        margin-top: 50px;
-    }
 
-    .form_wrapper {
+
+    .search_container{
         display: flex;
-        justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0b4126;
+    margin-top: 30px;
+    }
+
+    .search_box{
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        flex-direction: column;
-        margin-top: 100px;
-        background-color: #f1f1f1;
-        width: fit-content;
-        margin: 120px auto;
-        padding: 89px;
-        border: 1px solid #a7a7a7;
-        border-radius: 25px;
+        margin: 110px auto;
+        width: 37%;
     }
-    
-    .form_wrapper label{
-        font-size: 20px;
-        
-    }
-    .form_wrapper  input, #message{
-        font-size: 20px;
-        padding: 12px;
-        border-radius: 7px;
-        border: 1px solid #a7a7a7;
-        color: #616161;
-        margin-bottom: 20px;
-        margin-top: 5px;
-    }
-    
-    .form_wrapper button{
-        padding: 10px 10px;
-        background-color: #25645d;
-        color: white;
-        font-size: 24px;
-        border: none;
-        border-radius: 7px;
-        cursor: pointer;
-        text-align: center;
-        margin-left: 35px;
-    }
+    .search_input{
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    outline: none;
+    font-size: 18px;
 
-    .error-message {
-        color: red;
-        font-size: 20px;
-        margin-bottom: 18px;
-    }
+}
+.search_btn_fuzzy{
+    padding: 15px 13px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    /* background-color: #000; */
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 20px;
 
-    .success-message {
-        font-size: 20px;
-        color: green;
-        margin-bottom: 18px;
-    }
-
-    .contactButton{
-        padding: 10px 0;
-        background-color: red;
-    }
+}
