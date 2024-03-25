@@ -56,7 +56,7 @@ const UsersTable = () => {
 
   return (
     <div className="users_table_container">
-      <table className="users_table">
+      <table id="users_table">
         <thead>
           <tr>
             <th>First Name</th>

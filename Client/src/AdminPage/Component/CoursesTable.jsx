@@ -101,7 +101,7 @@ const CoursesTable = () => {
     return (
         <div className="courses_table_container">
             <button className="add_button" onClick={handleAddCourse}>Add</button>
-            <table className="courses_table">
+            <table id="courses_table">
                 <thead>
                     <tr>
                         

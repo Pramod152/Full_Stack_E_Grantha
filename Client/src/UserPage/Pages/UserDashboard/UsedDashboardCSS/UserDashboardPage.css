@@ -20,11 +20,14 @@
     cursor: pointer;
     border-radius: 50%;
     border : 1px solid black;
+    stroke: white;
+    background-color: #133f29;
+    stroke-dashoffset: 2%;
 
 
  }
 .sidebar{
-    background-color: black;
+    background-color: #133f29;
     width: 15vw;
     height: inherit;
     display: flex;

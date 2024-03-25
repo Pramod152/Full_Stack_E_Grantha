@@ -49,6 +49,7 @@ const All_CourseSection = ({ isHome, searchResults, searchQuery }) => {
               <option value="Instrument">Instrument</option>
               <option value="Vocal">Vocal</option>
             </select>
+            
           </div>
           <p className='selected_category'>Category: {selectedCategory}</p> {/* Render selected category */}
         </>

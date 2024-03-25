@@ -7,7 +7,7 @@
   }
   
   .add_button {
-    background-color: #4CAF50; /* Green background color */
+    background-color: #1C5739; /* Green background color */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -23,20 +23,21 @@
     background-color: #45a049; /* Darker green hover color */
   }
   
-  .courses_table {
+  #courses_table {
     width: 100%; /* Table takes up full width of its container */
     border-collapse: collapse; /* Remove default spacing between table cells */
   }
   
   
-  .courses_table th {
-    background-color: #f3f3f3;
+  #courses_table th {
+    background-color: #1C5739;
     height: 37px;
     font-size: 16px;
     font-weight: 600;
+    color: white;
 }
 
-.courses_table th, .courses_table td {
+#courses_table th, #courses_table td {
     padding: 10px 15px;
     border: 1px solid #ddd;
     text-align: left;
@@ -46,7 +47,7 @@
 
 
   
-  .courses_table tbody tr:hover {
+  #courses_table tbody tr:hover {
     background-color: #ddd;
   }
   
