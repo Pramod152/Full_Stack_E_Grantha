@@ -15,16 +15,16 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 1. Clone the repo
-git clone https://github.com/Pramod152/Full_Stack_E_Grantha.git
+`git clone https://github.com/Pramod152/Full_Stack_E_Grantha.git`
 
 2. Install NPM packages
-npm install
+`npm install`
 
 3. Running the app
 To run the app in the development mode, use the following command:
-npm start
+`npm start`
 
 ## Python file for Wrod2Vec algorithm
-/Server/Controller/trainin.py
+`/Server/Controller/trainin.py`
 
 
